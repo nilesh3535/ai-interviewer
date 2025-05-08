@@ -269,3 +269,42 @@ export const interviewCovers = [
   "/vine.png",
   "/xiaomi.png",
 ];
+
+export const iconsColors: { [key: string]: string } = {
+  "adobe.png": "#FF0000",
+  "amazon.png": "#FF9900",
+  "facebook.png": "#1877F2",
+  "hostinger.png": "#673DE6",
+  "pinterest.png": "#E60023",
+  "quora.png": "#B92B27",
+  "reddit.png": "#FF4500",
+  "skype.png": "#00AFF0",
+  "spotify.png": "#1DB954",
+  "telegram.png": "#0088CC",
+  "tiktok.png": "#000000",
+  "yahoo.png": "#6001D2",
+  "discord.png": "#5865F2",
+  "dropbox.png": "#0061FF",
+  "duckduckgo.png": "#DE5833",
+  "figma.png": "#F24E1E",
+  "instagram.png": "#E4405F",
+  "linkedin.png": "#0077B5",
+  "notion.png": "#000000",
+  "shopify.png": "#95BF47",
+  "twitch.png": "#9146FF",
+  "apple.png": "#000000",
+  "behance.png": "#1769FF",
+  "coda.png": "#F46A54",
+  "drive.png": "#4285F4",
+  "evernote.png": "#00A82D",
+  "hubspot.png": "#FF7A59",
+  "jira.png": "#0052CC",
+  "openai.png": "#412991",
+  "producthunt.png": "#DA552F",
+  "slack.png": "#611F69",
+  "trello.png": "#0079BF",
+  "vine.png": "#00B488",
+  "xiaomi.png": "#FA6709"
+};
+
+
