@@ -87,7 +87,7 @@ const InterviewCard = ({
           {/* Cover Image */}
           <div
           style={{ backgroundColor: iconsColors[imageSrc.split("/")[2]] }}
-          className="rounded-full size-[90px] mt-6 mx-auto flex items-center justify-center text-white text-xs font-semibold"
+          className="rounded-full size-[80px] mt-6 mx-auto flex items-center justify-center text-white text-xs font-semibold border-[3px] border-[#d9e0e691]"
         >
           <h1 className="font-bold text-2xl">
           {
