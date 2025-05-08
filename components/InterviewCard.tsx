@@ -5,7 +5,7 @@ import Image from "next/image";
 import DisplayTechIcons from "./DisplayTechIcons";
 import { cn, getRandomInterviewCover } from "@/lib/utils";
 import { MetalButton } from "./MetalButton";
-
+import { interviewCovers, mappings,iconsColors } from "@/constants";
 // Add feedback to props
 interface InterviewCardProps {
   interviewId: string;
@@ -85,13 +85,19 @@ const InterviewCard = ({
           </div>
 
           {/* Cover Image */}
-          <Image
-            src={imageSrc}
-            alt="cover-image"
-            width={90}
-            height={90}
-            className="rounded-full object-fit size-[90px] mt-6 mx-auto"
-          />
+          <div
+          style={{ backgroundColor: iconsColors[imageSrc.split("/")[2]] }}
+          className="rounded-full size-[90px] mt-6 mx-auto flex items-center justify-center text-white text-xs font-semibold"
+        >
+          <h1 className="font-bold text-2xl">
+          {
+                              role.split(" ").length === 1
+                                ? role[0].toUpperCase() + "I"
+                                : role.split(" ")[0][0].toUpperCase() + role.split(" ")[role.split(" ").length - 1][0].toUpperCase()
+                            }
+          </h1>
+          </div>
+         
 
           {/* Interview Role */}
           <h3 className="my-5 capitalize">{role.toLowerCase().includes("interview") ? role : `${role} Interview`}
