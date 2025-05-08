@@ -74,7 +74,8 @@ const InterviewCardList = ({
                 className="rounded-full object-cover size-[80px]"
               /> */}
               <div
-                        style={{ backgroundColor: iconsColors[imageSrc.split("/")[2]] }}
+                        style={{ backgroundColor: iconsColors[imageSrc.split("/")[2]] ,
+                          boxShadow: "0px 4px 10px rgba(219, 208, 208, 0.3)"}}
                         className="rounded-full size-[80px] mt-3 mx-auto flex items-center justify-center text-white text-xs font-semibold border-[3px] border-[#d9e0e691]"
                       >
                         <h1 className="font-bold text-2xl">
