@@ -257,7 +257,8 @@ export async function updateUserProfile({
   phone,
   bio,
   linkedin,
-  gstin
+  gstin,
+  company
 }: {
   userId: string;
   firstName: string;
@@ -267,6 +268,7 @@ export async function updateUserProfile({
   bio?: string;
   linkedin?: string;
   gstin?: string;
+  company?: string;
 }) {
   try {
     const userRef = db.collection("users").doc(userId);
@@ -278,6 +280,7 @@ export async function updateUserProfile({
       bio: bio || "Student",
       linkedin: linkedin || "",
       gstin:gstin || "",
+      company:company || "",
     });
 
     return { success: true, message: "Profile updated successfully!" };
