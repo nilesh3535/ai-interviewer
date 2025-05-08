@@ -1,13 +1,14 @@
 
 import Image from "next/image";
 
+
 import Link from "next/link";
 
 import InterviewCard from "@/components/InterviewCard"; // Grid view
 import InterviewCardList from "@/components/InterviewCardList"; // List view
 
 import { List, LayoutGrid } from 'lucide-react';
-import ViewToast from '@/components/ViewToast';
+
 import { getCurrentUser } from "@/lib/actions/auth.action";
 import {
   getInterviewsByUserId,
@@ -34,9 +35,7 @@ async function Home({ searchParams }: HomeProps) {
   const hasPastInterviews = (userInterviews?.length ?? 0) > 0;
   const allInterview = await getInterviewsByUserId('');
   const viewMode = searchParams?.view === 'grid' ? 'grid' : 'list';
-  if (viewMode) {
-    
-  }
+
   // ✅ Fetch feedback for each interview in parallel
   const feedbackList = await Promise.all(
     userInterviews.map(interview =>
@@ -57,7 +56,7 @@ async function Home({ searchParams }: HomeProps) {
   return (
     <>
      <section className="card-cta flex-col-reverse md:flex-row items-center">
-     <ViewToast />
+   
         <div className="flex flex-col gap-6 max-w-md mt-6 sm:mt-0">
           <AnimatedText delay={0.1}>
             <h2><span className="text-orange-300">AI-Powered</span> Real-Time Interview Platform for Smarter Hiring</h2>
