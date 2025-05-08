@@ -5,6 +5,7 @@ import Image from "next/image";
 import DisplayTechIcons from "./DisplayTechIcons";
 import { cn, getRandomInterviewCover } from "@/lib/utils";
 import { MetalButton } from "./MetalButton";
+import { iconsColors } from "@/constants";
 
 // Add feedback to props
 interface InterviewCardListProps {
@@ -65,15 +66,27 @@ const InterviewCardList = ({
           <div className="flex w-full min-h-32 px-5 py-4 gap-5 items-center rounded-2xl bg-gradient-to-b from-[#1A1C20] to-[#08090D] text-white">
             {/* Left: Image with badges */}
             <div className="relative">
-              <Image
+              {/* <Image
                 src={imageSrc}
                 alt="cover"
                 width={80}
                 height={80}
                 className="rounded-full object-cover size-[80px]"
-              />
-              <div className={cn("absolute -top-2 -left-2 text-xs px-2 py-0.5 rounded-md text-white", typeBadgeColor)}>
-                {normalizedType}
+              /> */}
+              <div
+                        style={{ backgroundColor: iconsColors[imageSrc.split("/")[2]] }}
+                        className="rounded-full size-[90px] mt-3 mx-auto flex items-center justify-center text-white text-xs font-semibold"
+                      >
+                        <h1 className="font-bold text-2xl">
+                        {
+                              role.split(" ").length === 1
+                                ? role[0].toUpperCase() + "I"
+                                : role.split(" ")[0][0].toUpperCase() + role.split(" ")[role.split(" ").length - 1][0].toUpperCase()
+                            }
+                        </h1>
+                        </div>
+              <div className={cn("absolute -top-0 -left-2 text-xs px-3 py-0.5 rounded-md text-white", typeBadgeColor)}>
+                {normalizedType.toLocaleLowerCase().replaceAll("interview", "")}
               </div>
               <div className={cn("absolute -bottom-2 -right-2 text-xs px-2 py-0.5 rounded-md text-white capitalize", levelBadgeColor)}>
                 {level || "Beginner"}
