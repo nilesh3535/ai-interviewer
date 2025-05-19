@@ -74,9 +74,9 @@ export default function InterviewForm({ user }) {
                 duration: 5000,
                 id: "generate-toast",
             });
-
+             window.location.href = "/";
             // Redirect to "/" after successful generation
-            router.push("/"); // <-- redirect here
+            // router.push("/"); // <-- redirect here
 
         } catch (error) {
             console.error(error);
