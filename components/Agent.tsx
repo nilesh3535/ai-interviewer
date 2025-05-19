@@ -443,7 +443,7 @@ const Agent = ({
           <CallHint 
             targetId="call-button"
             timeoutDuration={10000}
-            text={type === "generate" ? "Click CALL to generate the interview" : "Click CALL to start the interview"}
+            text={type === "generate" ? "Click CALL to generate the interview" : "Click below button to start the interview"}
             onDismiss={() => setShowCallHint(false)}
           />
         )}
