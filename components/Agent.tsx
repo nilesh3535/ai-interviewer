@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback,useRef } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -10,6 +10,10 @@ import { vapi } from "@/lib/vapi.sdk";
 import { interviewer } from "@/constants";
 import { createFeedback } from "@/lib/actions/general.action";
 import CallHint from "@/components/CallHint";
+import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
+import { HelpCircle,TriangleAlert  } from 'lucide-react';
+import { insertTransaction, updateWallet } from "@/lib/actions/auth.action";
+import moment from "moment";
 
 enum CallStatus {
   INACTIVE = "INACTIVE",
@@ -31,8 +35,68 @@ const Agent = ({
   type,
   questions,
   userAvatar,
+  remaining,
+  interviewrole
 }: AgentProps) => {
   const router = useRouter();
+
+
+
+
+    const accept = () => {
+      if(parseInt(remaining) > 0){
+       toast.success("Awesome! Your AI interview is about to begin...",{
+          duration: 2500,
+          id: "feedback-toast",
+        });
+        handleCall()
+      }else{
+        toast.warning("You don't have enough credits. Please purchase a pack to start your interview",{
+          duration:5000
+        });
+        // router.push(`/packs`);
+        setTimeout(()=>{
+        confirmAddCredit()
+        },1000)
+        //
+      }
+    };
+
+    const reject = () => {
+         toast("Interview cancelled. You can start it anytime from here.", {
+          icon: "🛑",
+          duration: 2500,
+        });
+    };
+
+    const confirmInterview = () => {
+        confirmDialog({
+            group: 'headless',
+            message: 'Are you sure you want to proceed?',
+            header: 'Confirmation',
+            icon: 'pi pi-exclamation-triangle',
+            defaultFocus: 'accept',
+            accept,
+            reject
+        });
+    };
+
+    const confirmAddCredit = () => {
+        confirmDialog({
+            group: 'headless',
+            message: 'Please add credits to proceed interview',
+            header: 'Credits',
+            icon: 'pi pi-exclamation-triangle',
+            defaultFocus: 'accept',
+            accept,
+            reject
+        });
+    };
+
+
+
+
+
   const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
   const [messages, setMessages] = useState<SavedMessage[]>([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -189,10 +253,28 @@ const Agent = ({
       });
 
       if (success && id) {
-        toast.success("Feedback generated successfully!", {
-          id: "feedback-toast"
-        });
-        router.push(`/interview/${interviewId}/feedback`);
+            const newBalance = (parseInt(remaining) - 1).toString();
+            const paymentid = "wallet" + moment(new Date()).format("DDMMYYHHmmss");
+            await insertTransaction({
+              paymentid:paymentid,
+              orderid: String(interviewrole),
+              type: "Debited",
+              amount: "",
+              packs: "1",
+              paymentType: "User Wallet", // e.g., card, UPI, netbanking
+              oldBalance: remaining,
+              remaining: newBalance,
+              userId,
+              packType:""
+            });
+
+            await updateWallet({ packs: newBalance, userId });
+
+            toast.success("Interview completed! Feedback generated successfully.", {
+              id: "feedback-toast",
+            });
+
+            router.push(`/interview/${interviewId}/feedback`);
       } else {
         console.log("Error saving feedback");
         toast.error("Failed to generate feedback", {
@@ -248,6 +330,73 @@ const Agent = ({
 
     return (
         <>
+        <ConfirmDialog
+  group="headless"
+  content={({ headerRef, contentRef, footerRef, hide, message }) => (
+    <div className="flex flex-col items-center px-10 py-5 bg-white shadow-xl rounded-lg max-w-md mx-auto">
+      <div className={`${message.header=="Confirmation"?"bg-blue-500":"bg-red-500"} text-white rounded-full p-5 -mt-12`}>
+       {message.header=="Confirmation" ? <HelpCircle size={30} className="text-gray-50" />
+        :<TriangleAlert size={30} className="text-gray-50" />
+        }
+        </div>
+      <h2 ref={headerRef} className="text-gray-700 font-semibold text-2xl mt-4">
+        {message.header}
+      </h2>
+      {message.header=="Confirmation" ?<p className="text-gray-500 text-center mt-2">
+        This interview will use <strong className="text-red-500">1 pack</strong>.
+      </p>:
+      <p className="text-gray-500 text-center mt-2">
+              You don't have enough credits.
+      </p>
+  }
+      {message.header=="Confirmation" ? 
+      <p className="text-gray-700 mt-1">Current packs remaining: <strong className="text-green-500">{remaining}</strong></p>
+      :
+      <p className="text-gray-700 mt-1">Current packs remaining: <strong className="text-red-500">{remaining}</strong></p>
+      }
+      <p ref={contentRef} className="mt-8 text-gray-700 font-medium text-base text-center">
+        {message.message}
+      </p>
+      <div ref={footerRef} className="w-full flex flex-row justify-around mt-6">
+       {message.header=="Confirmation" ?  <button
+          type="button"
+          className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 font-medium rounded-lg text-sm px-8 py-2.5 text-center me-2 mb-2"
+          onClick={(e) => {
+            hide(e);
+            accept();
+          }}
+        >
+          Proceed
+        </button>
+         :
+        <button
+          type="button"
+          className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 font-medium rounded-lg text-sm px-8 py-2.5 text-center me-2 mb-2"
+          onClick={(e) => {
+            hide(e);
+            // accept();
+             router.push(`/packs`);
+          }}
+        >
+          Add Credits
+        </button>
+        }
+        <button
+          type="button"
+          className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-8 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+          onClick={(e) => {
+            hide(e);
+            reject();
+          }}
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  )}
+/>
+{/* Error */}
+
         <div className="call-view">
             {/* AI Interviewer Card */}
             <div className="card-interviewer">
@@ -303,7 +452,14 @@ const Agent = ({
           <button 
             id="call-button" 
             className="relative btn-call" 
-            onClick={() => handleCall()}
+            onClick={()=>{
+            if(type=="generate"){
+            handleCall()
+            }else{
+              confirmInterview()
+            }
+            }
+            }
           >
             <span
               className={cn(

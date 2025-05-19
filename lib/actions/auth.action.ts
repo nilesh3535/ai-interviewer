@@ -257,7 +257,8 @@ export async function updateUserProfile({
   phone,
   bio,
   linkedin,
-  gstin
+  gstin,
+  company
 }: {
   userId: string;
   firstName: string;
@@ -267,6 +268,7 @@ export async function updateUserProfile({
   bio?: string;
   linkedin?: string;
   gstin?: string;
+  company?: string;
 }) {
   try {
     const userRef = db.collection("users").doc(userId);
@@ -278,6 +280,7 @@ export async function updateUserProfile({
       bio: bio || "Student",
       linkedin: linkedin || "",
       gstin:gstin || "",
+      company:company || "",
     });
 
     return { success: true, message: "Profile updated successfully!" };
@@ -318,3 +321,75 @@ export async function updateUserAddress({
     return { success: false, error };
   }
 }
+
+export async function insertOrder(params: OrderProps) {
+  const { paymentid,orderid, amount, packs,paymentType,oldBalance,remaining, userId,packType } = params;
+
+  try {
+    await db.collection("orders").add({
+      paymentid,
+      orderid,
+      amount,
+      packs,
+      paymentDate: new Date().toISOString(),
+      paymentType,
+      oldBalance:oldBalance,
+      userId,
+      description:`${packs} ${packs=="1"? "pack":"pack's"} added`,
+      createdAt: new Date().toISOString(),
+      packType:packType
+    });
+
+    return { success: true, message: "Transaction recorded successfully!" };
+  } catch (error) {
+    console.error("Error inserting transaction:", error);
+    return { success: false, error };
+  }
+}
+export async function updateWallet({
+  packs,
+  userId
+}: {
+  packs: string;
+  userId:string
+}) {
+  try {
+    const userRef = db.collection("users").doc(userId);
+
+    await userRef.update({
+      packs: packs || "",
+    });
+
+    return { success: true, message: "Wallet updated successfully!" };
+  } catch (error) {
+    console.error("Error updating user Wallet:", error);
+    return { success: false, error };
+  }
+}
+
+export async function insertTransaction(params: TransactionProps) {
+  const { paymentid,orderid,type,amount, packs,paymentType,oldBalance,remaining, userId,packType } = params;
+
+  try {
+    await db.collection("transactions").add({
+      paymentid,
+      orderid,
+      type,
+      amount,
+      packs,
+      paymentType,
+      oldBalance:oldBalance,
+      remaining:remaining,
+      userId,
+      description:`${packs} ${packs=="1"? "pack":"pack's"} ${type.toLocaleLowerCase()}.`,
+      createdAt: new Date().toISOString(),
+      packType:packType
+    });
+
+    return { success: true, message: "Transaction recorded successfully!" };
+  } catch (error) {
+    console.error("Error inserting transaction:", error);
+    return { success: false, error };
+  }
+}
+

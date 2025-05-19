@@ -5,7 +5,7 @@ import Image from "next/image";
 import DisplayTechIcons from "./DisplayTechIcons";
 import { cn, getRandomInterviewCover } from "@/lib/utils";
 import { MetalButton } from "./MetalButton";
-
+import { interviewCovers, mappings,iconsColors } from "@/constants";
 // Add feedback to props
 interface InterviewCardProps {
   interviewId: string;
@@ -71,7 +71,9 @@ const InterviewCard = ({
               typeBadgeColor
             )}
           >
-            <p className="badge-text font-medium text-white">{normalizedType}</p>
+            <p className="badge-text font-medium text-white">
+              {normalizedType.toLowerCase().replaceAll("interview","")}
+              </p>
           </div>
 
           {/* Level Badge - Top Left */}
@@ -85,16 +87,24 @@ const InterviewCard = ({
           </div>
 
           {/* Cover Image */}
-          <Image
-            src={imageSrc}
-            alt="cover-image"
-            width={90}
-            height={90}
-            className="rounded-full object-fit size-[90px] mt-6 mx-auto"
-          />
+          <div
+          style={{ backgroundColor: iconsColors[imageSrc.split("/")[2]] ,
+             boxShadow: "0px 4px 10px rgba(219, 208, 208, 0.3)"
+          }}
+          className="rounded-full size-[80px] mt-6 mx-auto flex items-center justify-center text-white text-xs font-semibold border-[3px] border-[#d9e0e691] "
+        >
+          <h1 className="font-bold text-2xl">
+          {
+                              role.split(" ").length === 1
+                                ? role[0].toUpperCase() + "I"
+                                : role.split(" ")[0][0].toUpperCase() + role.split(" ")[role.split(" ").length - 1][0].toUpperCase()
+                            }
+          </h1>
+          </div>
+         
 
           {/* Interview Role */}
-          <h3 className="my-5 capitalize">{role.toLowerCase().includes("interview") ? role : `${role} Interview`}
+          <h3 className="my-5 line-clamp-1 capitalize">{role.toLowerCase().includes("interview") ? role : `${role} Interview`}
           </h3>
 
           {/* Date & Score & Questions Count */}
@@ -139,9 +149,9 @@ const InterviewCard = ({
           </p>
         </div>
 
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between items-start">
           <DisplayTechIcons techStack={techstack} />
-
+           <div className="flex flex-col items-end space-y-2">
             <Link
               href={
                 feedback
@@ -151,6 +161,13 @@ const InterviewCard = ({
             >
               {feedback ? <MetalButton variant="primary">Check Feedback</MetalButton> : <MetalButton variant="bronze">Start Interview</MetalButton>}
             </Link>
+            {feedback && (
+                 <Link
+                href={`/interview/${interviewId}`}
+              >
+                   <MetalButton variant="bronze">Retake Interview</MetalButton>
+                </Link>)}
+            </div>
         </div>
       </div>
     </div>

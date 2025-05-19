@@ -23,6 +23,7 @@ export default  function UserInfoCard({user}) {
     setBio(user?.bio || "Student");
     setLinkedin(user?.linkedin || "");
     setGstin(user?.gstin || "");
+    setCompany(user?.company || "");
   }
 
   const handleSave = async() => {
@@ -57,7 +58,8 @@ export default  function UserInfoCard({user}) {
             phone,
             bio,
             linkedin,
-            gstin
+            gstin,
+            company
          });
          
          if (result.success) {
@@ -79,6 +81,7 @@ export default  function UserInfoCard({user}) {
   const [bio, setBio] = React.useState(user?.bio || "Student");
   const [gstin, setGstin] = React.useState(user?.gstin || "");
   const [linkedin, setLinkedin] = React.useState(user?.linkedin || "");
+  const [company, setCompany] = React.useState(user?.company || "");
   const handleLinkedInClick = () => {
     if (linkedin) {
       // If the LinkedIn URL is provided, open it in a new tab
@@ -142,9 +145,40 @@ export default  function UserInfoCard({user}) {
                {bio || "Student"}
               </p>
             </div>
+            <div className="flex flex-row items-center gap-2">
+            <button
+                    onClick={handleLinkedInClick}
+                    className="flex h-11 w-11 items-center justify-center gap-2 rounded-full border border-gray-300 bg-[#2d64bc] text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-[#2d64bc] dark:text-white dark:hover:bg-white/[0.03] dark:hover:text-gray-200"
+                  >
+                    <svg
+                      className="fill-current"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.78381 4.16645C5.78351 4.84504 5.37181 5.45569 4.74286 5.71045C4.11391 5.96521 3.39331 5.81321 2.92083 5.32613C2.44836 4.83904 2.31837 4.11413 2.59216 3.49323C2.86596 2.87233 3.48886 2.47942 4.16715 2.49978C5.06804 2.52682 5.78422 3.26515 5.78381 4.16645ZM5.83381 7.06645H2.50048V17.4998H5.83381V7.06645ZM11.1005 7.06645H7.78381V17.4998H11.0672V12.0248C11.0672 8.97475 15.0422 8.69142 15.0422 12.0248V17.4998H18.3338V10.8914C18.3338 5.74978 12.4505 5.94145 11.0672 8.46642L11.1005 7.06645Z"
+                        fill=""
+                      />
+                    </svg>
+               </button>
+              <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
+                {linkedin}
+              </p>
+            </div>
+            <div>
+              <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
+                Company (Optional)
+              </p>
+              <p className="text-sm font-medium text-gray-800 dark:text-white/90">
+               {company || "-"}
+              </p>
+            </div>
             <div>
                 <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
-                  GSTIN/Tax ID
+                  GSTIN (Optional)
                 </p>
                 <p className="text-sm font-medium text-gray-800 dark:text-white/90">
                   {gstin || "-"}
@@ -152,27 +186,7 @@ export default  function UserInfoCard({user}) {
                 </div>
             <div className="flex flex-row items-center gap-2">
              
-            <button
-            onClick={handleLinkedInClick}
-            className="flex h-11 w-11 items-center justify-center gap-2 rounded-full border border-gray-300 bg-[#2d64bc] text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-[#2d64bc] dark:text-white dark:hover:bg-white/[0.03] dark:hover:text-gray-200"
-          >
-            <svg
-              className="fill-current"
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M5.78381 4.16645C5.78351 4.84504 5.37181 5.45569 4.74286 5.71045C4.11391 5.96521 3.39331 5.81321 2.92083 5.32613C2.44836 4.83904 2.31837 4.11413 2.59216 3.49323C2.86596 2.87233 3.48886 2.47942 4.16715 2.49978C5.06804 2.52682 5.78422 3.26515 5.78381 4.16645ZM5.83381 7.06645H2.50048V17.4998H5.83381V7.06645ZM11.1005 7.06645H7.78381V17.4998H11.0672V12.0248C11.0672 8.97475 15.0422 8.69142 15.0422 12.0248V17.4998H18.3338V10.8914C18.3338 5.74978 12.4505 5.94145 11.0672 8.46642L11.1005 7.06645Z"
-                fill=""
-              />
-            </svg>
-    </button>
-              <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
-                {linkedin}
-              </p>
+            
               </div>
           </div>
         </div>
@@ -213,7 +227,7 @@ export default  function UserInfoCard({user}) {
           <form className="flex flex-col">
             <div className="custom-scrollbar h-[450px] overflow-y-auto px-2 pb-3">
               
-              <div className="mt-5">
+              <div className="mt-1">
                 
 
                 <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
@@ -249,25 +263,33 @@ export default  function UserInfoCard({user}) {
                     />
                   </div>
 
-                  <div className="col-span-2 lg:col-span-1">
+                  <div className="col-span-2">
                     <Label>Bio</Label>
                     <Input type="text" defaultValue={bio}
                       onChange={(e) => setBio(e.target.value)}
                       placeholder="e.g Student, Developer, etc."
                     />
                   </div>
-                  <div className="col-span-2 lg:col-span-1">
-                    <Label>GSTIN/ Tax ID</Label>
-                    <Input type="text" defaultValue={gstin}
-                      onChange={(e) => setGstin(e.target.value)}
-                      placeholder="GSTIN/ Tax ID"
-                    />
-                  </div>
+                
                   <div className="col-span-2">
                     <Label>Linkedln Profile link</Label>
                     <Input type="text" defaultValue={linkedin}
                       onChange={(e) => setLinkedin(e.target.value)}
                       placeholder="Paste your Linkedln Profile link"
+                    />
+                  </div>
+                  <div className="col-span-2 lg:col-span-1">
+                    <Label>Company (optional)</Label>
+                    <Input type="text" defaultValue={company}
+                      onChange={(e) => setCompany(e.target.value)}
+                      placeholder="Company name"
+                    />
+                  </div>
+                  <div className="col-span-2 lg:col-span-1">
+                    <Label>GSTIN (optional)</Label>
+                    <Input type="text" defaultValue={gstin}
+                      onChange={(e) => setGstin(e.target.value)}
+                      placeholder="GSTIN"
                     />
                   </div>
                 </div>

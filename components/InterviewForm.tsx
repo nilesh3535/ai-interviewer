@@ -47,7 +47,7 @@ export default function InterviewForm({ user }) {
         });
 
         try {
-            const response = await fetch("https://ai-interviewer-navy.vercel.app/api/vapi/generate", {
+            const response = await fetch("https://ai-interviewer-roan.vercel.app/api/vapi/generate", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -187,9 +187,9 @@ export default function InterviewForm({ user }) {
      {/* Tech Stack */}
      <div className="flex flex-col gap-2 w-full">
       <div>
-  <label className="text-white font-medium">Tech Stack</label>
+  <label className="text-white font-medium">Skills to be evaluated</label>
   <p className="text-sm text-gray-400">
-    Please enter technologies separated by commas (e.g., Advanced Excel, Python, Java, etc.)
+    Please enter skills separated by commas (e.g., Advanced Excel, Python, Java, etc.)
   </p>
   </div>
   <input

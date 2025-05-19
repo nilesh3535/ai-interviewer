@@ -1,6 +1,6 @@
 
 import Image from "next/image";
-import { redirect } from "next/navigation";
+
 import Link from "next/link";
 
 import InterviewCard from "@/components/InterviewCard"; // Grid view
@@ -17,6 +17,7 @@ import {
 import AnimatedCTAButton from "@/components/AnimatedCTAButton";
 import AnimatedText from "@/components/AnimatedText";
 import Footer from "@/components/Footer";
+import { toast } from "sonner";
 
 interface HomeProps {
   searchParams?: { view?: string };
@@ -50,9 +51,11 @@ async function Home({ searchParams }: HomeProps) {
     return acc;
   }, {} as Record<string, any>);
 
+
   return (
     <>
      <section className="card-cta flex-col-reverse md:flex-row items-center">
+    
         <div className="flex flex-col gap-6 max-w-md mt-6 sm:mt-0">
           <AnimatedText delay={0.1}>
             <h2><span className="text-orange-300">AI-Powered</span> Real-Time Interview Platform for Smarter Hiring</h2>
@@ -97,6 +100,7 @@ async function Home({ searchParams }: HomeProps) {
 
             <Link
               href="?view=grid"
+             
               className={`flex items-center gap-2 px-4 py-2 rounded-md transition ${
                 viewMode === "grid"
                   ? "bg-gray-800 text-white"

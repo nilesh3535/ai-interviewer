@@ -195,3 +195,40 @@ export async function getRegisterInterview(
   ];
 }
 
+
+export async function getTransactionsByUserId(
+  userId: string
+): Promise<Transaction[]> {
+  // 1) Execute the query by calling .get()
+  const snapshot = await db
+  .collection("transactions")
+  .where("userId", "==", userId)
+  .orderBy("createdAt", "desc")
+  .get();
+
+  // 2) Always return an array (never null)
+  if (snapshot.empty) return [];
+
+  // 3) Map over snapshot.docs
+  return snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  })) as Transaction[];
+}
+
+export async function getAllPacks(): Promise<Packs[]> {
+  const snapshot = await db.collection("packs")
+  .where("flag", "==", true)
+  .get();
+
+  if (snapshot.empty) return [];
+
+  const packs = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  })) as Packs[];
+
+  // Sort by desired fixed order
+  const order = ["Silver", "Gold", "Platinum"];
+  return packs.sort((a, b) => order.indexOf(a.name) - order.indexOf(b.name));
+}

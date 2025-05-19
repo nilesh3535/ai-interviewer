@@ -59,12 +59,12 @@ export default function UserMenu({ user }) {
         <Menu.Item>
           {({ active }) => (
             <button
-              onClick={() => handleRedirect("/credits")}
+              onClick={() => handleRedirect("/packs")}
               className={`${
                 active ? "bg-gray-100 dark:bg-gray-700" : ""
               } group flex w-full items-center px-4 py-2 text-sm text-left text-gray-900 dark:text-white`}
             >
-              Credits
+              Packs
             </button>
           )}
         </Menu.Item>

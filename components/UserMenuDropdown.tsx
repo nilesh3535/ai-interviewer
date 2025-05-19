@@ -61,7 +61,7 @@ function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
       <Dropdown
         isOpen={isOpen}
         onClose={closeDropdown}
-        className="absolute right-0 mt-[10px] flex w-[260px] flex-col rounded-2xl border border-gray-200 blue-gradient-dark  p-3 shadow-theme-lg dark:border-gray-800 dark:bg-gray-dark"
+        className="absolute right-[-10] mt-[10px] flex w-[280px] flex-col rounded-2xl border border-gray-200 blue-gradient-dark  p-3 shadow-theme-lg dark:border-gray-800 dark:bg-gray-dark"
       >
         
 

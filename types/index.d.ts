@@ -42,6 +42,7 @@ interface User {
   email: string;
   photoURL?: string;
   emailVerified?: boolean;
+  packs?:string
 }
 
 interface InterviewCardProps {
@@ -65,6 +66,8 @@ interface AgentProps {
   type: "generate" | "interview";
   questions?: string[];
   userAvatar?: string;
+  remaining?:string;
+  interviewrole?:string;
 }
 
 interface RouteParams {
@@ -107,4 +110,56 @@ interface InterviewFormProps {
 
 interface TechIconProps {
   techStack: string[];
+}
+
+interface Transaction{
+  id:string;
+  amount:string;
+createdAt:string;
+description:string;
+oldBalance:number;
+orderid:string;
+packs:string;
+paymentType:string;
+paymentid:string;
+remaining:number;
+type:string;
+userId:string;
+packType:string
+}
+
+interface TransactionProps{
+  paymentid: string;//
+  orderid:string;
+  type:string;
+  amount: string;//900 
+  packs: string;//5
+  paymentType:string;
+  oldBalance:string;
+  remaining:string;
+  userId:string; //userid
+  packType:string
+}
+interface OrderProps{
+  paymentid: string;//
+  orderid:string;
+  amount: string;//900 
+  packs: string;//5
+  paymentType:string;
+  oldBalance:string;
+  remaining:string;
+  userId:string; //userid
+  packType:string 
+  
+}
+
+interface Packs{
+  id:string;
+  name:string;
+  packs:string;
+  amount:string;
+  offer:string;
+  desc:string;
+  flag:boolean
+
 }

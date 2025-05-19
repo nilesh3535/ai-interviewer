@@ -7,6 +7,7 @@ import Logo from '@/components/Logo';
 import AvatarPicker from '@/components/avatar/AvatarPicker';
 import UserMenu from "@/components/UserMenu";
 import UserMenuDropdown from '@/components/UserMenuDropdown';
+import CreditsButton from '@/components/CreditsButton';
 const RootLayout = async ({children }: {children: ReactNode}) => {
   const isUserAuthenticated = await isAuthenticated();
   if (!isUserAuthenticated) redirect("/sign-in");
@@ -19,17 +20,28 @@ const RootLayout = async ({children }: {children: ReactNode}) => {
 
   return (
     <div className="root-layout">
-      <nav className='w-full flex justify-between items-center'>
+      <nav className='w-full flex justify-between '>
         <Logo link />
         
         {/* User profile section */}
+        <div className='flex flex-col items-center rounded-2xl border border-gray-200 pl-10 p-3 bg-[#272727]'>
         {user && (
           <div className="flex items-center gap-3">
-            <span className="text-light-100 text-lg font-medium">{user.name}</span>
+            <div className='flex flex-col items-end'>
+            <span className="text-light-100 text-lg  font-medium">{user.name}</span>
+            <CreditsButton packs={user?.packs||0} />
+            </div>
             {/* <UserMenu user={user} /> */}
             <UserMenuDropdown user={user} /> 
+            
           </div>
         )}
+        <div className=''>
+          
+        
+         <div></div>
+        </div>
+        </div>
       </nav>
 
       {children}

@@ -10,6 +10,7 @@ import {
   getInterviewById,
 } from "@/lib/actions/general.action";
 import { getCurrentUser } from "@/lib/actions/auth.action";
+import { iconsColors } from "@/constants";
 
 const InterviewDetails = async ({ params }: RouteParams) => {
   const { id } = await params;
@@ -59,15 +60,29 @@ const InterviewDetails = async ({ params }: RouteParams) => {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row gap-4 justify-between items-center mb-6">
+      <div className="flex flex-col md:flex-row justify-between items-center">
         <div className="flex items-center gap-4">
-          <Image
+         {/*  */}
+ <div
+                        style={{ backgroundColor: iconsColors[imageSrc.split("/")[2]] ,
+                          boxShadow: "0px 4px 10px rgba(219, 208, 208, 0.3)"}}
+                        className="rounded-full size-[52px] mx-auto flex items-center justify-center text-white text-xs font-semibold border-[3px] border-[#d9e0e691]"
+                      >
+                        <h1 className="font-bold text-xl">
+                        {
+                              interview.role.split(" ").length === 1
+                                ?interview.role[0].toUpperCase() + "I"
+                                : interview.role.split(" ")[0][0].toUpperCase() + interview.role.split(" ")[interview.role.split(" ").length - 1][0].toUpperCase()
+                            }
+                        </h1>
+                        </div>         
+          {/* <Image
             src={imageSrc}
             alt="cover-image"
             width={50}
             height={50}
             className="rounded-full object-cover size-[50px]"
-          />
+          /> */}
           <h3 className="capitalize text-xl font-medium">{interview.role.toLowerCase().includes("interview") ? interview.role : `${interview.role} Interview`}</h3>
         </div>
 
@@ -99,6 +114,8 @@ const InterviewDetails = async ({ params }: RouteParams) => {
         type="interview"
         questions={interview.questions}
         feedbackId={feedback?.id}
+        remaining={user?.packs||"0"}
+        interviewrole={interview.role.toLowerCase().includes("interview") ? interview.role : `${interview.role} Interview`}
       />
     </>
   );
