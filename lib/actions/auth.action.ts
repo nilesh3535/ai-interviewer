@@ -80,7 +80,7 @@ export async function signUp(params: SignUpParams) {
       phone:"",
       linkedin:"",
       bio:"student",
-
+      packs:"1"
     });
 
     return {
