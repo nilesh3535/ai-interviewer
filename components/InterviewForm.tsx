@@ -47,7 +47,7 @@ export default function InterviewForm({ user }) {
         });
 
         try {
-            const response = await fetch("https://ai-interviewer-roan.vercel.app/api/vapi/generate", {
+            const response = await fetch("https://ai-interviewer-pi-three.vercel.app/api/vapi/generate", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
