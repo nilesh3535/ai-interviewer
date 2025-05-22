@@ -9,8 +9,8 @@ import UserMenu from "@/components/UserMenu";
 import UserMenuDropdown from '@/components/UserMenuDropdown';
 import CreditsButton from '@/components/CreditsButton';
 const RootLayout = async ({children }: {children: ReactNode}) => {
-  const isUserAuthenticated = await isAuthenticated();
-  if (!isUserAuthenticated) redirect("/sign-in");
+    const isUserAuthenticated = await isAuthenticated();
+    if (!isUserAuthenticated) redirect("/sign-in");
   
   // Get current user data
   const user = await getCurrentUser();

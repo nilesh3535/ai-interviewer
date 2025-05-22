@@ -68,14 +68,14 @@ export default function CreditPackSelector({user,packsData}) {
     const res = await fetch('api/razorpay/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ packs, amount:1 }),
+      body: JSON.stringify({ packs, amount: pack=="Silver" ? 1 : pack=="Gold" ? 5 : 10 }),
     });
 
     const order = await res.json();
 
     const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
-        amount: 1,
+        amount:  pack=="Silver" ? 1 : pack=="Gold" ? 5 : 10,
         currency: order.currency,
         name: 'AI Interviewer',
         description: `${packs} Interview Packs`,
