@@ -47,7 +47,8 @@ export default function InterviewForm({ user }) {
         });
 
         try {
-            const response = await fetch("https://win-my-interview.vercel.app/api/vapi/generate", {
+            // const response = await fetch("https://win-my-interview.vercel.app/api/vapi/generate", {
+            const response = await fetch("https://app.winyourinterview.ai/api/vapi/generate", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
