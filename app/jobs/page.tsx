@@ -217,7 +217,7 @@ export default function App() {
     }
     return "desktop";
   });
-  const [position, setPosition] = useState("");
+  // const [position, setPosition] = useState("");
 
   useEffect(() => {
     setIsFullscreen(false);
@@ -359,10 +359,10 @@ Prefer: "return=representation",
     }
 
   };
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-     getJobs();
-  };
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //    getJobs();
+  // };
 
 
   const closeModal = () => {
