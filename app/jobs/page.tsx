@@ -1,3 +1,4 @@
+// jobs/page.tsx
 "use client";
 import JobListSection from "@/components/JobListSection";
 import LogoCarousel from "@/components/LogoCarousel";
@@ -5,12 +6,14 @@ import { getCurrentUser } from "@/lib/actions/auth.action";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect, useRef } from "react";
-import Lottie, { LottieComponentProps } from "lottie-react";
+// Lottie and toast imports stay
 import { toast } from "sonner";
 import moment from "moment";
 import LastSearchInfo from "@/components/LastSearchInfo";
 import Footer from "@/components/Footer";
+
 import { fetchAndProcessJobs } from "@/lib/actions/jobs.action";
+import Lottie, { LottieComponentProps } from "lottie-react";
 
 const themes = [
   "night",
