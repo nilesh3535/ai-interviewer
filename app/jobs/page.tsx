@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import moment from "moment";
 import LastSearchInfo from "@/components/LastSearchInfo";
 import Footer from "@/components/Footer";
+import { fetchAndProcessJobs } from "@/lib/actions/jobs.action";
 
 const themes = [
   "night",
@@ -308,53 +309,24 @@ useEffect(() => {
   }
 
   const getJobs = async () => {
-    if(role.trim() === "") {
-      toast.error("Please enter a role!",{
-        duration: 2000,
-        position: "top-center",
-      });
-      return;
-    }
-    if(level=="Select Experience Level") {
-      toast.error("Please select an experience level!",{
-        duration: 2000,
-        position: "top-center",
-      }); 
-      return;
-    }
-    if(city.trim() === "") {
-      toast.error("Please enter a city/preferred location!",{
-        duration: 2000,
-        position: "top-center",
-      });
-      return;
-    }
-    console.log("searching... Please wait");
-    setGenerateStatus(true);
-    toast.loading("Searching jobs for you... Please wait while it loads. Do not close this window.", {
-        duration: 5000,
-        id: "loading-toast"
-      });
-    try {
-      const response = await fetch("http://67.217.62.107/webhook/cbae3c40-0050-4cda-ae1a-301a758ffb02", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userid: user?.id,position:role,location:city,experience:level }),
-      });
-      const data = await response.text();
-      console.log("API Response:", data);
-      toast.dismiss("loading-toast");
-      toast.success("Jobs fetched successfully!", {
-        duration: 2000,
-        position: "top-center",
-      });
-      // redirect to same screen to update the job list
-      window.location.reload();
-      setGenerateStatus(false);
-    } catch (error) {
-      console.error("Error fetching AI response:", error);
-      setGenerateStatus(false);
-    }
+     await fetchAndProcessJobs({
+      user,
+      role,
+      city,
+      level,
+      allJobs,
+      onSuccess: (newJobs) => {
+        // This callback updates the component's state
+        setAllJobs(newJobs);
+        // If you still need a full reload after a successful search, keep it here
+        window.location.reload();
+      },
+      onError: (error) => {
+        // Handle error if needed (e.g., log, display specific UI message)
+        console.error("Job search failed:", error);
+      },
+      onStatusChange: setGenerateStatus, // Pass the setter directly
+    });
 
   };
   // const handleSubmit = (e: React.FormEvent) => {
