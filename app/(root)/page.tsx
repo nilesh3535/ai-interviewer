@@ -67,10 +67,15 @@ async function Home({ searchParams }: HomeProps) {
               For example: Frontend, Backend, Fullstack, Design, UX/UI.
             </p>
           </AnimatedText>
-
+           <div className="flex flex-row gap-4 max-w-full">
           <AnimatedCTAButton href="/create" delay={0.3}>
             Create an Interview
           </AnimatedCTAButton>
+          <AnimatedCTAButton href="/jobs" delay={0.3}>
+            Find Jobs
+          </AnimatedCTAButton>
+         
+          </div>
         </div>
 
         <Image

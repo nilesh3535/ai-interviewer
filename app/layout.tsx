@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Mona_Sans } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
-
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 const monaSans = Mona_Sans({
   variable: "--font-mona-sans",
   subsets: ["latin"],
