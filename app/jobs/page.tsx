@@ -35,17 +35,19 @@ function ThemeSwitcher({ theme, setTheme }: ThemeSwitcherProps) {
 
   // Close dropdown when clicking outside
  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setOpen(false);
+    // Only run this code on the client side
+    if (typeof document !== "undefined") {
+      function handleClickOutside(event: MouseEvent) {
+        if (
+          dropdownRef.current &&
+          !dropdownRef.current.contains(event.target as Node)
+        ) {
+          setOpen(false);
+        }
       }
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
     }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
 
@@ -197,7 +199,7 @@ interface Job {
   candidate_id: string;
   created_date: string;
 }
-export default function App() {
+export default function JobApp() {
   const [theme, setTheme] = useState("night");
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
@@ -211,8 +213,8 @@ export default function App() {
       const [city, setCity] = useState("");
       const [level, setLevel] = useState("Select Experience Level");
   // Move these useState calls to the top, before any early returns
-  const [size, setSize] = useState(() => {
-    if (typeof window !== "undefined") {
+   const [size, setSize] = useState(() => {
+    if (typeof window !== "undefined") { // This is correct
       return getDeviceSize(window.innerWidth);
     }
     return "desktop";
@@ -270,19 +272,15 @@ Prefer: "return=representation",
   }, []);
 
   // Move this useEffect for window resize to the top, before early return
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
+useEffect(() => {
+    if (typeof window === "undefined") return; // This is correct
     const handleResize = () => {
       const newSize = getDeviceSize(window.innerWidth);
       setSize(newSize);
     };
-
     window.addEventListener("resize", handleResize);
-
     // Set initial size on mount
     handleResize();
-
     return () => window.removeEventListener("mousedown", handleResize); // Corrected cleanup
   }, []);
 

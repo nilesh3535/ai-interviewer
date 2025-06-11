@@ -435,7 +435,7 @@ export default function JobDetails({ searchParams }: JobProps) {
             loading="lazy"
             width={300}
             height={360}
-            className="p-1 bg-primary rounded-xl"
+            className="p-1 bg-primary rounded-xl self"
             decoding="async"
             data-nimg="1"
             style={{ color: "transparent" }}
