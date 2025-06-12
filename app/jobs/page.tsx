@@ -182,7 +182,9 @@ export default function JobsApp() {
 
     const initializeAppData = async () => {
       // Load Lottie animation data
-  
+      const res = await fetch("/loaders/dataloader.json");
+       const json = await res.json();
+       console.log("Lottie JSON data loaded:", json);
 
       // Fetch user data and jobs
 
