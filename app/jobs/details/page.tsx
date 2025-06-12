@@ -179,7 +179,7 @@ interface Job {
 }
 
 export default function JobDetails({ searchParams }: JobProps) {
-  const [params, setParams] = useState<{ jid?: string; rq?: string; cd?: string } | null>(null);
+
   const [jobDetails, setJobDetails] =  useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -189,25 +189,14 @@ export default function JobDetails({ searchParams }: JobProps) {
     const resolveParams = async () => {
       try {
         const resolvedParams = await searchParams;
-        setParams(resolvedParams);
-      } catch (error) {
-        console.error("Error resolving search params:", error);
-        setError("Failed to load search parameters");
-        setLoading(false);
-      }
-    };
-
-    resolveParams();
-  }, [searchParams]);
-
-  // Fetch job details when params are available
-  useEffect(() => {
-    // Check if params has been resolved and if 'rq' (job ID) exists
-    if (params?.rq) {
+       
+        console.log("Resolved search params:", resolvedParams);
+        if (resolvedParams?.rq) {
       fetchJobDetails({
-        jobId: params.rq,
+        jobId: resolvedParams.rq,
         onSuccess: (jobs) => {
           setJobDetails(jobs); // ✅ now expecting Job[]
+             console.log("Job Details Response:", jobs);
         },
         onError: (errorMessage) => {
           setError(errorMessage);
@@ -219,7 +208,17 @@ export default function JobDetails({ searchParams }: JobProps) {
       setLoading(false);
       setError("No job ID provided."); // Optional: inform the user
     }
-  }, [params]); // Depend on params to re-fetch if the ID changes
+      } catch (error) {
+        console.error("Error resolving search params:", error);
+        setError("Failed to load search parameters");
+        setLoading(false);
+      }
+    };
+
+    resolveParams();
+  }, [searchParams]);
+
+
 
 
   if (loading) {
@@ -408,7 +407,7 @@ export default function JobDetails({ searchParams }: JobProps) {
               <img
             src="/jobad.png"
             onError={(e) => {
-              e.currentTarget.src = "/jobimg.png"; // fallback image
+              e.currentTarget.src = "/jobad.png"; // fallback image
             }}
             alt="Get your dream jobs - powered by WinYourInterview"
             loading="lazy"

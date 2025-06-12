@@ -175,9 +175,10 @@ export const fetchJobDetails = async ({
     }
 
     const data = await response.json();
+ 
     // Supabase often returns an array, even if only one item is expected.
     // We'll pass the first item or null if the array is empty.
-    onSuccess(data.length > 0 ? data[0] : []);
+    onSuccess(data.length > 0 ? data : []);
   } catch (error) {
     console.error("Error fetching job details:", error);
     const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
