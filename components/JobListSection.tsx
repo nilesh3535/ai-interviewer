@@ -179,7 +179,7 @@ return (
                         {job.employer_name}
                       </p>
                       <h6 className="mt-1 text-lg font-semibold text-accent-content group-hover:opacity-100 transition">
-                        <a href={`/jobs/details?jid=${job.job_id}&rq=${job.id}&cd=${job.candidate_id}`}>{job.job_title}</a>
+                        <a href={`/jobs/${job.id}details=${job.job_id}&rq=${job.id}&cd=${job.candidate_id}`}>{job.job_title}</a>
                       </h6>
                       <div className="mt-3 flex items-center gap-2">
                         <p className="bg-accent-content/5 px-2 py-1 text-xs text-accent-content/60 rounded-md">
@@ -205,7 +205,7 @@ return (
                   </div>
                   <a
                     className="md:flex items-center gap-1.5 px-4 py-2.5 text-accent-content/60 bg-accent-content/5 group-hover:bg-accent-content group-hover:text-white rounded-lg transition"
-                    href={`/jobs/details?jid=${job.job_id}&rq=${job.id}&cd=${job.candidate_id}`}
+                    href={`/jobs/${job.id}details=${job.job_id}&rq=${job.id}&cd=${job.candidate_id}`}
                   >
                     View Job
                     {/* Icon omitted for brevity */}

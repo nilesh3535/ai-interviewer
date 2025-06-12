@@ -4,6 +4,7 @@ import { fetchJobDetails } from "@/lib/actions/jobs.action";
 import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import React, { useState, useEffect, useRef } from "react";
 import { toast } from "sonner";
 const themes = [
@@ -178,18 +179,26 @@ interface Job {
   created_date: string;
 }
 // 
-export default function JobDetails({ searchParams }: JobProps) {
+interface Props {
+  params: {
+    id?: string;
+  };
+}
+export default function JobDetails({  }: JobProps) {
 
   const [jobDetails, setJobDetails] =  useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
    const [theme, setTheme] = useState("night");
-  // Resolve searchParams promise
+const params = useParams();
+   // Resolve searchParams promise
 useEffect(() => {
-  console.log(searchParams.rq)
-  if (searchParams.rq) {
+  const idValue = Array.isArray(params.id) ? params.id[0] : params.id;
+  const jobId = idValue?.split("details")[0];
+
+  if (jobId) {
     fetchJobDetails({
-      jobId: searchParams.rq,
+      jobId,
       onSuccess: (jobs) => {
         setJobDetails(jobs);
       },
@@ -202,7 +211,7 @@ useEffect(() => {
     setLoading(false);
     setError("No job ID provided.");
   }
-}, [searchParams]);
+}, [params]);
 
 
 
