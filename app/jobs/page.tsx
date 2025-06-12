@@ -1,4 +1,5 @@
 "use client"; // Make this a client component
+import { getCurrentUser } from '@/lib/actions/auth.action';
 import Lottie, { LottieComponentProps } from 'lottie-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -189,7 +190,13 @@ export default function JobsApp() {
       // Set initial theme from localStorage or default to "night"
 
       // Fetch user data and jobs
+      const currentUser = await getCurrentUser();
+              const userId = currentUser?.id;
 
+              if (!userId) {
+                console.error("No user ID found.");
+                return;
+              }
       // const currentUser = await getCurrentUser();
       //   const userId = currentUser?.id;
 
