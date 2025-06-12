@@ -12,7 +12,7 @@ import moment from "moment";
 import LastSearchInfo from "@/components/LastSearchInfo";
 import Footer from "@/components/Footer";
 
-import { fetchAndProcessJobs, fetchUserDataAndJobs } from "@/lib/actions/jobs.action";
+import { fetchAndProcessJobs } from "@/lib/actions/jobs.action";
 import Lottie, { LottieComponentProps } from "lottie-react";
 
 
@@ -101,7 +101,8 @@ export default function JobApp() {
   useEffect(() => {
     setTheme("night")
     setIsFullscreen(false);
-
+    setUser(null)
+    setLoading(true);
     const initializeAppData = async () => {
       // Load Lottie animation data
       const res = await fetch("/loaders/dataloader.json");
@@ -109,15 +110,15 @@ export default function JobApp() {
       setAnimationData(json);
 
       // Fetch user data and jobs
-      await fetchUserDataAndJobs({
-        onUserFetched: setUser,
-        onJobsFetched: setAllJobs,
-        onLoadingChange: setLoading,
-        onError: (error) => {
-          console.error("Initialization error:", error);
-          // Handle specific errors or show a generic message
-        },
-      });
+      // await fetchUserDataAndJobs({
+      //   onUserFetched: setUser,
+      //   onJobsFetched: setAllJobs,
+      //   onLoadingChange: setLoading,
+      //   onError: (error) => {
+      //     console.error("Initialization error:", error);
+      //     // Handle specific errors or show a generic message
+      //   },
+      // });
     };
 
     initializeAppData();
@@ -139,7 +140,7 @@ useEffect(() => {
 
   // Move this useEffect for theme to the top, before early return
   useEffect(() => {
-    // document.documentElement.setAttribute("data-theme", theme);
+    //  document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
   // Now, your early return is safe because all hooks have been called
