@@ -1,3 +1,4 @@
+"use client"; // Make this a client component
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react'
