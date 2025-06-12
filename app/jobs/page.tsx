@@ -1,5 +1,6 @@
 // jobs/page.tsx
-"use client";
+"use client"; // Make this a client component
+
 import JobListSection from "@/components/JobListSection";
 import LogoCarousel from "@/components/LogoCarousel";
 import Image from "next/image";
@@ -37,20 +38,17 @@ function ThemeSwitcher({ theme, setTheme }: ThemeSwitcherProps) {
   const [open, setOpen] = useState(false);
 
   // Close dropdown when clicking outside
- useEffect(() => {
-    // Only run this code on the client side
-    if (typeof document !== "undefined") {
-      function handleClickOutside(event: MouseEvent) {
-        if (
-          dropdownRef.current &&
-          !dropdownRef.current.contains(event.target as Node)
-        ) {
-          setOpen(false);
-        }
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setOpen(false);
       }
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => document.removeEventListener("mousedown", handleClickOutside);
     }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
 
