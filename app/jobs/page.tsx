@@ -254,6 +254,14 @@ useEffect(() => {
   }, []);
 
   // Move this useEffect for theme to the top, before early return
+  // Now, your early return is safe because all hooks have been called
+  if (loading || !animationData) {
+    return (
+      <div className="fixed inset-0 z-50 bg-[#17195000] dark:bg-white/5 text-white">
+     
+      </div>
+    );
+  }
 
 
   const getJobs = async () => {
