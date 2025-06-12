@@ -4,7 +4,7 @@
 import JobListSection from "@/components/JobListSection";
 import LogoCarousel from "@/components/LogoCarousel";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Suspense } from "react";
 // Lottie and toast imports stay
 import { toast } from "sonner";
 import moment from "moment";
@@ -258,6 +258,8 @@ useEffect(() => {
   // Now, your early return is safe because all hooks have been called
   if (loading || !animationData) {
     return (
+        <section>
+      <Suspense fallback={
       <div className="fixed inset-0 z-50 bg-[#17195000] dark:bg-white/5 text-white">
         <div className="relative flex lg:flex-row w-full h-screen justify-center flex-col sm:p-0">
           <div className="lg:w-1/2 w-full h-full lg:grid items-center hidden">
@@ -270,6 +272,9 @@ useEffect(() => {
           </div>
         </div>
       </div>
+      }>
+        </Suspense>
+      </section>
     );
   }
 
