@@ -179,17 +179,26 @@ interface Job {
   created_date: string;
 }
 // 
-interface Props {
-  params: {
-    id?: string;
-  };
-}
+
 export default function JobDetails({  }: JobProps) {
 
   const [jobDetails, setJobDetails] =  useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-   const [theme, setTheme] = useState("night");
+  const [theme, setThemeState] = useState<string>(() => {
+      if (typeof window !== "undefined") {
+        return localStorage.getItem("theme") || "night";
+      }
+      return "night";
+    });
+  
+    // Function to set theme and save to localStorage
+    const setTheme = (newTheme: string) => {
+      setThemeState(newTheme);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("theme", newTheme);
+      }
+    };
 const params = useParams();
    // Resolve searchParams promise
 useEffect(() => {
