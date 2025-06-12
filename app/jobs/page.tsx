@@ -12,7 +12,6 @@ import moment from "moment";
 import LastSearchInfo from "@/components/LastSearchInfo";
 import Footer from "@/components/Footer";
 
-import { fetchAndProcessJobs } from "@/lib/actions/jobs.action";
 import Lottie, { LottieComponentProps } from "lottie-react";
 
 
@@ -25,14 +24,7 @@ function getDeviceSize(width: number): DeviceSize {
   if (width < 1024) return "medium";     // Tailwind: < lg
   return "desktop";                      // Tailwind: lg and up
 };
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  photoURL?: string;
-  emailVerified?: boolean;
-  packs?:string
-}
+
 interface ApplyOption {
   is_direct: boolean;
   publisher: string;
@@ -78,7 +70,7 @@ interface Job {
 }
 export default function JobApp() {
   const [theme, setTheme] = useState("night");
-  const [user, setUser] = useState<User | null>(null);
+  // const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [allJobs, setAllJobs] = useState<Job[]>([]);
   const [animationData, setAnimationData] = useState<LottieComponentProps["animationData"] | null>(null);
@@ -101,7 +93,9 @@ export default function JobApp() {
   useEffect(() => {
     setTheme("night")
     setIsFullscreen(false);
-    setUser(null)
+    // setUser(null)
+    setAllJobs([]);
+    setGenerateStatus(false);
     setLoading(true);
     const initializeAppData = async () => {
       // Load Lottie animation data
@@ -162,24 +156,24 @@ useEffect(() => {
   }
 
   const getJobs = async () => {
-     await fetchAndProcessJobs({
-      user,
-      role,
-      city,
-      level,
-      allJobs,
-      onSuccess: (newJobs) => {
-        // This callback updates the component's state
-        setAllJobs(newJobs);
-        // If you still need a full reload after a successful search, keep it here
-        window.location.reload();
-      },
-      onError: (error) => {
-        // Handle error if needed (e.g., log, display specific UI message)
-        console.error("Job search failed:", error);
-      },
-      onStatusChange: setGenerateStatus, // Pass the setter directly
-    });
+    //  await fetchAndProcessJobs({
+    //   user,
+    //   role,
+    //   city,
+    //   level,
+    //   allJobs,
+    //   onSuccess: (newJobs) => {
+    //     // This callback updates the component's state
+    //     setAllJobs(newJobs);
+    //     // If you still need a full reload after a successful search, keep it here
+    //     window.location.reload();
+    //   },
+    //   onError: (error) => {
+    //     // Handle error if needed (e.g., log, display specific UI message)
+    //     console.error("Job search failed:", error);
+    //   },
+    //   onStatusChange: setGenerateStatus, // Pass the setter directly
+    // });
 
   };
   // const handleSubmit = (e: React.FormEvent) => {
