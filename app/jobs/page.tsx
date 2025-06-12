@@ -12,7 +12,7 @@ import moment from "moment";
 import LastSearchInfo from "@/components/LastSearchInfo";
 import Footer from "@/components/Footer";
 
-import { fetchAndProcessJobs, fetchUserDataAndJobs } from "@/lib/actions/jobs.action";
+import {fetchUserDataAndJobs } from "@/lib/actions/jobs.action";
 import Lottie, { LottieComponentProps } from "lottie-react";
 import { getCurrentUser } from "@/lib/actions/auth.action";
 
@@ -85,13 +85,7 @@ export default function JobApp() {
   const [loading, setLoading] = useState(true);
   const [allJobs, setAllJobs] = useState<Job[]>([]);
   const [animationData, setAnimationData] = useState<LottieComponentProps["animationData"] | null>(null);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
-    const [generateStatus, setGenerateStatus] =useState<boolean>(false);
 
-    const [role, setRole] = useState("");
-      const [city, setCity] = useState("");
-      const [level, setLevel] = useState("Select Experience Level");
   // Move these useState calls to the top, before any early returns
    const [size, setSize] = useState(() => {
     if (typeof window !== "undefined") { // This is correct
@@ -102,7 +96,7 @@ export default function JobApp() {
   // const [position, setPosition] = useState("");
 
   useEffect(() => {
-    setIsFullscreen(false);
+  
 
     const initializeAppData = async () => {
       // Load Lottie animation data
@@ -164,77 +158,18 @@ useEffect(() => {
     );
   }
 
-  const getJobs = async () => {
-     const currentUser = await getCurrentUser();
-        const userId = currentUser?.id;
-
-        if (!userId) {
-          console.error("No user ID found.");
-          return;
-        }
-       if (role.trim() === "") {
-          toast.error("Please enter a role!", { duration: 2000, position: "top-center" });
-          return;
-        }
-        if (level === "Select Experience Level") {
-          toast.error("Please select an experience level!", { duration: 2000, position: "top-center" });
-          return;
-        }
-        if (city.trim() === "") {
-          toast.error("Please enter a city/preferred location!", { duration: 2000, position: "top-center" });
-          return;
-        }
-
-        // Logic for checking if already searched today (client-side specific)
-        if (allJobs.length > 0) {
-          const jobDate = moment(allJobs[0].created_date).startOf("day");
-          const today = moment().startOf("day");
-          const isSameDay = jobDate.isSame(today, "day");
-          if (isSameDay) {
-            toast.error("You have already searched for jobs today!", { duration: 2000, position: "top-center" });
-            return; // Stop the function here
-          }
-        }
-
-        console.log("Searching... Please wait");
-        setGenerateStatus(true); // Set loading status in the component
-        const loadingToastId = toast.loading("Searching jobs for you... Please wait while it loads. Do not close this window.", {
-          duration: 5000,
-          id: "loading-toast",
-        });
-
-       
-     const newJobs=await fetchAndProcessJobs({
-      userId,
-      role,
-      city,
-      level,
-     });
-     if(newJobs){
-       toast.dismiss(loadingToastId);
-    toast.success("Jobs fetched successfully!", {
-      duration: 2000,
-      position: "top-center",
-    });
-window.location.reload();
-     }
+  
       //  
 
-  };
+  
   // const handleSubmit = (e: React.FormEvent) => {
   //   e.preventDefault();
   //    getJobs();
   // };
 
 
-  const closeModal = () => {
-    setIsOpen(false);
-  };
 
 
-
-  const commonFieldClasses =
-    "w-full px-5 py-3 pr-10 rounded-md border border-gray-300 dark:border-gray-700 bg-gray-900 text-white appearance-none";
 
   return (
     <div data-theme={"night"} className="min-h-screen bg-base-100 text-base-content font-sans transition-colors duration-300">
@@ -283,7 +218,7 @@ window.location.reload();
     <div className="flex justify-center">
   <button onClick={()=>{
      if (allJobs.length === 0) {
-           setIsOpen(true)
+          
         } else if (allJobs.length > 0) {
          const jobDate = moment(allJobs[0].created_date).startOf('day'); 
          const today = moment().startOf('day');
@@ -292,7 +227,6 @@ window.location.reload();
           const isSameDay = jobDate.isSame(today, 'day');
 
           if (!isSameDay) {
-            setIsOpen(true)
           } else {
             toast.error("You have already searched for jobs today!", {
               duration: 2000,
@@ -313,162 +247,6 @@ window.location.reload();
 </div>
   <LastSearchInfo allJobs={allJobs} />
 {/* Modal */}
-{isOpen && (
-  <div className="fixed inset-0 flex items-center justify-center overflow-y-auto z-[99999]">
-    {/* Backdrop */}
-    {!isFullscreen && (
-      <div
-        className="fixed inset-0 h-full w-full bg-gray-400/20 backdrop-blur-[5px]"
-        onClick={closeModal}
-      ></div>
-    )}
-
-    {/* Modal Content */}
-    <div
-      className={`${
-        isFullscreen ? "w-full h-full" : "relative w-full max-w-[700px] m-4 rounded-3xl bg-white dark:bg-gray-900"
-      }`}
-      onClick={(e) => e.stopPropagation()}
-    >
-      {/* Close Button */}
-      {true && (
-        <button
-          onClick={closeModal}
-          className="absolute right-3 top-3 z-[999] flex h-9.5 w-9.5 items-center justify-center rounded-full bg-gray-100 text-gray-400 transition-colors hover:bg-gray-200 hover:text-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white sm:right-6 sm:top-6 sm:h-11 sm:w-11"
-        >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M6.04289 16.5413C5.65237 16.9318 5.65237 17.565 6.04289 17.9555C6.43342 18.346 7.06658 18.346 7.45711 17.9555L11.9987 13.4139L16.5408 17.956C16.9313 18.3466 17.5645 18.3466 17.955 17.956C18.3455 17.5655 18.3455 16.9323 17.955 16.5418L13.4129 11.9997L17.955 7.4576C18.3455 7.06707 18.3455 6.43391 17.955 6.04338C17.5645 5.65286 16.9313 5.65286 16.5408 6.04338L11.9987 10.5855L7.45711 6.0439C7.06658 5.65338 6.43342 5.65338 6.04289 6.0439C5.65237 6.43442 5.65237 7.06759 6.04289 7.45811L10.5845 11.9997L6.04289 16.5413Z"
-              fill="currentColor"
-            />
-          </svg>
-        </button>
-      )}
-
-      {/* Modal Inner Content */}
-      <div className="no-scrollbar relative w-full max-w-[700px] overflow-y-auto rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11">
-        <div className="px-2 pr-14">
-          <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
-            Find Your Dream Job!
-          </h4>
-          <p className="mb-6 text-sm text-gray-500 dark:text-gray-400 lg:mb-7">
-            Update your details to keep your profile up-to-date.
-          </p>
-        </div>
-        {/* Add your fields or form here */}
-        <div className="flex flex-col gap-5">
-        {/* role */}
-        <div className="flex flex-col gap-2 w-full">
-        <label className="text-white font-medium">Role</label>
-        <input
-            type="text"
-            placeholder="e.g. Sales Executive, Software Engineer, etc."
-            className={commonFieldClasses}
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            />
-      </div>
-            {/* Experience Level */}
-      <div className="flex flex-col gap-2 w-full">
-        <label className="text-white font-medium">Experience Level</label>
-        <div className="relative">
-        <select
-            className={`${commonFieldClasses} pl-3 pr-10`}
-            value={level}
-            onChange={(e) => setLevel(e.target.value)}
-            >
-            <option value="">Select Experience Level</option>
-            <option>Entry level</option>
-            <option>Mid level</option>
-            <option>Senior level</option>
-            <option>1 year</option>
-            <option>2 years</option>
-            <option>3 years</option>
-            <option>4 years</option>
-            <option>5 years</option>
-            <option>6 years</option>
-            <option>7 years</option>
-            <option>8 years</option>
-            <option>9 years</option>
-            <option>10 years</option>
-            <option>1 to 2 years</option>
-            <option>2 to 3 years</option>
-            <option>3 to 5 years</option>
-            <option>5 to 10 years</option>
-            <option>10 to 12 years</option>
-          </select>
-          <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center justify-center text-white">
-            <svg
-              className="h-4 w-4"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-            >
-              <path d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-        </div>
-      </div>
-      {/* City */}
-       <div className="flex flex-col gap-2 w-full">
-        <label className="text-white font-medium">Preferred location</label>
-        <input
-            type="text"
-            placeholder="e.g. Bangaluru."
-            className={commonFieldClasses}
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            />
-      </div>
-      {/* Country */}
-      <div className="flex flex-col gap-2 w-full ">
-        <label className="text-white font-medium">Country</label>
-        <input
-            type="text"
-            placeholder="India"
-            className={`${commonFieldClasses} cursor-not-allowed`}
-            value={"India"}
-            disabled
-            />
-      </div>
-      {/*  */}
-       <button onClick={()=>{
-       if (allJobs.length === 0) {
-          getJobs();
-        } else if (allJobs.length > 0) {
-          const jobDate = moment(allJobs[0].created_date).startOf('day');
-          const today = moment().startOf('day');
-
-          // Compare dates (ignores time)
-          const isSameDay = jobDate.isSame(today, 'day');
-
-          if (!isSameDay) {
-            getJobs(); // allow only if it's a new day
-          } else {
-            toast.error("You have already searched for jobs today!", {
-              duration: 2000,
-              position: "top-center",
-            });
-          }
-        }
-        }} className="cursor-pointer px-10 bg-primary-200 text-accent-content text-xl font-medium py-3 rounded-md mt-4 transition hover:bg-primary hover:text-primary-content">
-      {generateStatus? <span className="dots-loading">. . .</span> : "Search Jobs"}
-      </button>
-      {/*  */}
-      </div>
-      </div>
-    </div>
-  </div>
-)}
 
 
 
