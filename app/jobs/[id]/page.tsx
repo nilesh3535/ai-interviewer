@@ -276,10 +276,10 @@ useEffect(() => {
         <div className="col-span-12 lg:w-10/12 xl:w-full xl:col-span-8">
           {/* Main Card */}
           <div className="p-8 bg-white rounded-t-2xl -mt-[184px]">
-            <button
-  onClick={() => window.history.back()}
-  className="cursor-pointer bg-base-content/20 px-3 py-2.5 text-sm font-medium text-accent-content/60 rounded-lg flex items-center gap-2.5 hover:bg-accent-content hover:text-white transition hover:duration-500 w-fit"
->
+            <Link
+          href={"/jobs"}
+          className="cursor-pointer bg-base-content/20 px-3 py-2.5 text-sm font-medium text-accent-content/60 rounded-lg flex items-center gap-2.5 hover:bg-accent-content hover:text-white transition hover:duration-500 w-fit"
+        >
   <span>
     <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
       <path
@@ -291,7 +291,7 @@ useEffect(() => {
     </svg>
   </span>
   Back
-</button>
+</Link>
 
 
             <div className="flex flex-col md:flex-row items-start md:items-center gap-6 mt-6 pb-6 xl:border-b border-accent-content/10">
