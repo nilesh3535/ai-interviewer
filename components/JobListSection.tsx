@@ -236,10 +236,12 @@ return (
 
             <button
               className="btn btn-sm"
-              onClick={() =>
-                setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(currentJobs.length / jobsPerPage)))
-              }
-              disabled={currentPage === Math.ceil(currentJobs.length / jobsPerPage)}
+             onClick={() =>
+    setCurrentPage((prev) =>
+      Math.min(prev + 1, Math.ceil(filteredJobs.length / jobsPerPage))
+    )
+  }
+  disabled={currentPage === Math.ceil(filteredJobs.length / jobsPerPage)}
             >
               Next
             </button>

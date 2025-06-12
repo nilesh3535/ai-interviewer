@@ -177,7 +177,7 @@ interface Job {
   candidate_id: string;
   created_date: string;
 }
-
+// 
 export default function JobDetails({ searchParams }: JobProps) {
 
   const [jobDetails, setJobDetails] =  useState<Job[]>([]);
