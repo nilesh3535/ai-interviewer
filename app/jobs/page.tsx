@@ -213,13 +213,14 @@ export default function JobsApp() {
 
   useEffect(() => {
     setIsFullscreen(false);
-
-    const initializeAppData = async () => {
-      // Load Lottie animation data
-      const res = await fetch("/loaders/dataloader.json");
+    const loadAnimation = async () => {
+      const res = await fetch("/loader.json");
       const json = await res.json();
       setAnimationData(json);
+    };
 
+    const initializeAppData = async () => {
+    
       // Fetch user data and jobs
 
       const currentUser = await getCurrentUser();
@@ -235,7 +236,7 @@ export default function JobsApp() {
         setLoading(false);
       
     };
-
+    loadAnimation()
     initializeAppData();
   }, []);
 
@@ -255,7 +256,7 @@ useEffect(() => {
 
   // Move this useEffect for theme to the top, before early return
   // Now, your early return is safe because all hooks have been called
-  if (loading && animationData) {
+  if (loading || !animationData) {
     return (
       <div className="fixed inset-0 z-50 bg-[#17195000] dark:bg-white/5 text-white">
         <div className="relative flex lg:flex-row w-full h-screen justify-center flex-col sm:p-0">
