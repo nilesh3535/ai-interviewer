@@ -190,7 +190,21 @@ interface Job {
   created_date: string;
 }
 export default function JobsApp() {
-  const [theme, setTheme] = useState<string>("night");
+  // Initialize theme from localStorage or default to "night"
+  const [theme, setThemeState] = useState<string>(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("theme") || "night";
+    }
+    return "night";
+  });
+
+  // Function to set theme and save to localStorage
+  const setTheme = (newTheme: string) => {
+    setThemeState(newTheme);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("theme", newTheme);
+    }
+  };
  const [loading, setLoading] = useState(true);
   const [allJobs, setAllJobs] = useState<Job[]>([]);
  const [isOpen, setIsOpen] = useState<boolean>(false);
