@@ -15,6 +15,7 @@ import { fetchAndProcessJobs } from "@/lib/actions/jobs.action";
 
 // IMPORTANT: Dynamically import Lottie with SSR disabled
 import dynamic from "next/dynamic";
+import { LottieComponentProps } from "lottie-react";
 const ClientLottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 const themes = [
@@ -207,7 +208,7 @@ export default function JobApp() {
   const [loading, setLoading] = useState(true);
   const [allJobs, setAllJobs] = useState<Job[]>([]);
   // Use 'any' type for animationData if LottieComponentProps is problematic after dynamic import
-  const [animationData, setAnimationData] = useState<any | null>(null);
+ const [animationData, setAnimationData] = useState<LottieComponentProps["animationData"] | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [generateStatus, setGenerateStatus] = useState<boolean>(false);

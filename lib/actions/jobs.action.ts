@@ -7,6 +7,7 @@
 
 import { toast } from "sonner"; // Assuming sonner is a client-side library
 import moment from "moment"; // Assuming moment is used for date comparisons
+import { getCurrentUser } from "./auth.action";
 
 // Define types used by this function
 interface User {
@@ -146,5 +147,53 @@ export const fetchAndProcessJobs = async ({
     onError(error); // Pass error back to component if needed
   } finally {
     onStatusChange(false); // Ensure status is reset
+  }
+};
+
+interface FetchUserDataAndJobsParams {
+  onUserFetched: (user: User | null) => void;
+  onJobsFetched: (jobs: Job[]) => void;
+  onLoadingChange: (loading: boolean) => void;
+  onError: (error: unknown) => void;
+}
+
+export const fetchUserDataAndJobs = async ({
+  onUserFetched,
+  onJobsFetched,
+  onLoadingChange,
+  onError,
+}: FetchUserDataAndJobsParams) => {
+  onLoadingChange(true);
+  try {
+    const currentUser = await getCurrentUser();
+    onUserFetched(currentUser); // Update user state in the component
+
+    if (currentUser) {
+      const response = await fetch(
+        `https://kxiqztfueasspcdjpbfq.supabase.co/rest/v1/jobs?candidate_id=eq.${currentUser.id}&order=id.desc`,
+        {
+          headers: {
+            apikey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt4aXF6dGZ1ZWFzc3BjZGpwYmZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkxODE1OTQsImV4cCI6MjA2NDc1NzU5NH0.zhh9G8FsIUVeMhJMbcrxiE24-wHV6yTstVsCj-wksCQ",
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt4aXF6dGZ1ZWFzc3BjZGpwYmZxIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0OTE4MTU5NCwiZXhwIjoyMDY0NzU3NTk0fQ.ohJi_t3-4ZYRKfGLJj74H3_efw0zrkpPwJiUIEImnbc",
+            "Content-Type": "application/json",
+            Prefer: "return=representation",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to fetch jobs for user: ${response.status}, message: ${errorText}`);
+      }
+
+      const data = await response.json(); // Use .json() directly as you're expecting JSON
+      onJobsFetched(data); // Update allJobs state in the component
+    }
+  } catch (error) {
+    console.error("Error in fetchUserDataAndJobs:", error);
+    toast.error("Failed to load user data or previous job searches.", { duration: 3000, position: "top-center" });
+    onError(error);
+  } finally {
+    onLoadingChange(false);
   }
 };

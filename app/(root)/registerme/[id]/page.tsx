@@ -3,7 +3,7 @@ import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { getRegisterInterview } from '@/lib/actions/general.action';
 import { useParams } from 'next/navigation';
-import Lottie from "lottie-react";
+import Lottie, { LottieComponentProps } from "lottie-react";
 import { getCurrentUser,registerMeByOpening } from '@/lib/actions/auth.action';
 import Link from "next/link";
 import { MetalButton } from '@/components/MetalButton';
@@ -14,7 +14,7 @@ export default function RegisterPage() {
   const params = useParams();
   const [registerInterview, setRegisterInterview] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [animationData, setAnimationData] = useState<any>(null);
+   const [animationData, setAnimationData] = useState<LottieComponentProps["animationData"] | null>(null);
   const [user, setUser] = useState<any>(null);
   const [normalizedType,setNormalizedType] = useState<string>('');
  const [typeBadgeColor,setTypeBadgeColor] = useState<string>('bg-violet-600');
