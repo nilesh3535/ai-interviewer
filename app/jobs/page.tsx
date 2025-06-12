@@ -1,5 +1,6 @@
 "use client"; // Make this a client component
 import { getCurrentUser } from '@/lib/actions/auth.action';
+import { fetchUserDataAndJobs } from '@/lib/actions/jobs.action';
 import Lottie, { LottieComponentProps } from 'lottie-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -129,54 +130,54 @@ function ThemeSwitcher({ theme, setTheme }: ThemeSwitcherProps) {
   );
 }
 
-// interface ApplyOption {
-//   is_direct: boolean;
-//   publisher: string;
-//   apply_link: string;
-// }
+interface ApplyOption {
+  is_direct: boolean;
+  publisher: string;
+  apply_link: string;
+}
 
-// interface Job {
-//   id: number;
-//   job_id: string;
-//   search_data: string;
-//   job_title: string;
-//   employer_name: string;
-//   employer_logo: string;
-//   employer_website: string | null;
-//   job_publisher: string;
-//   job_employment_type: string;
-//   job_employment_types: string[];
-//   job_apply_link: string;
-//   job_apply_is_direct: boolean;
-//   apply_options: ApplyOption[];
-//   job_description: string;
-//   job_is_remote: boolean;
-//   job_posted_at: string;
-//   job_posted_at_timestamp: number;
-//   job_posted_at_datetime_utc: string;
-//   job_location: string;
-//   job_city: string;
-//   job_state: string;
-//   job_country: string;
-//   job_latitude: number;
-//   job_longitude: number;
-//   job_benefits: string | null;
-//   job_google_link: string;
-//   job_salary: number | null;
-//   job_min_salary: number | null;
-//   job_max_salary: number | null;
-//   job_salary_period: string | null;
-//   job_highlights: string | null;
-//   job_onet_soc: number;
-//   job_onet_job_zone: number;
-//   candidate_id: string;
-//   created_date: string;
-// }
+interface Job {
+  id: number;
+  job_id: string;
+  search_data: string;
+  job_title: string;
+  employer_name: string;
+  employer_logo: string;
+  employer_website: string | null;
+  job_publisher: string;
+  job_employment_type: string;
+  job_employment_types: string[];
+  job_apply_link: string;
+  job_apply_is_direct: boolean;
+  apply_options: ApplyOption[];
+  job_description: string;
+  job_is_remote: boolean;
+  job_posted_at: string;
+  job_posted_at_timestamp: number;
+  job_posted_at_datetime_utc: string;
+  job_location: string;
+  job_city: string;
+  job_state: string;
+  job_country: string;
+  job_latitude: number;
+  job_longitude: number;
+  job_benefits: string | null;
+  job_google_link: string;
+  job_salary: number | null;
+  job_min_salary: number | null;
+  job_max_salary: number | null;
+  job_salary_period: string | null;
+  job_highlights: string | null;
+  job_onet_soc: number;
+  job_onet_job_zone: number;
+  candidate_id: string;
+  created_date: string;
+}
 export default function JobsApp() {
    const [theme, setTheme] = useState("night");
      const [loading, setLoading] = useState(true);
   const [animationData, setAnimationData] = useState<LottieComponentProps["animationData"] | null>(null);
-  
+  const [allJobs, setAllJobs] = useState<Job[]>([]);
    
   // const [position, setPosition] = useState("");
 
@@ -197,19 +198,9 @@ export default function JobsApp() {
                 console.error("No user ID found.");
                 return;
               }
-      // const currentUser = await getCurrentUser();
-      //   const userId = currentUser?.id;
-
-      //   if (!userId) {
-      //     console.error("No user ID found.");
-      //     return;
-      //   }
-      
-        // const alldata = await fetchUserDataAndJobs({ userId });
-        // console.log("Fetched jobs:", alldata);
-        // setAllJobs(alldata);
+       const alldata = await fetchUserDataAndJobs({ userId });
+        setAllJobs(alldata);
         setLoading(false);
-        console.log(loading)
       
     };
 
