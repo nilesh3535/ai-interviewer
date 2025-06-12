@@ -131,7 +131,7 @@ function ThemeSwitcher({ theme, setTheme }: ThemeSwitcherProps) {
 }
 
 interface JobProps {
-  searchParams: Promise<{ jid?: string; rq?: string; cd?: string }>;
+  searchParams: { jid?: string; rq?: string; cd?: string };
 }
 
 interface ApplyOption {
@@ -185,38 +185,24 @@ export default function JobDetails({ searchParams }: JobProps) {
   const [error, setError] = useState<string | null>(null);
    const [theme, setTheme] = useState("night");
   // Resolve searchParams promise
-  useEffect(() => {
-    const resolveParams = async () => {
-      try {
-        const resolvedParams = await searchParams;
-       
-        console.log("Resolved search params:", resolvedParams);
-        if (resolvedParams?.rq) {
-      fetchJobDetails({
-        jobId: resolvedParams.rq,
-        onSuccess: (jobs) => {
-          setJobDetails(jobs); // ✅ now expecting Job[]
-             console.log("Job Details Response:", jobs);
-        },
-        onError: (errorMessage) => {
-          setError(errorMessage);
-        },
-        onLoadingChange: setLoading,
-      });
-    } else {
-      // If params are resolved but no 'rq' parameter is present, stop loading
-      setLoading(false);
-      setError("No job ID provided."); // Optional: inform the user
-    }
-      } catch (error) {
-        console.error("Error resolving search params:", error);
-        setError("Failed to load search parameters");
-        setLoading(false);
-      }
-    };
+useEffect(() => {
+  if (searchParams?.rq) {
+    fetchJobDetails({
+      jobId: searchParams.rq,
+      onSuccess: (jobs) => {
+        setJobDetails(jobs);
+      },
+      onError: (errorMessage) => {
+        setError(errorMessage);
+      },
+      onLoadingChange: setLoading,
+    });
+  } else {
+    setLoading(false);
+    setError("No job ID provided.");
+  }
+}, [searchParams]);
 
-    resolveParams();
-  }, [searchParams]);
 
 
 
