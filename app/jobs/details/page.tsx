@@ -186,7 +186,8 @@ export default function JobDetails({ searchParams }: JobProps) {
    const [theme, setTheme] = useState("night");
   // Resolve searchParams promise
 useEffect(() => {
-  if (searchParams?.rq) {
+  console.log(searchParams.rq)
+  if (searchParams.rq) {
     fetchJobDetails({
       jobId: searchParams.rq,
       onSuccess: (jobs) => {
