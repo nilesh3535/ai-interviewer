@@ -125,6 +125,7 @@ return (
 
         <div className="mt-6">
   <div className="bg-base-300/30 rounded-xl text-center">
+  {/* eslint-disable-next-line @next/next/no-img-element */}
     <img
       src="/jobad.png"
       onError={(e) => {
@@ -160,6 +161,7 @@ return (
               >
                 <div className="flex items-center justify-between">
                   <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                    <img
                     alt="company logo"
                     loading="lazy"

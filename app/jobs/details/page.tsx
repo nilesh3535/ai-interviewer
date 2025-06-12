@@ -290,21 +290,22 @@ export default function JobDetails({ searchParams }: JobProps) {
 
 
             <div className="flex flex-col md:flex-row items-start md:items-center gap-6 mt-6 pb-6 xl:border-b border-accent-content/10">
-              <img
-                src={jobDetails[0].employer_logo || "/jobimg.png"}
-                    onError={(e) => {
-                      e.currentTarget.src = "/jobimg.png"; // fallback image
-                    }}
-                alt="company logo"
-                loading="lazy"
-                width={50}
-                height={50}
-                className="p-1 bg-primary rounded-xl"
-                decoding="async"
-                data-nimg="1"
-                style={{ color: "transparent" }}
-              />
-              <div>
+             {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={jobDetails[0].employer_logo || "/jobimg.png"}
+                  onError={(e) => {
+                    e.currentTarget.src = "/jobimg.png"; // fallback image
+                  }}
+                  alt="company logo"
+                  loading="lazy"
+                  width={50}
+                  height={50}
+                  className="p-1 bg-primary rounded-xl"
+                  decoding="async"
+                  data-nimg="1"
+                  style={{ color: "transparent" }}
+                />
+                              <div>
                 <p className="text-base font-medium text-accent"> {jobDetails[0].employer_name}</p>
                 <h6 className="mt-1 text-3xl font-medium text-accent-content">
                 {jobDetails[0].job_title}
@@ -404,20 +405,20 @@ export default function JobDetails({ searchParams }: JobProps) {
 
           <div className="mt-8 px-12">
             <div className="bg-base-300/30 rounded-xl text-center">
-              <img
-            src="/jobad.png"
-            onError={(e) => {
-              e.currentTarget.src = "/jobad.png"; // fallback image
-            }}
-            alt="Get your dream jobs - powered by WinYourInterview"
-            loading="lazy"
-            width={300}
-            height={360}
-            className="p-1 bg-primary rounded-xl self"
-            decoding="async"
-            data-nimg="1"
-            style={{ color: "transparent" }}
-          />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+             <img
+                src={jobDetails[0].employer_logo || "/jobad.png"}
+                onError={(e) => {
+                  e.currentTarget.src = "/jobad.png"; // fallback image
+                }}
+                alt="Get your dream jobs - powered by WinYourInterview"
+                loading="lazy"
+                width={300}
+                height={360}
+                className="p-1 bg-primary rounded-xl"
+                decoding="async"
+                style={{ color: "transparent" }}
+              />
             </div>
           </div>
         </div>
