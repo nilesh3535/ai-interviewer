@@ -197,3 +197,51 @@ export const fetchUserDataAndJobs = async ({
     onLoadingChange(false);
   }
 };
+
+interface FetchJobDetailsParams {
+  jobId: string;
+  onSuccess: (jobs: Job[]) => void;
+  onError: (message: string) => void;
+  onLoadingChange: (loading: boolean) => void;
+}
+
+export const fetchJobDetails = async ({
+  jobId,
+  onSuccess,
+  onError,
+  onLoadingChange,
+}: FetchJobDetailsParams) => {
+  onLoadingChange(true); // Indicate loading has started
+  try {
+    const response = await fetch(
+      `https://kxiqztfueasspcdjpbfq.supabase.co/rest/v1/jobs?id=eq.${jobId}`,
+      {
+        headers: {
+          apikey:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt4aXF6dGZ1ZWFzc3BjZGpwYmZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkxODE1OTQsImV4cCI6MjA2NDc1NzU5NH0.zhh9G8FsIUVeMhJMbcrxiE24-wHV6yTstVsCj-wksCQ",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt4aXF6dGZ1ZWFzc3BjZGpwYmZxIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0OTE4MTU5NCwiZXhwIjoyMDY0NzU3NTk0fQ.ohJi_t3-4ZYRKfGLJj74H3_efw0zrkpPwJiUIEImnbc",
+          "Content-Type": "application/json",
+          Prefer: "return=representation",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+    }
+
+    const data = await response.json();
+    // Supabase often returns an array, even if only one item is expected.
+    // We'll pass the first item or null if the array is empty.
+    onSuccess(data.length > 0 ? data[0] : []);
+  } catch (error) {
+    console.error("Error fetching job details:", error);
+    const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+    onError(errorMessage);
+    toast.error(`Failed to fetch job details: ${errorMessage}`, { duration: 3000, position: "top-center" });
+  } finally {
+    onLoadingChange(false); // Ensure loading is turned off
+  }
+};

@@ -1,5 +1,6 @@
 "use client";
 import Footer from "@/components/Footer";
+import { fetchJobDetails } from "@/lib/actions/jobs.action";
 import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
@@ -201,47 +202,25 @@ export default function JobDetails({ searchParams }: JobProps) {
 
   // Fetch job details when params are available
   useEffect(() => {
-    const fetchData = async () => {
-      if (params?.rq) {
-        try {
-          setLoading(true);
-          const response = await fetch(
-            `https://kxiqztfueasspcdjpbfq.supabase.co/rest/v1/jobs?id=eq.${params.rq}`,
-            {
-              headers: {
-                apikey:
-                  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt4aXF6dGZ1ZWFzc3BjZGpwYmZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkxODE1OTQsImV4cCI6MjA2NDc1NzU5NH0.zhh9G8FsIUVeMhJMbcrxiE24-wHV6yTstVsCj-wksCQ",
-                Authorization:
-                  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt4aXF6dGZ1ZWFzc3BjZGpwYmZxIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0OTE4MTU5NCwiZXhwIjoyMDY0NzU3NTk0fQ.ohJi_t3-4ZYRKfGLJj74H3_efw0zrkpPwJiUIEImnbc",
-                "Content-Type": "application/json",
-                Prefer: "return=representation",
-              },
-            }
-          );
-
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-
-          const data = await response.json();
-          
-          setJobDetails(data);
-        } catch (error) {
-          console.error("Error fetching job details:", error);
-          setError(error instanceof Error ? error.message : "An error occurred");
-        } finally {
-          setLoading(false);
-        }
-      } else if (params) {
-        // If params are resolved but no rq parameter, stop loading
-        setLoading(false);
-      }
-    };
-
-    if (params !== null) {
-      fetchData();
+    // Check if params has been resolved and if 'rq' (job ID) exists
+    if (params?.rq) {
+      fetchJobDetails({
+        jobId: params.rq,
+        onSuccess: (jobs) => {
+          setJobDetails(jobs); // ✅ now expecting Job[]
+        },
+        onError: (errorMessage) => {
+          setError(errorMessage);
+        },
+        onLoadingChange: setLoading,
+      });
+    } else {
+      // If params are resolved but no 'rq' parameter is present, stop loading
+      setLoading(false);
+      setError("No job ID provided."); // Optional: inform the user
     }
-  }, [params]);
+  }, [params]); // Depend on params to re-fetch if the ID changes
+
 
   if (loading) {
     return <div>Loading please wait...</div>;
