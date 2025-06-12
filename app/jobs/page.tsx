@@ -139,7 +139,7 @@ useEffect(() => {
 
   // Move this useEffect for theme to the top, before early return
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
+    // document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
   // Now, your early return is safe because all hooks have been called
