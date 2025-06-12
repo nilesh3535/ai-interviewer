@@ -3,8 +3,9 @@
 
 import JobListSection from "@/components/JobListSection";
 import LogoCarousel from "@/components/LogoCarousel";
-
-import React, { useState, useEffect, } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import React, { useState, useEffect } from "react";
 // Lottie and toast imports stay
 import { toast } from "sonner";
 import moment from "moment";
@@ -14,7 +15,6 @@ import Footer from "@/components/Footer";
 import { fetchAndProcessJobs, fetchUserDataAndJobs } from "@/lib/actions/jobs.action";
 import Lottie, { LottieComponentProps } from "lottie-react";
 import { getCurrentUser } from "@/lib/actions/auth.action";
-import Header from "@/components/Header";
 
 
 
@@ -81,7 +81,7 @@ interface Job {
   created_date: string;
 }
 export default function JobApp() {
-  const [theme, setTheme] = useState("night");
+ 
   const [loading, setLoading] = useState(true);
   const [allJobs, setAllJobs] = useState<Job[]>([]);
   const [animationData, setAnimationData] = useState<LottieComponentProps["animationData"] | null>(null);
@@ -142,14 +142,9 @@ useEffect(() => {
     handleResize();
     return () => window.removeEventListener("mousedown", handleResize); // Corrected cleanup
   }, []);
-console.log("Setting theme:", theme);
+
   // Move this useEffect for theme to the top, before early return
- useEffect(() => {
-  
-  if (theme) {
-    document.documentElement.setAttribute("data-theme", theme);
-  }
-}, [theme]);
+
 
   // Now, your early return is safe because all hooks have been called
   if (loading || !animationData) {
@@ -242,9 +237,35 @@ window.location.reload();
     "w-full px-5 py-3 pr-10 rounded-md border border-gray-300 dark:border-gray-700 bg-gray-900 text-white appearance-none";
 
   return (
-    <div data-theme={theme} className="min-h-screen bg-base-100 text-base-content font-sans transition-colors duration-300">
+    <div data-theme={"night"} className="min-h-screen bg-base-100 text-base-content font-sans transition-colors duration-300">
       {/* header */}
-     <Header theme={theme} setTheme={setTheme} />
+      <nav className="navbar px-4 sm:px-20" role="navigation" aria-label="Main navigation">
+        <div className="flex-1 flex items-center">
+         {/* nextjs image */}
+         <Link href="/jobs" className="btn btn-ghost">
+         <Image src="/jb.png" alt="AI Avatar" width={110} height={110} className="object-cover" />
+        </Link>
+        </div>
+        <div className="flex-none gap-4 flex items-center">
+          <div className="hidden sm:flex gap-4">
+             
+           <Link href="/" className="btn btn-ghost">
+            <p>AI Mock Interview</p>
+          </Link>
+
+          <button className="btn btn-ghost" onClick={()=>{
+            toast.info("AI Resume Builder is under development. Please check back later!", {
+             duration: 2000,
+              position: "top-center",
+            }
+            )
+          }}>
+            <p >AI Resume Builder</p>
+          </button>
+          </div>
+
+        </div>
+      </nav>
 
       {/* Main content area */}
 <div
