@@ -1,5 +1,4 @@
 "use client"; // Make this a client component
-import { getCurrentUser } from '@/lib/actions/auth.action';
 import Lottie, { LottieComponentProps } from 'lottie-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -191,13 +190,13 @@ export default function JobsApp() {
 
       // Fetch user data and jobs
 
-      const currentUser = await getCurrentUser();
-        const userId = currentUser?.id;
+      // const currentUser = await getCurrentUser();
+      //   const userId = currentUser?.id;
 
-        if (!userId) {
-          console.error("No user ID found.");
-          return;
-        }
+      //   if (!userId) {
+      //     console.error("No user ID found.");
+      //     return;
+      //   }
       
         // const alldata = await fetchUserDataAndJobs({ userId });
         // console.log("Fetched jobs:", alldata);
