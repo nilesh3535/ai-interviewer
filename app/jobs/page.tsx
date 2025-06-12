@@ -174,9 +174,7 @@ function ThemeSwitcher({ theme, setTheme }: ThemeSwitcherProps) {
 export default function JobsApp() {
    const [theme, setTheme] = useState("night");
      const [loading, setLoading] = useState(true);
-  const [animationData, setAnimationData] = useState<LottieComponentProps["animationData"] | null>(null);
-
-
+  
    
   // const [position, setPosition] = useState("");
 
@@ -184,9 +182,7 @@ export default function JobsApp() {
 
     const initializeAppData = async () => {
       // Load Lottie animation data
-      const res = await fetch("/loaders/dataloader.json");
-      const json = await res.json();
-      setAnimationData(json);
+  
 
       // Fetch user data and jobs
 
@@ -202,28 +198,14 @@ export default function JobsApp() {
         // console.log("Fetched jobs:", alldata);
         // setAllJobs(alldata);
         setLoading(false);
+        console.log(loading)
       
     };
 
     initializeAppData();
   }, []);
 
-  if (loading || !animationData) {
-    return (
-      <div className="fixed inset-0 z-50 bg-[#17195000] dark:bg-white/5 text-white">
-        <div className="relative flex lg:flex-row w-full h-screen justify-center flex-col sm:p-0">
-          <div className="lg:w-1/2 w-full h-full lg:grid items-center hidden">
-            <div className="relative items-center justify-center flex z-1 flex-col gap-4">
-              <Lottie animationData={animationData} loop autoplay className="w-48 h-48" />
-            </div>
-          </div>
-          <div className="lg:hidden flex justify-center items-center w-full h-full bg-[#17195000] dark:bg-white/5">
-            <Lottie animationData={animationData} loop autoplay className="w-48 h-48" />
-          </div>
-        </div>
-      </div>
-    );
-  }
+ 
   return (
      <div data-theme={theme} className="min-h-screen bg-base-100 text-base-content font-sans transition-colors duration-300">
       {/* header */}
