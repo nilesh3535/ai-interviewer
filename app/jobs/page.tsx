@@ -208,22 +208,7 @@ export default function JobsApp() {
 
     initializeAppData();
   }, []);
-  if (loading || !animationData) {
-    return (
-      <div className="fixed inset-0 z-50 bg-[#17195000] dark:bg-white/5 text-white">
-        <div className="relative flex lg:flex-row w-full h-screen justify-center flex-col sm:p-0">
-          <div className="lg:w-1/2 w-full h-full lg:grid items-center hidden">
-            <div className="relative items-center justify-center flex z-1 flex-col gap-4">
-              <Lottie animationData={animationData} loop autoplay className="w-48 h-48" />
-            </div>
-          </div>
-          <div className="lg:hidden flex justify-center items-center w-full h-full bg-[#17195000] dark:bg-white/5">
-            <Lottie animationData={animationData} loop autoplay className="w-48 h-48" />
-          </div>
-        </div>
-      </div>
-    );
-  }
+ 
  
   return (
      <div data-theme={theme} className="min-h-screen bg-base-100 text-base-content font-sans transition-colors duration-300">
