@@ -161,7 +161,9 @@ return (
               >
                 <div className="flex items-center justify-between">
                   <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                   
+                    
+                       {/* eslint-disable-next-line @next/next/no-img-element */}
                    <img
                     alt="company logo"
                     loading="lazy"
@@ -173,7 +175,14 @@ return (
                       e.currentTarget.src = "/jobimg.png"; // fallback image
                     }}
                   />
-
+                   <a
+                    className="flex items-center gap-1.5 px-4 py-2.5 text-accent-content/60 bg-accent-content/5 group-hover:bg-accent-content group-hover:text-white rounded-lg transition md:hidden"
+                    href={`/jobs/${job.id}details=${job.job_id}&rq=${job.id}&cd=${job.candidate_id}`}
+                  >
+                    View Job
+                    {/* Icon omitted for brevity */}
+                  </a>
+              
                     <div>
                       <p className="text-sm font-medium text-accent">
                         {job.employer_name}
@@ -197,14 +206,14 @@ return (
                         <p className="bg-accent-content/5 px-2 py-1 text-xs text-accent-content/60 rounded-md">
                           {job.job_location}
                         </p>
-                         <p className="bg-accent-content/5 px-2 py-1 text-xs text-accent-content/60 rounded-md">
+                         <p className="hidden md:bg-accent-content/5 px-2 py-1 text-xs text-accent-content/60 rounded-md">
                           {job.search_data}
                         </p>
                       </div>
                     </div>
                   </div>
                   <a
-                    className="md:flex items-center gap-1.5 px-4 py-2.5 text-accent-content/60 bg-accent-content/5 group-hover:bg-accent-content group-hover:text-white rounded-lg transition"
+                    className="hidden md:flex items-center gap-1.5 px-4 py-2.5 text-accent-content/60 bg-accent-content/5 group-hover:bg-accent-content group-hover:text-white rounded-lg transition"
                     href={`/jobs/${job.id}details=${job.job_id}&rq=${job.id}&cd=${job.candidate_id}`}
                   >
                     View Job

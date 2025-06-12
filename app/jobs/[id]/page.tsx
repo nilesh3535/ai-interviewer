@@ -305,7 +305,7 @@ useEffect(() => {
                   loading="lazy"
                   width={50}
                   height={50}
-                  className="p-1 bg-primary rounded-xl"
+                  className="p-2 bg-accent-content rounded-xl"
                   decoding="async"
                   data-nimg="1"
                   style={{ color: "transparent" }}
@@ -321,7 +321,7 @@ useEffect(() => {
             <div className="block xl:hidden">
               <div className="rounded-xl">
                 <Link target="_blank"  href={`${jobDetails[0].job_apply_link}`} className="bg-primary w-fit  py-3 px-5 text-base font-semibold text-primary-content rounded-lg flex items-center gap-3 hover:bg-accent-content hover:text-white transition hover:duration-500">
-                  Apply Nows
+                  Apply Now
                   <span>
                     <svg className="text-xl" width="18" height="18" viewBox="0 0 14 14" fill="none">
                       {/* SVG path same as original */}
@@ -412,7 +412,7 @@ useEffect(() => {
             <div className="bg-base-300/30 rounded-xl text-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
              <img
-                src={jobDetails[0].employer_logo || "/jobad.png"}
+                src={"/jobad.png"}
                 onError={(e) => {
                   e.currentTarget.src = "/jobad.png"; // fallback image
                 }}
