@@ -339,15 +339,20 @@ useEffect(() => {
       city,
       level,
      });
-     if(newJobs){
+     console.log(newJobs)
+     if(newJobs.length>0){
        toast.dismiss(loadingToastId);
     toast.success("Jobs fetched successfully!", {
       duration: 2000,
       position: "top-center",
     });
-window.location.reload();
-     }
-      //  
+    window.location.reload();
+  }else{
+  
+            toast.error("You have already searched for jobs today!", { duration: 2000, position: "top-center" });
+          
+  }
+   //  
 
   };
   // const handleSubmit = (e: React.FormEvent) => {
