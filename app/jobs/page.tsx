@@ -309,7 +309,7 @@ useEffect(() => {
         }
 
         // Logic for checking if already searched today (client-side specific)
-        if (allJobs) {
+        if (allJobs.length>0) {
           const jobDate = moment(allJobs[0].created_date).startOf("day");
           const today = moment().startOf("day");
           const isSameDay = jobDate.isSame(today, "day");
@@ -340,11 +340,14 @@ useEffect(() => {
      console.log(newJobs);
      if(newJobs){
        toast.dismiss(loadingToastId);
+       
     toast.success("Jobs fetched successfully!", {
       duration: 2000,
       position: "top-center",
     });
+    setTimeout(()=>{
     window.location.reload();
+    },2000)
   }else{
   
             toast.error("You have already searched for jobs today!", { duration: 2000, position: "top-center" });
@@ -597,7 +600,7 @@ useEffect(() => {
       </div>
       {/*  */}
        <button onClick={()=>{
-       if (allJobs) {
+       if (allJobs.length>0) {
          const jobDate = moment(allJobs[0].created_date).startOf('day');
           const today = moment().startOf('day');
 
