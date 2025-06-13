@@ -309,7 +309,7 @@ useEffect(() => {
         }
 
         // Logic for checking if already searched today (client-side specific)
-        if (allJobs.length > 0) {
+        if (allJobs) {
           const jobDate = moment(allJobs[0].created_date).startOf("day");
           const today = moment().startOf("day");
           const isSameDay = jobDate.isSame(today, "day");
@@ -329,18 +329,16 @@ useEffect(() => {
         const currentUser = await getCurrentUser();
         const userId = currentUser?.id;
 
-        if (!userId) {
-          console.error("No user ID found.");
-          return;
-        }
+        if (userId) {
+         
      const newJobs=await fetchAndProcessJobs({
       userId,
       role,
       city,
       level,
      });
-     console.log(newJobs)
-     if(newJobs.length>0){
+     console.log(newJobs);
+     if(newJobs){
        toast.dismiss(loadingToastId);
     toast.success("Jobs fetched successfully!", {
       duration: 2000,
@@ -351,6 +349,7 @@ useEffect(() => {
   
             toast.error("You have already searched for jobs today!", { duration: 2000, position: "top-center" });
           
+  }
   }
    //  
 

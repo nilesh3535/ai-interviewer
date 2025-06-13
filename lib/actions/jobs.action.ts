@@ -87,7 +87,7 @@ export const fetchAndProcessJobs = async ({
     }
 
     const data = await response.text();
-    console.log("API Response:", data);
+    // console.log("API Response:", data);
 
 
 
