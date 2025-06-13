@@ -397,9 +397,9 @@ useEffect(() => {
             }
             )
           }}>
-             <Link href="/" className="hidden sm:btn btn-ghost">
+             
             <p >AI Resume Builder</p>
-            </Link>
+          
           </button>
           
         
