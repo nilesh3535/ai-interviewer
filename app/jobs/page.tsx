@@ -346,8 +346,8 @@ useEffect(() => {
       position: "top-center",
     });
     setTimeout(()=>{
-    // window.location.reload();
-    },2000)
+     window.location.reload();
+    },1000)
   }else{
   
             toast.error("You have already searched for jobs today!", { duration: 2000, position: "top-center" });
