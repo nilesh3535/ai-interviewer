@@ -210,7 +210,8 @@ export default function JobsApp() {
  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
     const [generateStatus, setGenerateStatus] =useState<boolean>(false);
-
+   const [photoUrl, setPhotoUrl] = useState<string>("");
+   const [username, setUsername] = useState<string>("");
     const [role, setRole] = useState("");
       const [city, setCity] = useState("");
       const [level, setLevel] = useState("Select Experience Level");
@@ -231,6 +232,8 @@ export default function JobsApp() {
       // Fetch user data and jobs
 
       const currentUser = await getCurrentUser();
+      setPhotoUrl(currentUser?.photoURL || "/user-avatar.jpg");
+      setUsername(currentUser?.name || "Hey");
         const userId = currentUser?.id;
 
         if (!userId) {
@@ -291,23 +294,17 @@ useEffect(() => {
 
 
   const getJobs = async () => {
-     const currentUser = await getCurrentUser();
-        const userId = currentUser?.id;
-
-        if (!userId) {
-          console.error("No user ID found.");
-          return;
-        }
+    
        if (role.trim() === "") {
-          toast.error("Please enter a role!", { duration: 2000, position: "top-center" });
+          toast.error("Please enter a role!", { duration: 2000, position: "top-center",closeButton:true });
           return;
         }
         if (level === "Select Experience Level") {
-          toast.error("Please select an experience level!", { duration: 2000, position: "top-center" });
+          toast.error("Please select an experience level!", { duration: 2000, position: "top-center" ,closeButton:true });
           return;
         }
         if (city.trim() === "") {
-          toast.error("Please enter a city/preferred location!", { duration: 2000, position: "top-center" });
+          toast.error("Please enter a city/preferred location!", { duration: 2000, position: "top-center" ,closeButton:true });
           return;
         }
 
@@ -329,7 +326,13 @@ useEffect(() => {
           id: "loading-toast",
         });
 
-       
+        const currentUser = await getCurrentUser();
+        const userId = currentUser?.id;
+
+        if (!userId) {
+          console.error("No user ID found.");
+          return;
+        }
      const newJobs=await fetchAndProcessJobs({
       userId,
       role,
@@ -375,21 +378,38 @@ window.location.reload();
         </Link>
         </div>
         <div className="flex-none gap-4 flex items-center">
-          <div className="hidden sm:flex gap-4">
+          <div className="flex gap-4">
              <ThemeSwitcher theme={theme} setTheme={setTheme} />
-           <Link href="/" className="btn btn-ghost">
+           <Link href="/" className="hidden sm:btn btn-ghost">
             <p>AI Mock Interview</p>
           </Link>
 
-          <button className="btn btn-ghost" onClick={()=>{
+          <button className="hidden sm:btn btn-ghost" onClick={()=>{
             toast.info("AI Resume Builder is under development. Please check back later!", {
              duration: 2000,
-              position: "top-center",
+              position:"top-right",
+            
             }
             )
           }}>
+             <Link href="/" className="hidden sm:btn btn-ghost">
             <p >AI Resume Builder</p>
+            </Link>
           </button>
+          
+        
+            <p className="hidden sm:btn btn-md">{username.split(" ")[0]}</p>
+          
+          
+          <Link href={"/profile"} className="p-1 rounded-full border-1 border-white hover:ring-2 ring-white transition duration-200">
+                    <Image
+                            src={photoUrl}
+                            alt="avatar"
+                            width={32}
+                            height={32}
+                            className="rounded-full"
+                        />
+                  </Link>
           </div>
 
         </div>
@@ -450,7 +470,7 @@ window.location.reload();
     {!isFullscreen && (
       <div
         className="fixed inset-0 h-full w-full bg-gray-400/20 backdrop-blur-[5px]"
-        onClick={closeModal}
+        // onClick={closeModal}
       ></div>
     )}
 
@@ -459,7 +479,7 @@ window.location.reload();
       className={`${
         isFullscreen ? "w-full h-full" : "relative w-full max-w-[700px] m-4 rounded-3xl bg-white dark:bg-gray-900"
       }`}
-      onClick={(e) => e.stopPropagation()}
+      // onClick={(e) => e.stopPropagation()}
     >
       {/* Close Button */}
       {true && (
