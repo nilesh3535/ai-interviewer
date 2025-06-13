@@ -597,10 +597,8 @@ useEffect(() => {
       </div>
       {/*  */}
        <button onClick={()=>{
-       if (allJobs.length === 0) {
-          getJobs();
-        } else if (allJobs.length > 0) {
-          const jobDate = moment(allJobs[0].created_date).startOf('day');
+       if (allJobs) {
+         const jobDate = moment(allJobs[0].created_date).startOf('day');
           const today = moment().startOf('day');
 
           // Compare dates (ignores time)
@@ -614,6 +612,8 @@ useEffect(() => {
               position: "top-center",
             });
           }
+        } else {
+         getJobs();
         }
         }} className="cursor-pointer px-10 bg-primary-200 text-accent-content text-xl font-medium py-3 rounded-md mt-4 transition hover:bg-primary hover:text-primary-content">
       {generateStatus? <span className="dots-loading">. . .</span> : "Search Jobs"}
