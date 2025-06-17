@@ -75,7 +75,7 @@ export const fetchAndProcessJobs = async ({
 }: GetJobsParams) => {
   
   try {
-    const response = await fetch("http://67.217.62.107/webhook/cbae3c40-0050-4cda-ae1a-301a758ffb02", {
+    const response = await fetch("https://n8n.panalinks.com/webhook/cbae3c40-0050-4cda-ae1a-301a758ffb02", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userid: userId, position: role, location: city, experience: level }),
