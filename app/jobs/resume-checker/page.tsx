@@ -323,21 +323,21 @@ setTimeout(() => {
       <nav className="navbar bg-transparent px-4 sm:px-20" role="navigation" aria-label="Main navigation">
         <div className="flex-1 flex items-center">
          {/* nextjs image */}
-          <Link href="/jobs/resume-checker" className="hidden sm:btn btn-ghost">
+          <Link href="/jobs/resume-checker" className="btn btn-ghost">
             <p>ATS Resume Checker</p>
           </Link>
         </div>
         <div className="flex-none gap-4 flex items-center">
-          <div className="hidden sm:flex gap-4">
+          <div className="flex gap-4">
              <ThemeSwitcher theme={theme} setTheme={setTheme} />
-           <Link href="/" className="btn btn-ghost">
+           <Link href="/" className="hidden md:btn btn-ghost">
             <p>AI Mock Interview</p>
           </Link>
- <Link href="/jobs" className="btn btn-ghost">
+ <Link href="/jobs" className="hidden md:btn btn-ghost">
             <p>Find Jobs</p>
           </Link>
 
-         <button className="btn btn-ghost" onClick={()=>{
+         <button className="hidden sm:btn btn-ghost" onClick={()=>{
             toast.info("AI Resume Builder is under development. Please check back later!", {
              duration: 2000,
               position: "top-center",
@@ -349,7 +349,7 @@ setTimeout(() => {
             <p className="hidden sm:btn btn-md">{username.split(" ")[0]}</p>
           
           
-          <Link href={"/profile"} className="p-1 rounded-full border-1 border-white hover:ring-2 ring-white transition duration-200">
+          <Link href={"/profile"} className="block p-1 rounded-full border-1 border-white hover:ring-2 ring-white transition duration-200">
                     <Image
                             src={photoUrl}
                             alt="avatar"
