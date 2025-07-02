@@ -390,7 +390,9 @@ useEffect(() => {
            <Link href="/" className="hidden sm:btn btn-ghost">
             <p>AI Mock Interview</p>
           </Link>
-
+ <Link href="/jobs/resume-checker" className="hidden sm:btn btn-ghost">
+            <p>AI ATS Resume Checker</p>
+          </Link>
           <button className="hidden sm:btn btn-ghost" onClick={()=>{
             toast.info("AI Resume Builder is under development. Please check back later!", {
              duration: 2000,
