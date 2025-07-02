@@ -56,7 +56,7 @@ async function Home({ searchParams }: HomeProps) {
     <>
      <section className="card-cta flex-col-reverse md:flex-row items-center">
     
-        <div className="flex flex-col gap-6 max-w-md mt-6 sm:mt-0">
+        <div className="flex flex-col gap-6 max-w-1/1.1 mt-6 sm:mt-0">
           <AnimatedText delay={0.1}>
             <h2><span className="text-orange-300">AI-Powered</span> Real-Time Interview Platform for Smarter Hiring</h2>
           </AnimatedText>
@@ -67,11 +67,14 @@ async function Home({ searchParams }: HomeProps) {
               For example: Frontend, Backend, Fullstack, Design, UX/UI.
             </p>
           </AnimatedText>
-           <div className="flex flex-row gap-4 max-w-full">
+           <div className="gap-2 max-w-full flex flex-col md:flex-row sm:flex-col">
           <AnimatedCTAButton href="/create" delay={0.3}>
             Create an Interview
           </AnimatedCTAButton>
-          <AnimatedCTAButton href="/jobs" delay={0.3}>
+             <AnimatedCTAButton href="/jobs/resume-checker" delay={0.3}>
+            ATS Resume Checker
+          </AnimatedCTAButton>
+           <AnimatedCTAButton href="/jobs" delay={0.3}>
             Find Jobs
           </AnimatedCTAButton>
          
