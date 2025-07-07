@@ -329,7 +329,7 @@ setTimeout(() => {
                                        alt="Company Logo"
                                        width={200}
                                        height={100}
-                                       className="object-contain bg-gray-50 rounded-sm"
+                                       className="object-contain bg-gray-50 rounded-sm shadow-lg shadow-gray-700"
                                      />
                            </a>
         </div>
