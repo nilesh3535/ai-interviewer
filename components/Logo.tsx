@@ -9,8 +9,8 @@ interface LogoProps {
 
 export const Logo = ({ link = false, className }: LogoProps) => {
   const content = (
-    <div className={clsx("flex items-center gap-2", className)}>
-      <Image src="/logo-4.png" alt="logo" width={84} height={39} />
+    <div className={clsx("mt-auto flex items-center gap-2", className)}>
+      <Image src="/logo-4.png" alt="logo" width={84} height={39} className="object-contain hidden sm:block" />
       <span className="hidden sm:block text-primary-100 text-2xl sm:text-[38px] font-bold">
       Interviewer
       </span>

@@ -189,7 +189,7 @@
   }
 
   .card-border {
-    @apply border-gradient p-0.5 rounded-2xl w-fit;
+    @apply border-gradient p-0.5 rounded-lg w-fit;
   }
 
   .card {
@@ -260,12 +260,13 @@
     }
   }
 
-  .auth-layout {
-    @apply flex items-center justify-center mx-auto max-w-7xl min-h-screen max-sm:px-4 max-sm:py-8;
-  }
+.auth-layout {
+  @apply flex flex-col lg:flex-row items-center justify-center mx-auto max-w-7xl min-h-screen max-sm:px-4 max-sm:py-8 relative;
+}
+
 
   .root-layout {
-    @apply flex mx-auto max-w-7xl flex-col gap-12 py-12 px-16 max-sm:px-4 max-sm:my-8;
+    @apply flex mx-auto max-w-7xl flex-col gap-12 pb-12 pt-5 px-16 max-sm:px-4 max-sm:my-8;
   }
 
   .card-cta {

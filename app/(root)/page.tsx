@@ -71,12 +71,12 @@ async function Home({ searchParams }: HomeProps) {
           <AnimatedCTAButton href="/create" delay={0.3}>
             Create an Interview
           </AnimatedCTAButton>
-             <AnimatedCTAButton href="/jobs/resume-checker" delay={0.3}>
+             {/* <AnimatedCTAButton href="/jobs/resume-checker" delay={0.3}>
             ATS Resume Checker
           </AnimatedCTAButton>
            <AnimatedCTAButton href="/jobs" delay={0.3}>
             Find Jobs
-          </AnimatedCTAButton>
+          </AnimatedCTAButton> */}
          
           </div>
         </div>

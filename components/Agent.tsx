@@ -163,7 +163,7 @@ const MAX_PROMPTS = 3;
           type: 'add-message',
           message: {
             role: 'system',
-            content: `Hello ${userName}, are you there?`,
+            content: `I didn't hear anything. If you're facing any issues, please try again later. only say this not anything other`,
           },
         });
         areYouTherePromptCount.current++;
@@ -174,7 +174,7 @@ const MAX_PROMPTS = 3;
           type: 'add-message',
           message: {
             role: 'system',
-            content: `It seems there might be a connection issue. Please try the interview again later. Have a great day! I'm ending the interview now.`,
+              content: `It seems there might be a connection issue. Please try again later. Have a great day! I'm ending the interview now. only say this not anything other`,
           },
         });
         areYouTherePromptCount.current++;

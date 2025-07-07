@@ -323,19 +323,25 @@ setTimeout(() => {
       <nav className="navbar bg-transparent px-4 sm:px-20" role="navigation" aria-label="Main navigation">
         <div className="flex-1 flex items-center">
          {/* nextjs image */}
-          <Link href="/jobs/resume-checker" className="btn btn-ghost">
-            <p>ATS Resume Checker</p>
-          </Link>
+           <a href="https://winyourinterview.ai/" target='_blank' className="btn btn-ghost">
+                    <Image
+                                       src="/wyi.png" // replace with your logo path
+                                       alt="Company Logo"
+                                       width={200}
+                                       height={100}
+                                       className="object-contain bg-gray-50 rounded-sm"
+                                     />
+                           </a>
         </div>
         <div className="flex-none gap-4 flex items-center">
           <div className="flex gap-4">
              <ThemeSwitcher theme={theme} setTheme={setTheme} />
-           <Link href="/" className="hidden md:btn btn-ghost">
+           <a href="https://app.winyourinterview.ai" target='_blank' className="hidden md:btn btn-ghost">
             <p>AI Mock Interview</p>
-          </Link>
- <Link href="/jobs" className="hidden md:btn btn-ghost">
+          </a>
+ <a href="https://app.winyourinterview.ai/jobs" target='_blank' className="hidden md:btn btn-ghost">
             <p>Find Jobs</p>
-          </Link>
+          </a>
 
          <button className="hidden sm:btn btn-ghost" onClick={()=>{
             toast.info("AI Resume Builder is under development. Please check back later!", {

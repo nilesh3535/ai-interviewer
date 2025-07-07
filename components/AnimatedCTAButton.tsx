@@ -37,9 +37,9 @@ const AnimatedCTAButton = ({
   if (!isMounted) {
     return null; // Prevent SSR flash
   }
-
+//  <div className="relative inline-block mx-auto"></div>
   return (
-    <div className="relative inline-block mx-auto">
+    <div className="relative inline-block ">
       {/* Glow effect */}
       {showGlow && (
         <motion.div

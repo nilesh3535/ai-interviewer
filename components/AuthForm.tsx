@@ -440,12 +440,12 @@ const handleGithubSignIn = async () => {
     // Regular auth form
     return (
         <AuthCard>
-            <AuthHeader title="AI-powered real-time interview platform for smarter hiring" />
+            <AuthHeader title={isSignIn ? `AI-powered real-time interview platform for smarter hiring`:``} />
 
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="w-full space-y-6 mt-4 form"
+                className="w-full space-y-6 mt-0 form"
               >
                 {!isSignIn && (
                   <FormField
@@ -482,7 +482,7 @@ const handleGithubSignIn = async () => {
             </Form>
             
             {/* Divider */}
-            <div className="relative flex items-center justify-center mt-6 mb-4">
+            <div className="relative flex items-center justify-center mt-1 mb-0">
               <div className="absolute border-t border-gray-700 w-full"></div>
               <span className="relative px-4 bg-gray-700 text-light-300 text-sm rounded-lg">or</span>
             </div>
@@ -555,7 +555,7 @@ const handleGithubSignIn = async () => {
             </Button>  */}
            
 
-            <p className="text-center flex flex-col sm:flex-row gap-3 justify-center mt-6">
+            <p className="text-center flex flex-col sm:flex-row gap-3 justify-center mt-3">
               {isSignIn ? "No account yet?" : "Have an account already?"}
               <Link
                 href={!isSignIn ? "/sign-in" : "/sign-up"}
