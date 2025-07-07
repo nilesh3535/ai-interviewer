@@ -114,36 +114,112 @@ const Agent = ({
     setCallStatus(CallStatus.FINISHED);
     vapi.stop();
   }, []);
-  
+const areYouTherePromptCount = useRef(0); // persists across renders and interval calls
+const promptCountRef = useRef(0); // This always has the latest value
+const MAX_PROMPTS = 3;
   // Inactivity monitor
   useEffect(() => {
     if (callStatus !== CallStatus.ACTIVE) return;
     
     const inactivityTimer = setInterval(() => {
       const now = Date.now();
-      if (now - lastActivityTimestamp > INACTIVITY_TIMEOUT) {
-        console.log("Inactivity timeout reached, ending call");
+      // old code
+      // if (now - lastActivityTimestamp > INACTIVITY_TIMEOUT) {
+      //   console.log("Inactivity timeout reached, ending call");
+      //   handleDisconnect();
+      // }
+
+          // new
+      
+          if (now - lastActivityTimestamp > INACTIVITY_TIMEOUT) {
+
+      console.log("Current prompt count:", areYouTherePromptCount.current);
+
+     if (areYouTherePromptCount.current === 0) {
+  // 1st prompt
+        vapi.send({
+          type: 'add-message',
+          message: {
+            role: 'system',
+            content: `Hello ${userName}, are you there?`,
+          },
+        });
+        areYouTherePromptCount.current++;
+        setLastActivityTimestamp(Date.now());
+      } else if (areYouTherePromptCount.current === 1) {
+        // 2nd prompt
+       vapi.send({
+          type: 'add-message',
+          message: {
+            role: 'system',
+            content: `Hello ${userName}, are you there?`,
+          },
+        });
+        areYouTherePromptCount.current++;
+        setLastActivityTimestamp(Date.now());
+      }else if (areYouTherePromptCount.current === 2) {
+        // 2nd prompt
+       vapi.send({
+          type: 'add-message',
+          message: {
+            role: 'system',
+            content: `Hello ${userName}, are you there?`,
+          },
+        });
+        areYouTherePromptCount.current++;
+        setLastActivityTimestamp(Date.now());
+      } else if (areYouTherePromptCount.current === 3) {
+        // Final polite closing
+        vapi.send({
+          type: 'add-message',
+          message: {
+            role: 'system',
+            content: `It seems there might be a connection issue. Please try the interview again later. Have a great day! I'm ending the interview now.`,
+          },
+        });
+        areYouTherePromptCount.current++;
+        setLastActivityTimestamp(Date.now());
+
+        // End the call after a short pause (optional)
+        setTimeout(() => {
+          console.log("Inactivity timeout reached, ending call");
+          handleDisconnect();
+        }, 4000); // wait 4 seconds before ending
+      } else {
+        // Safety fallback (shouldn't be needed)
         handleDisconnect();
       }
+      }
+
+
     }, 5000); // Check every 5 seconds
     
+
+
+
+
     return () => clearInterval(inactivityTimer);
-  }, [callStatus, lastActivityTimestamp, handleDisconnect, INACTIVITY_TIMEOUT]);
+ }, [callStatus, lastActivityTimestamp, handleDisconnect, INACTIVITY_TIMEOUT, userName]);
   
   // VAPI event handlers
   useEffect(() => {
     const onCallStart = () => {
       setCallStatus(CallStatus.ACTIVE);
       setLastActivityTimestamp(Date.now());
+       areYouTherePromptCount.current = 0; // ✅ Reset inactivity prompts
     };
 
     const onCallEnd = () => {
+          areYouTherePromptCount.current = 0; // ✅ Reset inactivity prompts
       setCallStatus(CallStatus.FINISHED);
+  
     };
 
     const onMessage = (message: Message) => {
+  
       if (message.type === "transcript" && message.transcriptType === "final") {
         setLastActivityTimestamp(Date.now());
+       
         const newMessage = { role: message.role, content: message.transcript };
         setMessages((prev) => [...prev, newMessage]);
         
@@ -190,6 +266,8 @@ const Agent = ({
 
     const onSpeechStart = () => {
       setLastActivityTimestamp(Date.now()); // Update timestamp when speech starts
+      
+       
       setIsSpeaking(true);
     };
 
