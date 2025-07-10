@@ -160,7 +160,7 @@ export default function InterviewForm({ user, roles, skills }: InterviewFormProp
       }
 
       toast.success("Interview generated successfully! 🎉", {
-        duration: 5000,
+        duration: 7000,
         id: "generate-toast",
       });
       window.location.href = "/";
