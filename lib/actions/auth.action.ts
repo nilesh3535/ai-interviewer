@@ -407,7 +407,7 @@ interface Skills {
 }
 export async function getAllRoles(): Promise<Roles[]> {
   const snapshot = await db.collection("roles")
- .orderBy("createdAt", "desc")
+ .orderBy("role", "asc")
   .get();
 
   if (snapshot.empty) return [];
@@ -421,7 +421,7 @@ export async function getAllRoles(): Promise<Roles[]> {
 }
 export async function getAllSkills(): Promise<Skills[]> {
   const snapshot = await db.collection("skills")
- .orderBy("createdAt", "desc")
+ .orderBy("skill", "asc")
   .get();
 
   if (snapshot.empty) return [];
