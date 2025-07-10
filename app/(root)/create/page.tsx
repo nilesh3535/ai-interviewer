@@ -1,12 +1,13 @@
 // app/interview/page.tsx
 import InterviewForm from "@/components/InterviewForm";
-import { getCurrentUser } from "@/lib/actions/auth.action";
-
+import { getAllRoles, getAllSkills, getCurrentUser } from "@/lib/actions/auth.action";
 
 const Page = async () => {
   const user = await getCurrentUser();
+  const roles=await getAllRoles();
+  const skills=await getAllSkills();
 
-  return <InterviewForm user={user} />;
+  return <InterviewForm user={user} roles={roles} skills={skills} />;
 };
 
 export default Page;

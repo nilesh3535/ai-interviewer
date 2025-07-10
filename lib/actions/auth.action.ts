@@ -393,3 +393,43 @@ export async function insertTransaction(params: TransactionProps) {
   }
 }
 
+interface Roles{
+  id:string;
+  role:string;
+  createdAt:string;
+  flag: boolean;
+}
+interface Skills {
+  id: string;
+  skill: string;
+  createdAt: string;
+  flag: boolean;
+}
+export async function getAllRoles(): Promise<Roles[]> {
+  const snapshot = await db.collection("roles")
+ .orderBy("createdAt", "desc")
+  .get();
+
+  if (snapshot.empty) return [];
+
+  const roles = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  })) as Roles[];
+
+  return roles;
+}
+export async function getAllSkills(): Promise<Skills[]> {
+  const snapshot = await db.collection("skills")
+ .orderBy("createdAt", "desc")
+  .get();
+
+  if (snapshot.empty) return [];
+
+  const skills = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  })) as Skills[];
+
+  return skills;
+}
