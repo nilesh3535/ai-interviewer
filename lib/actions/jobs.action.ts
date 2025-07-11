@@ -115,7 +115,7 @@ export const fetchUserDataAndJobs = async ({
 }: FetchUserDataAndJobsParams): Promise<Job[]> => {
   try {
     const response = await fetch(
-      `https://kxiqztfueasspcdjpbfq.supabase.co/rest/v1/jobs?candidate_id=eq.${userId}&order=id.desc`,
+      `https://exaeukhkbitfzhmvypbx.supabase.co/rest/v1/jobs?candidate_id=eq.${userId}&order=id.desc`,
       {
         headers: {
            apikey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt4aXF6dGZ1ZWFzc3BjZGpwYmZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkxODE1OTQsImV4cCI6MjA2NDc1NzU5NH0.zhh9G8FsIUVeMhJMbcrxiE24-wHV6yTstVsCj-wksCQ",
