@@ -1,6 +1,8 @@
+
 import Footer from '@/components/Footer';
 import { getCurrentUser } from '@/lib/actions/auth.action';
 import { getTransactionsByUserId } from '@/lib/actions/general.action';
+import { ArrowLeft } from 'lucide-react';
 import React from 'react';
 
 export default async function Page() {
@@ -12,6 +14,13 @@ export default async function Page() {
       {/* Main content */}
       <main className="flex-grow">
     <section className="flex flex-col gap-6 mt-8">
+      <a
+         href='https://app.winyourinterview.ai/'
+          className="w-fit flex flex-row items-center cursor-pointer"
+        >
+          <ArrowLeft color="#ffffffc2" size={21} />
+          <p className="text-[#ffffffc2] ml-1">Go Back</p>
+        </a>
       <div className="flex flex-row items-center justify-between">
         <h2 className="text-3xl">Transactions</h2>
       </div>

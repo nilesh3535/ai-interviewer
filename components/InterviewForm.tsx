@@ -255,10 +255,13 @@ export default function InterviewForm({ user, roles, skills }: InterviewFormProp
     <>
       <div className="flex-center flex-col gap-4 p-7 blue-gradient-dark rounded-lg border-2 border-primary-200/50 w-full max-w-2xl mx-auto">
         <div className="w-full flex flex-row justify-between">
-          <a href="https://app.winyourinterview.ai/" className="w-fit flex flex-row items-center">
-            <ArrowLeft color="#ffffffc2" size={21} />
-            <p className="text-[#ffffffc2] ml-1">Back</p>
-          </a>
+         <button
+         onClick={() => window.history.back()}
+          className="w-fit flex flex-row items-center cursor-pointer"
+        >
+          <ArrowLeft color="#ffffffc2" size={21} />
+          <p className="text-[#ffffffc2] ml-1">Back</p>
+        </button>
           <h3 className="text-xl font-bold text-white">Interview Generation</h3>
           {/* If file.svg is a local asset, import it and use <Image> component.
               If it's a public asset in the /public folder, the path should be relative to /public. */}
