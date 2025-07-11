@@ -118,8 +118,8 @@ export const fetchUserDataAndJobs = async ({
       `https://exaeukhkbitfzhmvypbx.supabase.co/rest/v1/jobs?candidate_id=eq.${userId}&order=id.desc`,
       {
         headers: {
-           apikey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt4aXF6dGZ1ZWFzc3BjZGpwYmZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkxODE1OTQsImV4cCI6MjA2NDc1NzU5NH0.zhh9G8FsIUVeMhJMbcrxiE24-wHV6yTstVsCj-wksCQ",
-            Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt4aXF6dGZ1ZWFzc3BjZGpwYmZxIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0OTE4MTU5NCwiZXhwIjoyMDY0NzU3NTk0fQ.ohJi_t3-4ZYRKfGLJj74H3_efw0zrkpPwJiUIEImnbc",
+           apikey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV4YWV1a2hrYml0ZnpobXZ5cGJ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAzMDYyNjAsImV4cCI6MjA2NTg4MjI2MH0.qd33Da-t5Ki_JDEd-dEsEgqyo86JhiBQJWgssvFlODA",
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV4YWV1a2hrYml0ZnpobXZ5cGJ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAzMDYyNjAsImV4cCI6MjA2NTg4MjI2MH0.qd33Da-t5Ki_JDEd-dEsEgqyo86JhiBQJWgssvFlODA",
             "Content-Type": "application/json",
             Prefer: "return=representation",
           },
