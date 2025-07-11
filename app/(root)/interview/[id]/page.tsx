@@ -11,6 +11,7 @@ import {
 } from "@/lib/actions/general.action";
 import { getCurrentUser } from "@/lib/actions/auth.action";
 import { iconsColors } from "@/constants";
+import { ArrowLeft } from "lucide-react";
 
 const InterviewDetails = async ({ params }: RouteParams) => {
   const { id } = await params;
@@ -60,7 +61,15 @@ const InterviewDetails = async ({ params }: RouteParams) => {
 
   return (
     <>
+    <a
+         href='https://app.winyourinterview.ai/'
+          className="w-fit flex flex-row items-center cursor-pointer"
+        >
+          <ArrowLeft color="#ffffffc2" size={21} />
+          <p className="text-[#ffffffc2] ml-1">Go Back</p>
+        </a>
       <div className="flex flex-col md:flex-row justify-between items-center">
+         
         <div className="flex items-center gap-4">
          {/*  */}
  <div

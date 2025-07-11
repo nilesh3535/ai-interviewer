@@ -9,6 +9,7 @@ import {
 } from "@/lib/actions/general.action";
 import { getCurrentUser } from "@/lib/actions/auth.action";
 import { MetalButton } from "@/components/MetalButton";
+import { ArrowLeft } from "lucide-react";
 
 const Feedback = async ({ params }: RouteParams) => {
   const { id } = await params;
@@ -24,6 +25,13 @@ const Feedback = async ({ params }: RouteParams) => {
 
   return (
     <section className="section-feedback bg-stone-900/50 px-4 lg:px-8 py-3 lg:py-8 rounded-3xl">
+      <a
+         href='https://app.winyourinterview.ai/'
+          className="w-fit flex flex-row items-center cursor-pointer"
+        >
+          <ArrowLeft color="#ffffffc2" size={21} />
+          <p className="text-[#ffffffc2] ml-1">Go Back</p>
+        </a>
       <div className="flex flex-row justify-center">
         <h1 className="text-4xl font-semibold">
           Feedback:{" "}
