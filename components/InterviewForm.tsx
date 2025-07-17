@@ -1,10 +1,10 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { ArrowLeft, X } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import CreatableSelect from 'react-select/creatable';
-import Image from "next/image";
+import Select from "react-select"; // not CreatableSelect
+// import { StylesConfig, GroupBase } from 'react-select';
 
 // Define these interfaces if they are not imported from a shared types file (recommended)
 interface User {
@@ -32,6 +32,7 @@ interface Roles {
   role: string;
   createdAt: string;
   flag: boolean;
+  skillsetNames?: string[]; // array of skill *names*, not IDs
 }
 
 interface Skills {
@@ -51,7 +52,8 @@ interface InterviewFormProps {
 interface SelectOption {
   value: string;
   label: string;
-  __isNew__?: boolean; // CreatableSelect adds this for new options
+  __isNew__?: boolean;
+  data?: Roles; // Store full role object
 }
 
 export default function InterviewForm({ user, roles, skills }: InterviewFormProps) {
@@ -69,13 +71,14 @@ export default function InterviewForm({ user, roles, skills }: InterviewFormProp
   const [isSkillsInvalid, setIsSkillsInvalid] = useState(false);
   const [isQuestionCountInvalid, setIsQuestionCountInvalid] = useState(false);
 
-  const router = useRouter();
+  
 
   // Transform roles data into react-select options format
   const roleOptions: SelectOption[] = roles.map((r) => ({
-    value: r.id,
-    label: r.role,
-  }));
+  value: r.id,
+  label: r.role,
+  data: r, // store full role data including skillsetNames
+}));
 
   // Transform skills data into react-select options format
   const skillOptions: SelectOption[] = skills.map((s) => ({
@@ -106,10 +109,10 @@ export default function InterviewForm({ user, roles, skills }: InterviewFormProp
       setIsLevelInvalid(true);
       isValid = false;
     }
-    if (selectedSkills.length === 0) {
-      setIsSkillsInvalid(true);
-      isValid = false;
-    }
+    // if (selectedSkills.length === 0) {
+    //   setIsSkillsInvalid(true);
+    //   isValid = false;
+    // }
     if (!questionCount) {
       setIsQuestionCountInvalid(true);
       isValid = false;
@@ -270,22 +273,74 @@ export default function InterviewForm({ user, roles, skills }: InterviewFormProp
 
         <div className="flex flex-col gap-2 w-full">
           <label className="text-white font-medium">Role</label>
-          <CreatableSelect
-            className="basic-single"
-            classNamePrefix="select"
-            value={selectedRole}
-            onChange={(selectedOption) => {
-              setSelectedRole(selectedOption as SelectOption);
-              setIsRoleInvalid(false); // Clear validation on change
-            }}
-            options={roleOptions}
-            isClearable={true}
-            isSearchable={true}
-            placeholder="Select or type a Role"
-            styles={getCustomSelectStyles(isRoleInvalid)} // Pass validation state
-          />
-        </div>
+          <Select
+  className="basic-single"
+  classNamePrefix="select"
+  value={selectedRole}
+  onChange={(selectedOption) => {
+    setSelectedRole(selectedOption as SelectOption);
+    setIsRoleInvalid(false);
 
+    const skillNamesFromRole = selectedOption?.data?.skillsetNames || [];
+    const matchedSkills = skillNamesFromRole.map((name) => {
+      const match = skills.find((s) => s.skill.toLowerCase() === name.toLowerCase());
+      return match ? { value: match.id, label: match.skill } : null;
+    }).filter(Boolean) as SelectOption[];
+
+    setSelectedSkills(matchedSkills);
+  }}
+  options={roleOptions}
+  isClearable={true}
+  isSearchable={true}
+  placeholder="Select a Role"
+  styles={getCustomSelectStyles(isRoleInvalid)}
+/>
+        </div>
+    {/* Tech Stack (Skills) */}
+        <div className="flex flex-col gap-2 w-full">
+          <div>
+           <label className="text-white font-medium">Skills to be evaluated</label>
+              <p className="text-sm text-gray-400">
+                These skills are based on the selected role and cannot be modified.
+              </p>
+          </div>
+         <div style={{ position: "relative" }}>
+        <CreatableSelect
+          className="basic-multi-select"
+          classNamePrefix="select"
+          isMulti
+          isDisabled={true}
+          value={selectedSkills}
+          onChange={(selectedOptions) => {
+            setSelectedSkills(selectedOptions as SelectOption[]);
+            setIsSkillsInvalid(false);
+          }}
+          options={skillOptions}
+          isClearable={true}
+          isSearchable={true}
+          placeholder="Skills are auto-selected from role"
+          styles={getCustomSelectStyles(isSkillsInvalid)}
+        />
+
+        {/* Overlay for alert on click */}
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            cursor: "not-allowed",
+            zIndex: 10, // above select but below any modal
+          }}
+          onClick={() => {
+            if (!selectedRole) {
+              alert("Please select a role first to load skills.");
+            }
+          }}
+        />
+      </div>
+        </div>
         {/* Interview Type */}
         <div className="flex flex-col gap-2 w-full">
           <label className="text-white font-medium">Interview Type</label>
@@ -352,30 +407,7 @@ export default function InterviewForm({ user, roles, skills }: InterviewFormProp
           </div>
         </div>
 
-        {/* Tech Stack (Skills) */}
-        <div className="flex flex-col gap-2 w-full">
-          <div>
-            <label className="text-white font-medium">Skills to be evaluated</label>
-            <p className="text-sm text-gray-400">
-              Select existing skills or type new ones.
-            </p>
-          </div>
-          <CreatableSelect
-            className="basic-multi-select"
-            classNamePrefix="select"
-            isMulti
-            value={selectedSkills}
-            onChange={(selectedOptions) => {
-              setSelectedSkills(selectedOptions as SelectOption[]);
-              setIsSkillsInvalid(false); // Clear validation on change
-            }}
-            options={skillOptions}
-            isClearable={true}
-            isSearchable={true}
-            placeholder="Select or type skills"
-            styles={getCustomSelectStyles(isSkillsInvalid)} // Pass validation state
-          />
-        </div>
+    
 
         {/* Number of Questions */}
         <div className="flex flex-col gap-2 w-full">
