@@ -553,24 +553,13 @@ useEffect(() => {
             onChange={(e) => setLevel(e.target.value)}
             >
             <option value="">Select Experience Level</option>
-            <option>Entry level</option>
-            <option>Mid level</option>
-            <option>Senior level</option>
-            <option>1 year</option>
-            <option>2 years</option>
-            <option>3 years</option>
-            <option>4 years</option>
-            <option>5 years</option>
-            <option>6 years</option>
-            <option>7 years</option>
-            <option>8 years</option>
-            <option>9 years</option>
-            <option>10 years</option>
-            <option>1 to 2 years</option>
-            <option>2 to 3 years</option>
-            <option>3 to 5 years</option>
-            <option>5 to 10 years</option>
-            <option>10 to 12 years</option>
+                <option value="Entry Level (Typically less than 2 years)">Entry Level (Typically less than 2 years)</option>
+                <option value="Junior Level (Typically 2-5 years)">Junior Level (Typically 2-5 years)</option>
+                <option value="Mid-Level">Mid-Level / Intermediate (Typically 5-7 years)</option>
+                <option value="Mid-Level / Intermediate (Typically 5-7 years)">Senior Level (Typically 7-10 years)</option>
+                <option value="Advanced Level (Typically 10-15 years)">Advanced Level (Typically 10-15 years)</option>
+                <option value="Expert Level (Typically 15-20 years)">Expert Level (Typically 15-20 years)</option>
+                <option value="Mastery Level (20+ years)">Mastery Level (20+ years)</option>
           </select>
           <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center justify-center text-white">
             <svg

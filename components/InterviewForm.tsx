@@ -389,8 +389,8 @@ export default function InterviewForm({ user, roles, skills }: InterviewFormProp
                 <option value="Junior Level">Junior Level (Typically 2-5 years)</option>
                 <option value="Mid-Level">Mid-Level / Intermediate (Typically 5-7 years)</option>
                 <option value="Senior Level">Senior Level (Typically 7-10 years)</option>
-                <option value="advanced">Advanced Level (Typically 10-15 years)</option>
-                <option value="Advanced Level">Expert Level (Typically 15-20 years)</option>
+                <option value="Advanced Level">Advanced Level (Typically 10-15 years)</option>
+                <option value="Expert Level">Expert Level (Typically 15-20 years)</option>
                 <option value="Mastery Level">Mastery Level (20+ years)</option>
               </select>
             <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center justify-center text-white">
