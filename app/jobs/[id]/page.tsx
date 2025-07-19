@@ -238,12 +238,19 @@ useEffect(() => {
    <div data-theme={theme} className="min-h-screen bg-base-100 text-base-content font-sans transition-colors duration-300">
       {/* header */}
       <nav className="navbar bg-transparent px-4 sm:px-20" role="navigation" aria-label="Main navigation">
-        <div className="flex-1 flex items-center">
-         {/* nextjs image */}
-         <Link href="/jobs" className="btn btn-ghost">
-         <Image src="/jb.png" alt="AI Avatar" width={110} height={110} className="object-cover" />
-        </Link>
-        </div>
+       <div className="flex-1 flex items-center">
+                {/* nextjs image */}
+                <a href="https://winyourinterview.ai/" target='_blank' className="btn btn-ghost">
+                 <Image
+                                    src="/wyi.png" // replace with your logo path
+                                    alt="Company Logo"
+                                    width={200}
+                                    height={100}
+                                    className="object-contain bg-gray-50 rounded-sm shadow-lg shadow-gray-700"
+                                  />
+                        </a>
+              
+               </div>
         <div className="flex-none gap-4 flex items-center">
           <div className="hidden sm:flex gap-4">
              <ThemeSwitcher theme={theme} setTheme={setTheme} />
