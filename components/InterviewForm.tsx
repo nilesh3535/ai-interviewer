@@ -105,7 +105,7 @@ export default function InterviewForm({ user, roles, skills }: InterviewFormProp
       setIsTypeInvalid(true);
       isValid = false;
     }
-    if (!level) {
+    if(!level) {
       setIsLevelInvalid(true);
       isValid = false;
     }

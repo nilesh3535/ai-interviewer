@@ -392,11 +392,11 @@ useEffect(() => {
             </Link>
             <div className="mt-3">
               {[
-                    ["Date Posted", moment(jobDetails[0].job_posted_at_datetime_utc).format('MMM DD, YYYY')],
+                    ["Date Posted", jobDetails[0].job_posted_at_datetime_utc? moment(jobDetails[0].job_posted_at_datetime_utc).format('MMM DD, YYYY'):"-" ],
                     ["Job Type", jobDetails[0].job_employment_type],
                     ["Job Role", jobDetails[0].job_title],
                     ["Salary", `${jobDetails[0].job_min_salary || ""} - ${jobDetails[0].job_max_salary || ""}`],
-                  ["Tag", jobDetails[0].search_data],
+                  ["", jobDetails[0].search_data],
                 ].map(([label, value]) => (
                 <div
                   key={label}

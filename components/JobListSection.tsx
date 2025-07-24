@@ -198,10 +198,10 @@ return (
                           {job.job_min_salary||""}-{job.job_max_salary||""}
                         </p>
                         <p className="bg-accent-content/5 px-2 py-1 text-xs text-accent-content/60 rounded-md">
-                          {moment(job.job_posted_at_datetime_utc).format('MMM DD, YYYY')}
+                        {job.job_posted_at_datetime_utc? moment(job.job_posted_at_datetime_utc).format('MMM DD, YYYY'):"-" }
                         </p>
                           <p className="bg-accent-content/5 px-2 py-1 text-xs text-accent-content/60 rounded-md">
-                         {moment(job.job_posted_at_datetime_utc).fromNow()}
+                         {job.job_posted_at_datetime_utc?moment(job.job_posted_at_datetime_utc).fromNow():"-"}
                         </p>
                         <p className="bg-accent-content/5 px-2 py-1 text-xs text-accent-content/60 rounded-md">
                           {job.job_location}

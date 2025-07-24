@@ -12,10 +12,10 @@ import LastSearchInfo from "@/components/LastSearchInfo";
 import Footer from "@/components/Footer";
 
 import { fetchAndProcessJobs, fetchUserDataAndJobs } from "@/lib/actions/jobs.action";
-import { getCurrentUser } from "@/lib/actions/auth.action";
+import { getAllRoles, getCurrentUser } from "@/lib/actions/auth.action";
 import Link from "next/link";
 import Image from "next/image";
-
+import CreatableSelect from 'react-select/creatable';
 const themes = [
   "night",
   "synthwave",
@@ -189,6 +189,17 @@ interface Job {
   candidate_id: string;
   created_date: string;
 }
+interface SelectOption {
+  value: string;
+  label: string;
+  __isNew__?: boolean;
+}
+interface Roles {
+  id: string;
+  role: string;
+  createdAt: string;
+  flag: boolean;
+}
 export default function JobsApp() {
   // Initialize theme from localStorage or default to "night"
   const [theme, setThemeState] = useState<string>(() => {
@@ -205,13 +216,20 @@ export default function JobsApp() {
       localStorage.setItem("theme", newTheme);
     }
   };
+ 
  const [loading, setLoading] = useState(true);
   const [allJobs, setAllJobs] = useState<Job[]>([]);
+  const [roles,setRoles]=useState<Roles[]>([])
  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
     const [generateStatus, setGenerateStatus] =useState<boolean>(false);
    const [photoUrl, setPhotoUrl] = useState<string>("");
    const [username, setUsername] = useState<string>("");
+    const [selectedRole, setSelectedRole] = useState<SelectOption | null>(null);
+    // Validation states
+  const [isRoleInvalid, setIsRoleInvalid] = useState(false);
+  const [isLevelInvalid, setIsLevelInvalid] = useState(false);
+  const [isLocInvalid, setIsLocInvalid] = useState(false);
     const [role, setRole] = useState("");
       const [city, setCity] = useState("");
       const [level, setLevel] = useState("Select Experience Level");
@@ -223,7 +241,7 @@ export default function JobsApp() {
     return "desktop";
   });
   // const [position, setPosition] = useState("");
-
+ 
   useEffect(() => {
     setIsFullscreen(false);
    
@@ -242,7 +260,10 @@ export default function JobsApp() {
         }
       
         const alldata = await fetchUserDataAndJobs({ userId });
+
         setAllJobs(alldata);
+         const froles=await getAllRoles();
+        setRoles(froles)
         setLoading(false);
       
     };
@@ -295,15 +316,24 @@ useEffect(() => {
 
   const getJobs = async () => {
     
-       if (role.trim() === "") {
-          toast.error("Please enter a role!", { duration: 2000, position: "top-center",closeButton:true });
+
+    // Reset all validation states
+    setIsRoleInvalid(false);
+    setIsLevelInvalid(false);
+    setIsLocInvalid(false);
+  
+       if (selectedRole?.label == "" || selectedRole?.label==null) {
+         setIsRoleInvalid(true);
+          toast.error("Please Select or type a Role!", { duration: 2000, position: "top-center",closeButton:true });
           return;
         }
         if (level === "Select Experience Level") {
+            setIsLevelInvalid(true);
           toast.error("Please select an experience level!", { duration: 2000, position: "top-center" ,closeButton:true });
           return;
         }
         if (city.trim() === "") {
+              setIsLocInvalid(true);
           toast.error("Please enter a city/preferred location!", { duration: 2000, position: "top-center" ,closeButton:true });
           return;
         }
@@ -332,10 +362,10 @@ useEffect(() => {
         if (userId) {
          
      const newJobs=await fetchAndProcessJobs({
-      userId,
-      role,
-      city,
-      level,
+      userId:userId,
+      role:selectedRole?.label||"",
+      city:city,
+      level:level
      });
      console.log(newJobs);
      if(newJobs){
@@ -372,7 +402,78 @@ useEffect(() => {
   const commonFieldClasses =
     "w-full px-5 py-3 pr-10 rounded-md border border-gray-300 dark:border-gray-700 bg-gray-900 text-white appearance-none";
 
- 
+   const getCustomSelectStyles = (isInvalid: boolean) => ({
+    control: (base: any, state: any) => ({
+      ...base,
+      backgroundColor: '#1A202C', // bg-gray-900
+      borderColor: isInvalid ? '#EF4444' : '#4A5568', // border-red-500 or border-gray-700
+      color: 'white',
+      borderRadius: '0.375rem', // rounded-md
+      padding: '0.25rem', // p-2
+      boxShadow: state.isFocused ? '0 0 0 1px #63B3ED' : 'none', // Example focus ring
+      '&:hover': {
+        borderColor: isInvalid ? '#EF4444' : '#63B3ED', // Maintain red on hover if invalid
+      },
+      minHeight: '42px', // Ensure consistent height for single and multi-select
+    }),
+    multiValue: (base: any) => ({
+      ...base,
+      backgroundColor: '#3B82F6', // bg-blue-500
+      color: 'white',
+      borderRadius: '9999px', // rounded-full
+      padding: '0.125rem 0.5rem', // px-2 py-1
+    }),
+    multiValueLabel: (base: any) => ({
+      ...base,
+      color: 'white',
+      fontSize: '0.875rem', // text-sm
+    }),
+    multiValueRemove: (base: any) => ({
+      ...base,
+      color: 'white',
+      '&:hover': {
+        backgroundColor: '#2563EB', // A darker blue on hover
+        color: 'white',
+      },
+    }),
+    singleValue: (base: any) => ({
+      ...base,
+      color: 'white',
+    }),
+    input: (base: any) => ({
+      ...base,
+      color: 'white',
+    }),
+    placeholder: (base: any) => ({
+      ...base,
+      color: '#A0AEC0', // gray-400
+    }),
+    menu: (base: any) => ({
+      ...base,
+      backgroundColor: '#1A202C', // bg-gray-900 for dropdown menu
+      color: 'white',
+      borderRadius: '0.375rem', // rounded-md
+    }),
+    option: (base: any, state: any) => ({
+      ...base,
+      backgroundColor: state.isFocused ? '#2D3748' : '#1A202C', // bg-gray-800 on focus, bg-gray-900 otherwise
+      color: 'white',
+      '&:active': {
+        backgroundColor: '#4A5568', // bg-gray-700 on active
+      },
+    }),
+    indicatorSeparator: (base: any) => ({
+      ...base,
+      backgroundColor: '#4A5568', // Separator color
+    }),
+    dropdownIndicator: (base: any) => ({
+      ...base,
+      color: '#A0AEC0', // Arrow color
+      '&:hover': {
+        color: 'white',
+      },
+    }),
+  });
  
   return (
      <div data-theme={theme} className="min-h-screen bg-base-100 text-base-content font-sans transition-colors duration-300">
@@ -535,20 +636,52 @@ useEffect(() => {
         {/* role */}
         <div className="flex flex-col gap-2 w-full">
         <label className="text-white font-medium">Role</label>
-        <input
+        {/* <input
             type="text"
             placeholder="e.g. Sales Executive, Software Engineer, etc."
             className={commonFieldClasses}
             value={role}
             onChange={(e) => setRole(e.target.value)}
-            />
+            /> */}
+            <CreatableSelect
+            className="basic-single"
+            classNamePrefix="select"
+            value={selectedRole}
+            onChange={(selectedOption) => {
+              setSelectedRole(selectedOption as SelectOption);
+              
+              setIsRoleInvalid(false);
+            }}
+            options={roles.map((r) => ({
+              value: r.id,
+              label: r.role,
+              data: r, // full role data
+            }))}
+            isClearable={true}
+            isSearchable={true}
+            placeholder="Select or type a Role"
+            styles={getCustomSelectStyles(isRoleInvalid)}
+            onCreateOption={(inputValue) => {
+              const customRole = {
+                value: inputValue,
+                label: inputValue,
+                data: null, // or define how you want to store custom data
+              };
+              setSelectedRole(customRole);
+           
+              setIsRoleInvalid(false);
+
+              // Optional: insert new role to DB or state
+              // createRoleInBackend(inputValue)
+            }}
+          />
       </div>
             {/* Experience Level */}
       <div className="flex flex-col gap-2 w-full">
         <label className="text-white font-medium">Experience Level</label>
         <div className="relative">
         <select
-            className={`${commonFieldClasses} pl-3 pr-10`}
+            className={`${commonFieldClasses} pl-3 pr-10 ${isLevelInvalid ? '!border-red-500' : ''}`}
             value={level}
             onChange={(e) => setLevel(e.target.value)}
             >
@@ -580,7 +713,7 @@ useEffect(() => {
         <input
             type="text"
             placeholder="e.g. Bangaluru."
-            className={commonFieldClasses}
+            className={`${commonFieldClasses}${isLocInvalid ? '!border-red-500' : ''}`}
             value={city}
             onChange={(e) => setCity(e.target.value)}
             />
