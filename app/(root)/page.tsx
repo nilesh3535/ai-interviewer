@@ -82,7 +82,7 @@ async function Home({ searchParams }: HomeProps) {
         </div>
 
         <Image
-          src="/robot.png"
+          src="/robott.png"
           alt="Robot here"
           width={400}
           height={254}
