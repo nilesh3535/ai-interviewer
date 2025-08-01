@@ -91,6 +91,7 @@ const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
 useEffect(() => {
   window.scrollTo({ top: 500, behavior: "smooth" });
 }, [currentPage]);
+const todayStr = new Date().toISOString().split("T")[0];
 return (
   <div className="w-full bg-white">
     <div className="container mx-auto py-16 xl:py-20 px-5 md:px-0">
@@ -146,14 +147,130 @@ return (
         </aside>
 
         <section className="col-span-12 xl:col-span-9" id="find-job">
+          {filteredJobs.filter((job) =>
+          job.created_date.split("T")[0] === todayStr
+        ).length >0 &&
+       <>
           <div className="flex items-center justify-between">
-            <h3 className="text-2xl font-semibold text-accent-content">Latest Jobs</h3>
+            <h3 className="text-2xl font-semibold text-accent-content">Latest Job Search Results</h3>
             <p className="text-base text-accent-content/60">
-              {filteredJobs.length.toLocaleString()} Results Found
+              {filteredJobs.filter((job) =>
+  job.created_date.split("T")[0] === todayStr
+).length.toLocaleString()} Results Found
             </p>
           </div>
+           <div className="mt-8 flex flex-col gap-6">
+            {filteredJobs.filter((job) =>
+  job.created_date.split("T")[0] === todayStr
+).map((job, idx) => (
+              <div
+                key={idx}
+                className="p-6 bg-white hover:bg-gray-50 hover:duration-500 transition border border-base-100/20 rounded-xl group"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+                   
+                    
+                       {/* eslint-disable-next-line @next/next/no-img-element */}
+                   <img
+                    alt="company logo"
+                    loading="lazy"
+                    width={48}
+                    height={48}
+                    className="p-2 bg-accent-content rounded-xl"
+                    src={job.employer_logo || "/jobimg.png"}
+                    onError={(e) => {
+                      e.currentTarget.src = "/jobimg.png"; // fallback image
+                    }}
+                  />
+                   <a
+                    className="flex items-center gap-1.5 px-4 py-2.5 text-accent-content/60 bg-accent-content/5 group-hover:bg-accent-content group-hover:text-white rounded-lg transition md:hidden"
+                    href={`/jobs/${job.id}details=${job.job_id}&rq=${job.id}&cd=${job.candidate_id}`}
+                  >
+                    View Job
+                    {/* Icon omitted for brevity */}
+                  </a>
+              
+                    <div>
+                      <p className="text-sm font-medium text-accent">
+                        {job.employer_name}
+                      </p>
+                      <h6 className="mt-1 text-lg font-semibold text-accent-content group-hover:opacity-100 transition">
+                        <a href={`/jobs/${job.id}details=${job.job_id}&rq=${job.id}&cd=${job.candidate_id}`}>{job.job_title}</a>
+                      </h6>
+                      <div className="mt-3 flex items-center gap-2">
+                        <p className="bg-accent-content/5 px-2 py-1 text-xs text-accent-content/60 rounded-md">
+                          {job.job_employment_type}
+                        </p>
+                        <p className="bg-accent-content/5 px-2 py-1 text-xs text-accent-content/60 rounded-md">
+                          {job.job_min_salary||""}-{job.job_max_salary||""}
+                        </p>
+                        <p className="bg-accent-content/5 px-2 py-1 text-xs text-accent-content/60 rounded-md">
+                        {job.job_posted_at_datetime_utc? moment(job.job_posted_at_datetime_utc).format('MMM DD, YYYY'):"-" }
+                        </p>
+                          <p className="bg-accent-content/5 px-2 py-1 text-xs text-accent-content/60 rounded-md">
+                         {job.job_posted_at_datetime_utc?moment(job.job_posted_at_datetime_utc).fromNow():"-"}
+                        </p>
+                        <p className="bg-accent-content/5 px-2 py-1 text-xs text-accent-content/60 rounded-md">
+                          {job.job_location}
+                        </p>
+                         <p className="hidden md:bg-accent-content/5 px-2 py-1 text-xs text-accent-content/60 rounded-md">
+                          {job.search_data}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <a
+                    className="hidden md:flex items-center gap-1.5 px-4 py-2.5 text-accent-content/60 bg-accent-content/5 group-hover:bg-accent-content group-hover:text-white rounded-lg transition"
+                    href={`/jobs/${job.id}details=${job.job_id}&rq=${job.id}&cd=${job.candidate_id}`}
+                  >
+                    View Job
+                    {/* Icon omitted for brevity */}
+                  </a>
+                </div>
+                <p className="mt-5 text-base text-accent-content/60 line-clamp-3">{job.job_description}</p>
+              </div>
+            ))}
+          </div>
+          </>
+ }
+          {/* older */}
+          <div
+  style={{
+     marginTop:
+      filteredJobs.some(
+        (job) => job.created_date.split("T")[0] === todayStr
+      )
+        ? "50px"
+        : "0px",
+    borderTop: filteredJobs.some(
+      (job) => job.created_date.split("T")[0] === todayStr
+    )
+      ? "2px solid black"
+      : "0px"
+  }}
+></div>
+          <div
+  className="flex items-center justify-between"
+  style={{
+    marginTop:
+      filteredJobs.some(
+        (job) => job.created_date.split("T")[0] === todayStr
+      )
+        ? "30px"
+        : "0px",
+   
+  }}
+>
 
-          <div className="mt-8 flex flex-col gap-6">
+            <h3 className="text-2xl font-semibold text-accent-content">Past Job Searches</h3>
+            <p className="text-base text-accent-content/60">
+              {filteredJobs.filter((job) =>
+  job.created_date.split("T")[0] !== todayStr
+).length.toLocaleString()} Results Found
+            </p>
+          </div>
+ <div className="mt-8 flex flex-col gap-6">
             {currentJobs.map((job, idx) => (
               <div
                 key={idx}
@@ -224,6 +341,7 @@ return (
               </div>
             ))}
           </div>
+         
           {filteredJobs.length ?<div className="mt-8 flex justify-center gap-2">
             <button
               className="btn btn-sm"
