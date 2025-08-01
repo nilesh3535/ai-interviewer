@@ -50,7 +50,7 @@ interface JobListSectionProps {
 
 export default function JobListSection({ jobs }: JobListSectionProps) {
   // Example state (e.g., job list), if needed
-  
+  const todayStr = new Date().toISOString().split("T")[0];
 
 const jobTypes = ['Full Time', 'Part Time', 'Remote','Contractor', 'Internship'];
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
@@ -87,11 +87,13 @@ const filteredJobs = selectedTypes.length > 0
 
 const indexOfLastJob = currentPage * jobsPerPage;
 const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
+const currentJobs = filteredJobs.filter((job) =>
+  job.created_date.split("T")[0] !== todayStr
+).slice(indexOfFirstJob, indexOfLastJob);
 useEffect(() => {
   window.scrollTo({ top: 500, behavior: "smooth" });
 }, [currentPage]);
-const todayStr = new Date().toISOString().split("T")[0];
+
 return (
   <div className="w-full bg-white">
     <div className="container mx-auto py-16 xl:py-20 px-5 md:px-0">
@@ -342,7 +344,9 @@ return (
             ))}
           </div>
          
-          {filteredJobs.length ?<div className="mt-8 flex justify-center gap-2">
+          {filteredJobs.filter((job) =>
+  job.created_date.split("T")[0] !== todayStr
+).length ?<div className="mt-8 flex justify-center gap-2">
             <button
               className="btn btn-sm"
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
@@ -351,7 +355,9 @@ return (
               Prev
             </button>
 
-           {Array.from({ length: Math.ceil(filteredJobs.length / jobsPerPage) }).map((_, idx) => (
+           {Array.from({ length: Math.ceil(filteredJobs.filter((job) =>
+  job.created_date.split("T")[0] !== todayStr
+).length / jobsPerPage) }).map((_, idx) => (
           <button
             key={idx}
             onClick={() => setCurrentPage(idx + 1)}
@@ -365,10 +371,14 @@ return (
               className="btn btn-sm"
              onClick={() =>
     setCurrentPage((prev) =>
-      Math.min(prev + 1, Math.ceil(filteredJobs.length / jobsPerPage))
+      Math.min(prev + 1, Math.ceil(filteredJobs.filter((job) =>
+  job.created_date.split("T")[0] !== todayStr
+).length / jobsPerPage))
     )
   }
-  disabled={currentPage === Math.ceil(filteredJobs.length / jobsPerPage)}
+  disabled={currentPage === Math.ceil(filteredJobs.filter((job) =>
+  job.created_date.split("T")[0] !== todayStr
+).length / jobsPerPage)}
             >
               Next
             </button>
