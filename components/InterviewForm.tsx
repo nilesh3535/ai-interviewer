@@ -153,6 +153,7 @@ const [isCustomRole, setIsCustomRole] = useState(false);
           level: level,
           amount: String(questionCount || 1),
           userid: user?.id || "guest",
+          isCustomRole: isCustomRole,
           techstack:isCustomRole ? jobDescription  : selectedSkills.map(s => s.label).join(", "),
         }),
       });
