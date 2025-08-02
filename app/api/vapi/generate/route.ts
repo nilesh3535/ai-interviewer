@@ -48,7 +48,7 @@ Start now.
       amount: amount, // amount of questions
       type: type, // type of interview (behavioural, technical, mixed)
       level: level, // level of the interview (entry level, junior, mid, senior, expert)
-      techstack: isCustomRole?"":techstack.split(","),// tech stack used in the interview
+      techstack: isCustomRole?techstack:techstack.split(","),// tech stack used in the interview
       questions: JSON.parse(questions), // parse the questions from gemini
       userId: userid,// user id of the user who created the interview
       finalized: true,// whether the interview is finalized or not
