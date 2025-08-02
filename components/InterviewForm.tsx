@@ -63,7 +63,8 @@ export default function InterviewForm({ user, roles, skills }: InterviewFormProp
   const [type, setType] = useState("");
   const [level, setLevel] = useState("");
   const [generateStatus, setGenerateStatus] = useState(false);
-
+  const [jobDescription, setJobDescription] = useState(""); 
+const [isCustomRole, setIsCustomRole] = useState(false);
   // Validation states
   const [isRoleInvalid, setIsRoleInvalid] = useState(false);
   const [isTypeInvalid, setIsTypeInvalid] = useState(false);
@@ -152,7 +153,7 @@ export default function InterviewForm({ user, roles, skills }: InterviewFormProp
           level: level,
           amount: String(questionCount || 1),
           userid: user?.id || "guest",
-          techstack: selectedSkills.map(s => s.label).join(", "),
+          techstack:isCustomRole ? jobDescription  : selectedSkills.map(s => s.label).join(", "),
         }),
       });
 
@@ -273,39 +274,63 @@ export default function InterviewForm({ user, roles, skills }: InterviewFormProp
 
         <div className="flex flex-col gap-2 w-full">
           <label className="text-white font-medium">Role</label>
-          <Select
+<CreatableSelect
   className="basic-single"
   classNamePrefix="select"
   value={selectedRole}
   onChange={(selectedOption) => {
     setSelectedRole(selectedOption as SelectOption);
     setIsRoleInvalid(false);
+    setIsCustomRole(selectedOption?.data === null); // <- Set flag based on data presence
 
-    const skillNamesFromRole = selectedOption?.data?.skillsetNames || [];
-    const matchedSkills = skillNamesFromRole.map((name) => {
-      const match = skills.find((s) => s.skill.toLowerCase() === name.toLowerCase());
-      return match ? { value: match.id, label: match.skill } : null;
-    }).filter(Boolean) as SelectOption[];
-
-    setSelectedSkills(matchedSkills);
+    if (selectedOption?.data) {
+      const skillNamesFromRole = selectedOption.data.skillsetNames || [];
+      const matchedSkills = skillNamesFromRole.map((name) => {
+        const match = skills.find((s) => s.skill.toLowerCase() === name.toLowerCase());
+        return match ? { value: match.id, label: match.skill } : null;
+      }).filter(Boolean) as SelectOption[];
+      setSelectedSkills(matchedSkills);
+    } else {
+      setSelectedSkills([]); // Clear skills if it's a custom role
+    }
+  }}
+  onCreateOption={(inputValue) => {
+    const customRole = {
+      value: inputValue,
+      label: inputValue,
+      data: null,
+    };
+    setSelectedRole(customRole);
+    setIsRoleInvalid(false);
+    setIsCustomRole(true); // <- Mark as custom
+    setSelectedSkills([]); // Clear skills for custom role
   }}
   options={roleOptions}
   isClearable={true}
   isSearchable={true}
-  placeholder="Select a Role"
+  placeholder="Select or type a Role"
   styles={getCustomSelectStyles(isRoleInvalid)}
 />
         </div>
     {/* Tech Stack (Skills) */}
         <div className="flex flex-col gap-2 w-full">
           <div>
-           <label className="text-white font-medium">Skills to be evaluated</label>
+           <label className="text-white font-medium">{isCustomRole ?"Job Description":"Skills to be evaluated"}</label>
               <p className="text-sm text-gray-400">
-                These skills are based on the selected role and cannot be modified.
+               {isCustomRole?"Enter a detailed description for this custom role": "These skills are based on the selected role and cannot be modified."}
               </p>
           </div>
          <div style={{ position: "relative" }}>
-        <CreatableSelect
+       {isCustomRole ? (
+  <textarea
+
+    className={`${commonFieldClasses} h-32 resize-none`}
+    placeholder="Enter a detailed description for this custom role"
+    value={jobDescription}
+    
+    onChange={(e) => setJobDescription(e.target.value)}
+  />
+) : ( <CreatableSelect
           className="basic-multi-select"
           classNamePrefix="select"
           isMulti
@@ -321,9 +346,11 @@ export default function InterviewForm({ user, roles, skills }: InterviewFormProp
           placeholder="Skills are auto-selected from role"
           styles={getCustomSelectStyles(isSkillsInvalid)}
         />
+)}
 
         {/* Overlay for alert on click */}
-        <div
+        {/* { !isCustomRole &&
+          <div
           style={{
             position: "absolute",
             top: 0,
@@ -338,7 +365,7 @@ export default function InterviewForm({ user, roles, skills }: InterviewFormProp
               alert("Please select a role first to load skills.");
             }
           }}
-        />
+        />} */}
       </div>
         </div>
         {/* Interview Type */}
