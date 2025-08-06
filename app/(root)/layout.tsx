@@ -78,6 +78,10 @@ const RootLayout = async ({children }: {children: ReactNode}) => {
             <p>ATS Resume Checker</p>
           </a>
           <p className='text-gray-50'>|</p>
+          <a href="https://app.winyourinterview.ai/jobs/resume-builder" target='_blank' className="hidden sm:btn btn-ghost ">
+            <p>ATS Resume Builder</p>
+          </a>
+          <p className='text-gray-50'>|</p>
        <a href="https://app.winyourinterview.ai/jobs" target='_blank' className="hidden sm:btn btn-ghost">
             <p>Find Jobs</p>
           </a>     
