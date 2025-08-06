@@ -249,6 +249,7 @@ setTimeout(() => {
   ];
   const [currentStep, setCurrentStep] = useState(0);
   const [stepsloader,setStepsLoader]=useState(false);
+  const [resumeLoader, setResumeLoader] = useState(false);
   const [stepsStopped,setSteppsStopper]=useState(false);
   useEffect(() => {
     if(stepsloader){
@@ -356,14 +357,29 @@ const slides = [
 
 ];
 
-  return (
+const handleRedirect= () => {
+    setResumeLoader(true);
+ setTimeout(() => {
+  // Redirect to the resume checker page after 1 second
+  window.location.href = "https://app.winyourinterview.ai/jobs/ats-resume-builder/";
+
+ }, 3000);
+
+
+}
+  return resumeLoader ?
+  <div className="bg-white min-h-screen flex justify-center items-center">
+          <span className="loading loading-infinity text-green-500" style={{ width: '70px', height: '70px' }} />
+
+        </div>
+        :(
     <>
       <div
         data-theme={theme}
         className="bg-base-100 text-base-content font-sans transition-colors duration-300"
       >
         {/* Header */}
-        {!scoreLoader && !n8nData && (
+      
           <nav
             className="navbar bg-transparent px-4 sm:px-20"
             role="navigation"
@@ -426,7 +442,7 @@ const slides = [
               </div>
             </div>
           </nav>
-        )}
+      
       </div>
       {/* Main Content */}
       <div
@@ -482,8 +498,8 @@ const slides = [
               style={{ marginTop: "50px" }}
               className="flex gap-3 gap-4-xsm p-inline-4-xs p-inline-6-sm"
             >
-              <a
-                href="https://app.winyourinterview.ai/jobs/resume-checker"
+              <button
+              onClick={handleRedirect}
                 style={{
                   fontSize: 18,
                   lineHeight: "24px",
@@ -510,7 +526,7 @@ const slides = [
                 className="_7d9Ew3rdopoMTEUs4G1Anw== nh1o124RBbCY8z2D0sMLjg== VBydUq+aZiAcG1CHXLDDPw== s6uaHA305IeoqI4xywTdvA== col-12-xsm full-width-xsm"
               >
                 Build Your Resume
-              </a>
+              </button>
               <a
                 style={{
                   fontSize: 18,
@@ -810,9 +826,8 @@ const slides = [
                 >
                 Easily create and customize your ATS-optimized resume with our intuitive drag-and-drop builder. Choose from professional templates, section layouts, and design options tailored to help you land more interviews.
                 </p>
-                <a
-                  href="https://app.winyourinterview.ai/jobs/resume-checker"
-                  target="_blank"
+                <button
+                  onClick={handleRedirect}
                   className="lbDsKPVYdwKjE90OIGvw8g== RRxe1M+sUxFTRkUeo96NlQ=="
                 >
                   <span
@@ -828,7 +843,7 @@ const slides = [
                     Build Your Resume
                   </span>
                   <ArrowRightIcon className="text-[#5f4dc7] ml-1 w-4 h-4 inline-block" />
-                </a>
+                </button>
               </div>
             </div>
           </div>
