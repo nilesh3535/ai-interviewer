@@ -514,18 +514,9 @@ useEffect(() => {
          <a href="https://app.winyourinterview.ai/jobs/resume-checker" target='_blank' className="hidden sm:btn btn-ghost">
             <p>ATS Resume Checker</p>
           </a>
-          <button className="hidden sm:btn btn-ghost" onClick={()=>{
-            toast.info("AI Resume Builder is under development. Please check back later!", {
-             duration: 2000,
-              position:"top-right",
-            
-            }
-            )
-          }}>
-             
-            <p >AI Resume Builder</p>
-          
-          </button>
+          <a href="https://app.winyourinterview.ai/jobs/resume-builder" target='_blank' className="hidden md:btn btn-ghost">
+            <p >ATS Resume Builder</p>
+          </a>
           
         
             <p className="hidden sm:btn btn-md">{username.split(" ")[0]}</p>
