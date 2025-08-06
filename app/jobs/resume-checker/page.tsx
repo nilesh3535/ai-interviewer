@@ -343,15 +343,9 @@ setTimeout(() => {
             <p>Find Jobs</p>
           </a>
 
-         <button className="hidden sm:btn btn-ghost" onClick={()=>{
-            toast.info("AI Resume Builder is under development. Please check back later!", {
-             duration: 2000,
-              position: "top-center",
-            }
-            )
-          }}>
+        <a href="https://app.winyourinterview.ai/jobs/resume-builder" target='_blank' className="hidden md:btn btn-ghost">
             <p >ATS Resume Builder</p>
-          </button>
+          </a>
             <p className="hidden sm:btn btn-md">{username.split(" ")[0]}</p>
           
           
@@ -609,7 +603,7 @@ setTimeout(() => {
             </div>
             <div className="flex-1 max-w-4xl w-full rounded-3xl overflow-hidden shadow-lg bg-white/90 backdrop-blur-sm border border-white/50">
               <img
-                src="https://storage.googleapis.com/a1aa/image/c2169f80-5431-49d9-8336-b3abc476632d.jpg"
+                src="/rb/resume.png"
                 alt="Resume checker dashboard"
                 className="w-full h-auto object-contain"
                 width={900}
