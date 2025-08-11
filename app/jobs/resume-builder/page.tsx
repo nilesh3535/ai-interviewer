@@ -715,7 +715,7 @@ export default function ResumeBuilderPage() {
         </div>
       </div>
       {/* Carousel */}
-      <EmblaCarousel slides={slides} />
+      <EmblaCarousel slides={slides} handleRedirect={handleRedirect} />
       {/* Features Section */}
       <div style={{ background: "#fff", width: "100%" }}>
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 py-12 px-6 md:px-16 lg:px-24">
