@@ -114,7 +114,7 @@ export default function Page() {
             autoplay
             className="w-48 h-48"
           />
-          <h1 className="font-mona-sans text-[32px] font-normal leading-[38px] mb-4 mt-8 text-[#2d3639]">
+          <h1 className="text-center font-mona-sans text-[32px] font-normal leading-[38px] mb-4 mt-8 text-[#2d3639]">
             Would you like to import your existing resume?
           </h1>
           <div className="flex flex-row items-center justify-center gap-4 mt-8">
@@ -137,7 +137,7 @@ export default function Page() {
       {/* Step 2: Template Selection */}
       {!showImportPrompt && !showFinalStep && (
         <div className="flex flex-col items-center justify-center mt-8">
-          <h2 className="font-mona-sans text-[32px] font-normal leading-[38px] mb-4 mt-8 text-[#2d3639]">
+          <h2 className="text-center font-mona-sans text-[32px] font-normal leading-[38px] mb-4 mt-8 text-[#2d3639]">
             Please select a template for your resume.
           </h2>
 
