@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 
 import Link from "next/link";
@@ -6,7 +5,7 @@ import Link from "next/link";
 import InterviewCard from "@/components/InterviewCard"; // Grid view
 import InterviewCardList from "@/components/InterviewCardList"; // List view
 
-import { List, LayoutGrid } from 'lucide-react';
+import { List, LayoutGrid } from "lucide-react";
 
 import { getCurrentUser } from "@/lib/actions/auth.action";
 import {
@@ -27,20 +26,20 @@ async function Home({ searchParams }: HomeProps) {
   const user = await getCurrentUser();
 
   const [userInterviews] = await Promise.all([
-    getInterviewsByUserId(user?.id || ''),
-    getLatestInterviews({ userId: user?.id || '' }),
+    getInterviewsByUserId(user?.id || ""),
+    getLatestInterviews({ userId: user?.id || "" }),
   ]);
 
   const hasPastInterviews = (userInterviews?.length ?? 0) > 0;
-  const allInterview = await getInterviewsByUserId('');
-  const viewMode = searchParams?.view === 'grid' ? 'grid' : 'list';
+  const allInterview = await getInterviewsByUserId("");
+  const viewMode = searchParams?.view === "grid" ? "grid" : "list";
 
   // ✅ Fetch feedback for each interview in parallel
   const feedbackList = await Promise.all(
-    userInterviews.map(interview =>
+    userInterviews.map((interview) =>
       getFeedbackByInterviewId({
         interviewId: interview.id,
-        userId: user?.id || '',
+        userId: user?.id || "",
       })
     )
   );
@@ -51,33 +50,50 @@ async function Home({ searchParams }: HomeProps) {
     return acc;
   }, {} as Record<string, any>);
 
-
   return (
     <>
-     <section className="card-cta flex-col-reverse md:flex-row items-center">
-    
+      <section className="card-cta flex-col-reverse md:flex-row items-center">
         <div className="flex flex-col gap-6 max-w-1/1.1 mt-6 sm:mt-0">
           <AnimatedText delay={0.1}>
-            <h2><span className="text-orange-300">AI-Powered</span> Real-Time Interview Platform for Smarter Hiring</h2>
+            <h2>
+              <span className="text-orange-300">AI-Powered</span> Real-Time
+              Interview Platform for Smarter Hiring
+            </h2>
           </AnimatedText>
-          
+
           <AnimatedText delay={0.2}>
             <p className="text-lg">
-              Practice real interview questions & get instant feedback.<br />
+              Practice real interview questions & get instant feedback.
+              <br />
               For example: Frontend, Backend, Fullstack, Design, UX/UI.
             </p>
           </AnimatedText>
-           <div className="gap-2 max-w-full flex flex-col md:flex-row sm:flex-col">
-          <AnimatedCTAButton href="/create" delay={0.3}>
-            Create an Interview
-          </AnimatedCTAButton>
-             {/* <AnimatedCTAButton href="/jobs/resume-checker" delay={0.3}>
-            ATS Resume Checker
-          </AnimatedCTAButton>
-           <AnimatedCTAButton href="/jobs" delay={0.3}>
-            Find Jobs
-          </AnimatedCTAButton> */}
-         
+          <div className="gap-2 max-w-full flex flex-col md:flex-row sm:flex-col">
+            <AnimatedCTAButton href="/create" delay={0.3}>
+              Create an Interview
+            </AnimatedCTAButton>
+            <h1 className="ml-3 text-amber-600">Other tools</h1>
+            <AnimatedCTAButton
+              className="block md:hidden"
+              href="/jobs/resume-builder"
+              delay={0.3}
+            >
+              ATS Resume Builder
+            </AnimatedCTAButton>
+            <AnimatedCTAButton
+              className="block md:hidden"
+              href="/jobs/resume-checker"
+              delay={0.3}
+            >
+              ATS Resume Checker
+            </AnimatedCTAButton>
+            <AnimatedCTAButton
+              className="block md:hidden"
+              href="/jobs"
+              delay={0.3}
+            >
+              Find Jobs
+            </AnimatedCTAButton>
           </div>
         </div>
 
@@ -108,7 +124,6 @@ async function Home({ searchParams }: HomeProps) {
 
             <Link
               href="?view=grid"
-             
               className={`flex items-center gap-2 px-4 py-2 rounded-md transition ${
                 viewMode === "grid"
                   ? "bg-gray-800 text-white"
@@ -143,11 +158,13 @@ async function Home({ searchParams }: HomeProps) {
             </div>
 
             {/* Conditional view for desktop */}
-            <div className={`${
-              viewMode === "grid"
-                ? "grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-                : "flex flex-col gap-4"
-            } hidden md:grid md:flex`}>
+            <div
+              className={`${
+                viewMode === "grid"
+                  ? "grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+                  : "flex flex-col gap-4"
+              } hidden md:grid md:flex`}
+            >
               {userInterviews.map((interview) =>
                 viewMode === "list" ? (
                   <InterviewCardList
