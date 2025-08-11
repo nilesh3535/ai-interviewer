@@ -41,7 +41,7 @@ export default function Page() {
   }, []);
 
   const handleYes = () => {
-    router.push("/jobs/ats-resume-builder/upload");
+    router.push("/jobs/ats-resume-builder/atseditor");
   };
 
   const handleNo = () => {
@@ -114,6 +114,7 @@ export default function Page() {
             autoplay
             className="w-48 h-48"
           />
+
           <h1 className="text-center font-mona-sans text-[32px] font-normal leading-[38px] mb-4 mt-8 text-[#2d3639]">
             Would you like to import your existing resume?
           </h1>
