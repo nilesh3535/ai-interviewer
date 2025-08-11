@@ -72,23 +72,25 @@ async function Home({ searchParams }: HomeProps) {
             <AnimatedCTAButton href="/create" delay={0.3}>
               Create an Interview
             </AnimatedCTAButton>
-            <h1 className="ml-3 text-amber-600">Other tools</h1>
+            <h1 className="block mt-2 ml-3 text-amber-600  md:hidden">
+              Other tools
+            </h1>
             <AnimatedCTAButton
-              className="block md:hidden"
+              className="block mt-1 md:hidden"
               href="/jobs/resume-builder"
               delay={0.3}
             >
               ATS Resume Builder
             </AnimatedCTAButton>
             <AnimatedCTAButton
-              className="block md:hidden"
+              className="block mt-1 md:hidden"
               href="/jobs/resume-checker"
               delay={0.3}
             >
               ATS Resume Checker
             </AnimatedCTAButton>
             <AnimatedCTAButton
-              className="block md:hidden"
+              className="block mt-1 md:hidden"
               href="/jobs"
               delay={0.3}
             >
