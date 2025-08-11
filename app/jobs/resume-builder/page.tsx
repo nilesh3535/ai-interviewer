@@ -361,7 +361,7 @@ const handleRedirect= () => {
     setResumeLoader(true);
  setTimeout(() => {
   // Redirect to the resume checker page after 1 second
-  window.location.href = "https://app.winyourinterview.ai/jobs/ats-resume-builder/";
+  window.location.href = "http://localhost:3000/jobs/ats-resume-builder/";
 
  }, 3000);
 

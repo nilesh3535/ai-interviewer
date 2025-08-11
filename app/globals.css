@@ -260,10 +260,9 @@
     }
   }
 
-.auth-layout {
-  @apply flex flex-col lg:flex-row items-center justify-center mx-auto max-w-7xl min-h-screen max-sm:px-4 max-sm:py-8 relative;
-}
-
+  .auth-layout {
+    @apply flex flex-col lg:flex-row items-center justify-center mx-auto max-w-7xl min-h-screen max-sm:px-4 max-sm:py-8 relative;
+  }
 
   .root-layout {
     @apply flex mx-auto max-w-7xl flex-col gap-12 pb-12 pt-5 px-16 max-sm:px-4 max-sm:my-8;
@@ -338,8 +337,13 @@
 }
 
 @keyframes bounce-x {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(3px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(3px);
+  }
 }
 
 .animate-bounce-x {
@@ -354,9 +358,15 @@
 }
 
 @keyframes dotsAnimation {
-  0% { clip-path: inset(0 66% 0 0); }
-  33% { clip-path: inset(0 33% 0 0); }
-  66% { clip-path: inset(0 0% 0 0); }
+  0% {
+    clip-path: inset(0 66% 0 0);
+  }
+  33% {
+    clip-path: inset(0 33% 0 0);
+  }
+  66% {
+    clip-path: inset(0 0% 0 0);
+  }
 }
 
 @keyframes flipCard {
@@ -402,4 +412,30 @@
 
 .FoldImageAnimated_back__STkbo {
   transform: rotateY(180deg);
+}
+/* Firefox */
+.hide-scrollbar {
+  scrollbar-width: none; /* hides scrollbar */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+/* Chrome, Safari, Opera */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+@media print {
+  .print-container {
+    transform: none !important; /* remove scale for print */
+    width: 816px !important; /* exact print size for Letter */
+    height: 1056px !important;
+    overflow: visible !important; /* show full content */
+    border: none !important; /* hide border in print */
+    box-shadow: none !important; /* remove shadow */
+  }
+
+  /* Optional: page margin, font size, etc */
+  @page {
+    size: Letter;
+    margin: 10mm;
+  }
 }
