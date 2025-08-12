@@ -1926,15 +1926,10 @@ Improved application load time by 25% through code splitting and performance opt
                           className="font-bold text-[18pt] text-center"
                           style={{ color: themeColor }}
                         >
-                          {atsOutput?.name}
+                          {ainame}
                         </h1>
                         <div className="flex flex-wrap justify-center items-center gap-2 text-[10pt]">
-                          {[
-                            atsOutput?.phone,
-                            atsOutput?.email,
-                            atsOutput?.website,
-                            atsOutput?.location,
-                          ]
+                          {[aiphone, aiemail, aiwebsite, ailocation]
                             .filter(Boolean)
                             .map((item, idx, arr) => (
                               <React.Fragment key={idx}>
@@ -1958,7 +1953,7 @@ Improved application load time by 25% through code splitting and performance opt
                         OBJECTIVE
                       </h2>
                       <p className="text-[#171717] font-normal mt-[6pt]">
-                        {atsOutput?.objective}
+                        {aiobjective}
                       </p>
 
                       <div className="w-full h-px bg-[#2e2e2e] my-2"></div>
@@ -1973,7 +1968,7 @@ Improved application load time by 25% through code splitting and performance opt
                         </h2>
                       )}
                       {!hideExperience &&
-                        atsOutput?.experience?.map((exp, i) => (
+                        aiexperience?.map((exp, i) => (
                           <div key={i} className="mt-[6pt]">
                             <div className="flex justify-between">
                               <div>
@@ -2022,7 +2017,7 @@ Improved application load time by 25% through code splitting and performance opt
                         </h2>
                       )}
                       {!hideEducation &&
-                        atsOutput?.education?.map((edu, i) => (
+                        aieducation?.map((edu, i) => (
                           <div key={i} className="mt-[6pt]">
                             <p className="text-[#171717] font-bold">
                               {edu.school}
@@ -2058,7 +2053,7 @@ Improved application load time by 25% through code splitting and performance opt
                         </h2>
                       )}
                       {!hideProjects &&
-                        atsOutput?.projects?.map((proj, i) => (
+                        aiprojects?.map((proj, i) => (
                           <div key={i} className="mt-[6pt]">
                             <div className="flex justify-between">
                               <p className="text-[#171717] font-bold">
@@ -2089,7 +2084,7 @@ Improved application load time by 25% through code splitting and performance opt
                       )}
                       {!hideSkills && (
                         <div className="mt-3 grid grid-cols-2 gap-x-8 gap-y-2">
-                          {atsOutput?.skills?.map((skill, i) => (
+                          {aiskills?.map((skill, i) => (
                             <div key={i} className="flex items-center">
                               <span className="font-bold px-[6pt]">•</span>
                               <span>{skill}</span>
@@ -2364,7 +2359,7 @@ Improved application load time by 25% through code splitting and performance opt
                       <button
                         onClick={handleAIGenerate}
                         type="button"
-                        className="flex items-center gap-2 px-7 py-5 text-sm font-mona-sans text-indigo-600 bg-white rounded-lg shadow-md border border-gray-200 hover:bg-indigo-50 hover:text-indigo-800 transition-colors duration-200"
+                        className="cursor-pointer flex items-center gap-2 px-7 py-5 text-sm font-mona-sans text-indigo-600 bg-white rounded-lg shadow-md border border-gray-200 hover:bg-indigo-50 hover:text-indigo-800 transition-colors duration-200"
                       >
                         <img
                           src="/gemini.png"

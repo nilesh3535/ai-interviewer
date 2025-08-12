@@ -326,125 +326,485 @@ Improved application load time by 25% through code splitting and performance opt
                 ATS Resume Builder
               </h1>
             </div>
-            {atsShow?
-            <>
-            {/* Basic Info */}
-            <section className="bg-white flex flex-col gap-3 rounded-md border border-slate-200 p-6 pt-4 shadow transition-opacity duration-200 undefined">
-              <div className="grid grid-cols-6 gap-3 text-[#374151] mb-4">
-                <label className="text-base font-medium text-gray-700 col-span-3">
-                  Name
-                  <input
-                    placeholder="Name"
-                    className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                    type="text"
-                    value={ainame}
-                    onChange={(e) => aisetName(e.target.value)}
-                  />
-                </label>
+            {atsShow ? (
+              <>
+                {/* Basic Info */}
+                <section className="bg-white flex flex-col gap-3 rounded-md border border-slate-200 p-6 pt-4 shadow transition-opacity duration-200 undefined">
+                  <div className="grid grid-cols-6 gap-3 text-[#374151] mb-4">
+                    <label className="text-base font-medium text-gray-700 col-span-3">
+                      Name
+                      <input
+                        placeholder="Name"
+                        className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                        type="text"
+                        value={ainame}
+                        onChange={(e) => aisetName(e.target.value)}
+                      />
+                    </label>
 
-                <label className="text-base font-medium text-gray-700 col-span-3">
-                  Location
-                  <input
-                    placeholder="Bengaluru, Karnataka, India"
-                    className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                    type="text"
-                    value={ailocation}
-                    onChange={(e) => aisetLocation(e.target.value)}
-                  />
-                </label>
+                    <label className="text-base font-medium text-gray-700 col-span-3">
+                      Location
+                      <input
+                        placeholder="Bengaluru, Karnataka, India"
+                        className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                        type="text"
+                        value={ailocation}
+                        onChange={(e) => aisetLocation(e.target.value)}
+                      />
+                    </label>
 
-                <label className="text-base font-medium text-gray-700 col-span-3">
-                  Phone
-                  <input
-                    placeholder="+91-0000000000"
-                    className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                    type="text"
-                    value={aiphone}
-                    onChange={(e) => aisetPhone(e.target.value)}
-                  />
-                </label>
+                    <label className="text-base font-medium text-gray-700 col-span-3">
+                      Phone
+                      <input
+                        placeholder="+91-0000000000"
+                        className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                        type="text"
+                        value={aiphone}
+                        onChange={(e) => aisetPhone(e.target.value)}
+                      />
+                    </label>
 
-                <label className="text-base font-medium text-gray-700 col-span-3">
-                  Email
-                  <input
-                    placeholder="john.doe@example.com"
-                    className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                    type="text"
-                    value={aiemail}
-                    onChange={(e) => aisetEmail(e.target.value)}
-                  />
-                </label>
+                    <label className="text-base font-medium text-gray-700 col-span-3">
+                      Email
+                      <input
+                        placeholder="john.doe@example.com"
+                        className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                        type="text"
+                        value={aiemail}
+                        onChange={(e) => aisetEmail(e.target.value)}
+                      />
+                    </label>
 
-                <label className="text-base font-medium text-gray-700 col-span-full">
-                  Website
-                  <input
-                    placeholder="linkedin.com/in/johndoe"
-                    className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                    type="text"
-                    value={aiwebsite}
-                    onChange={(e) => aisetWebsite(e.target.value)}
-                  />
-                </label>
+                    <label className="text-base font-medium text-gray-700 col-span-full">
+                      Website
+                      <input
+                        placeholder="linkedin.com/in/johndoe"
+                        className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                        type="text"
+                        value={aiwebsite}
+                        onChange={(e) => aisetWebsite(e.target.value)}
+                      />
+                    </label>
 
-                {/* Objective with AI Button */}
-                <div className="relative col-span-full">
-                  <label className="text-base font-medium text-gray-700 col-span-full relative w-full">
-                    Objective
-                    <textarea
-                      name="summary"
-                      className="h-[180px] mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base overflow-hidden"
-                      placeholder="objective"
-                      value={aiobjective}
-                      onChange={(e) => aisetObjective(e.target.value)}
-                    />
-                  </label>
-                </div>
-              </div>
-            </section>
-            {/* Work Experience */}
-            <section
-              style={{
-                backgroundColor: hideExperience ? "#f0f0f0" : "#FFFFFF",
-              }}
-              className="bg-white flex flex-col gap-3 rounded-md border border-slate-200 p-6 pt-4 shadow pb-6 transition-opacity duration-200"
-            >
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex grow items-center gap-2">
-                  <Briefcase className="h-6 w-6 text-gray-600" />
-                  <input
-                    className="block w-full border-b border-transparent text-lg font-semibold tracking-wide text-gray-900 outline-none hover:border-gray-300 hover:shadow-sm focus:border-gray-300 focus:shadow-sm"
-                    type="text"
-                    value={workExperienceTitle}
-                    maxLength={30}
-                    onChange={(e) => setWorkExperienceTitle(e.target.value)}
-                  />
-                  {/* hide unhide section */}
-                  <button
-                    onClick={() => setHideExperience(!hideExperience)}
-                    className="text-gray-600 hover:text-black"
-                    title={
-                      hideExperience
-                        ? "Show Work Experience"
-                        : "Hide Work Experience"
-                    }
+                    {/* Objective with AI Button */}
+                    <div className="relative col-span-full">
+                      <label className="text-base font-medium text-gray-700 col-span-full relative w-full">
+                        Objective
+                        <textarea
+                          name="summary"
+                          className="h-[180px] mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base overflow-hidden"
+                          placeholder="objective"
+                          value={aiobjective}
+                          onChange={(e) => aisetObjective(e.target.value)}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </section>
+                {/* Work Experience */}
+                <section
+                  style={{
+                    backgroundColor: hideExperience ? "#f0f0f0" : "#FFFFFF",
+                  }}
+                  className="bg-white flex flex-col gap-3 rounded-md border border-slate-200 p-6 pt-4 shadow pb-6 transition-opacity duration-200"
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex grow items-center gap-2">
+                      <Briefcase className="h-6 w-6 text-gray-600" />
+                      <input
+                        className="block w-full border-b border-transparent text-lg font-semibold tracking-wide text-gray-900 outline-none hover:border-gray-300 hover:shadow-sm focus:border-gray-300 focus:shadow-sm"
+                        type="text"
+                        value={workExperienceTitle}
+                        maxLength={30}
+                        onChange={(e) => setWorkExperienceTitle(e.target.value)}
+                      />
+                      {/* hide unhide section */}
+                      <button
+                        onClick={() => setHideExperience(!hideExperience)}
+                        className="text-gray-600 hover:text-black"
+                        title={
+                          hideExperience
+                            ? "Show Work Experience"
+                            : "Hide Work Experience"
+                        }
+                      >
+                        {hideExperience ? (
+                          <EyeOff className="h-6 w-6 text-gray-400" />
+                        ) : (
+                          <Eye className="h-6 w-6 text-gray-600" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div
+                    className="grid overflow-hidden transition-all duration-300 visible"
+                    style={{ gridTemplateRows: "1fr" }}
                   >
-                    {hideExperience ? (
-                      <EyeOff className="h-6 w-6 text-gray-400" />
-                    ) : (
-                      <Eye className="h-6 w-6 text-gray-600" />
-                    )}
-                  </button>
-                </div>
-              </div>
+                    {aiexperience.map((exp, i) => (
+                      <div key={i} className="min-h-0 mb-6">
+                        <div className="relative grid grid-cols-6 gap-3">
+                          {/* Header row */}
+                          <div
+                            style={{
+                              borderLeftWidth: "4px",
+                              borderLeftColor: themeColor,
+                            }}
+                            className="col-span-full flex h-9 items-center justify-between bg-slate-100 px-3 py-2"
+                          >
+                            <h3 className="text-sm font-semibold text-slate-900">{`${
+                              i + 1
+                            } Experience`}</h3>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const updated = [...aiexperience];
+                                updated.splice(i, 1);
+                                aisetExperience(updated);
+                              }}
+                              className="text-red-500 hover:text-red-700"
+                              title="Delete Experience"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="w-5 h-5"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M6 18L18 6M6 6l12 12"
+                                />
+                              </svg>
+                            </button>
+                          </div>
 
-              <div
-                className="grid overflow-hidden transition-all duration-300 visible"
-                style={{ gridTemplateRows: "1fr" }}
-              >
-                {aiexperience.map((exp, i) => (
-                  <div key={i} className="min-h-0 mb-6">
-                    <div className="relative grid grid-cols-6 gap-3">
-                      {/* Header row */}
+                          {/* Company */}
+                          <label className="text-base font-medium text-gray-700 col-span-full">
+                            Company
+                            <input
+                              placeholder="Company Name"
+                              className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                              type="text"
+                              value={exp.company}
+                              onChange={(e) => {
+                                const updated = [...aiexperience];
+                                updated[i].company = e.target.value;
+                                aisetExperience(updated);
+                              }}
+                            />
+                          </label>
+
+                          {/* Job Title */}
+                          <label className="text-base font-medium text-gray-700 col-span-4">
+                            Job Title
+                            <input
+                              placeholder="Job Title"
+                              className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                              type="text"
+                              value={exp.jobTitle}
+                              onChange={(e) => {
+                                const updated = [...aiexperience];
+                                updated[i].jobTitle = e.target.value;
+                                aisetExperience(updated);
+                              }}
+                            />
+                          </label>
+
+                          {/* Date */}
+                          <label className="text-base font-medium text-gray-700 col-span-2">
+                            Date
+                            <input
+                              placeholder="APR 2024 - Present"
+                              className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                              type="text"
+                              value={exp.date}
+                              onChange={(e) => {
+                                const updated = [...aiexperience];
+                                updated[i].date = e.target.value;
+                                aisetExperience(updated);
+                              }}
+                            />
+                          </label>
+
+                          {/* Description / Bullets */}
+                          <label className="text-base font-medium text-gray-700 col-span-full">
+                            Description
+                            <div className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base cursor-text pl-7">
+                              <textarea
+                                className="h-[150px] w-full border-none outline-none  bg-transparent"
+                                value={exp.bullets}
+                                onChange={(e) => {
+                                  const updated = [...aiexperience];
+                                  updated[i].bullets = e.target.value;
+                                  aisetExperience(updated);
+                                }}
+                              />
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-2 flex">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        aisetExperience([
+                          ...aiexperience,
+                          { jobTitle: "", company: "", date: "", bullets: "" },
+                        ])
+                      }
+                      className="bg-white text-[#007CEE] flex items-center rounded-md py-2 pl-3 pr-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                        data-slot="icon"
+                        className="text-link -ml-0.5 mr-1.5 h-5 w-5"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 4.5v15m7.5-7.5h-15"
+                        />
+                      </svg>
+                      Add an experience
+                    </button>
+                  </div>
+                </section>
+
+                {/* Education */}
+                <section
+                  style={{
+                    backgroundColor: hideEducation ? "#f0f0f0" : "#FFFFFF",
+                  }}
+                  className="bg-white flex flex-col gap-3 rounded-md border border-slate-200 p-6 pt-4 shadow transition-opacity duration-200 pb-6"
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex grow items-center gap-2">
+                      <GraduationCap className="h-6 w-6 text-gray-600" />
+                      <input
+                        className="block w-full border-b border-transparent text-lg font-semibold tracking-wide text-gray-900 outline-none hover:border-gray-300 hover:shadow-sm focus:border-gray-300 focus:shadow-sm"
+                        type="text"
+                        value={educationTitle}
+                        maxLength={30}
+                        onChange={(e) => setEducationTitle(e.target.value)}
+                      />
+                      <button
+                        onClick={() => setHideEducation(!hideEducation)}
+                        className="text-gray-600 hover:text-black"
+                        title={
+                          hideEducation ? "Show Education" : "Hide Education"
+                        }
+                      >
+                        {hideEducation ? (
+                          <EyeOff className="h-6 w-6 text-gray-400" />
+                        ) : (
+                          <Eye className="h-6 w-6 text-gray-600" />
+                        )}
+                      </button>
+                    </div>
+                    <div className="flex items-center gap-0.5">
+                      {/* Up / Down / Hide buttons */}
+                    </div>
+                  </div>
+
+                  <div
+                    className="grid overflow-hidden transition-all duration-300 visible"
+                    style={{ gridTemplateRows: "1fr" }}
+                  >
+                    {aieducation.map((edu, i) => (
+                      <div key={i} className="min-h-0">
+                        <div className="relative grid grid-cols-6 gap-3">
+                          {/* Header */}
+                          <div
+                            style={{
+                              borderLeftWidth: "4px",
+                              borderLeftColor: themeColor,
+                            }}
+                            className="mt-5 col-span-full flex h-9 items-center justify-between bg-slate-100 px-3 py-2"
+                          >
+                            <h3 className="text-sm font-semibold text-slate-900">{`${
+                              i + 1
+                            } Section`}</h3>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const updated = [...aieducation];
+                                updated.splice(i, 1);
+                                aisetEducation(updated);
+                              }}
+                              className="text-red-500 hover:text-red-700"
+                              title="Delete Education"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="w-5 h-5"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M6 18L18 6M6 6l12 12"
+                                />
+                              </svg>
+                            </button>
+                          </div>
+
+                          {/* School */}
+                          <label className="text-base font-medium text-gray-700 col-span-4">
+                            School
+                            <input
+                              placeholder="Final Round AI University"
+                              className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                              type="text"
+                              value={edu.school}
+                              onChange={(e) => {
+                                const updated = [...aieducation];
+                                updated[i].school = e.target.value;
+                                aisetEducation(updated);
+                              }}
+                            />
+                          </label>
+
+                          {/* Date */}
+                          <label className="text-base font-medium text-gray-700 col-span-2">
+                            Date
+                            <input
+                              placeholder="APR 2024"
+                              className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                              type="text"
+                              value={edu.date}
+                              onChange={(e) => {
+                                const updated = [...aieducation];
+                                updated[i].date = e.target.value;
+                                aisetEducation(updated);
+                              }}
+                            />
+                          </label>
+
+                          {/* Degree */}
+                          <label className="text-base font-medium text-gray-700 col-span-4">
+                            Degree &amp; Major
+                            <input
+                              placeholder="Bachelor of Science in Computer Engineering"
+                              className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                              type="text"
+                              value={edu.degree}
+                              onChange={(e) => {
+                                const updated = [...aieducation];
+                                updated[i].degree = e.target.value;
+                                aisetEducation(updated);
+                              }}
+                            />
+                          </label>
+
+                          {/* GPA */}
+                          <label className="text-base font-medium text-gray-700 col-span-2">
+                            GPA
+                            <input
+                              placeholder="4.00"
+                              className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                              type="text"
+                              value={edu.gpa}
+                              onChange={(e) => {
+                                const updated = [...aieducation];
+                                updated[i].gpa = e.target.value;
+                                aisetEducation(updated);
+                              }}
+                            />
+                          </label>
+
+                          {/* Additional Info with AI Button */}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Add School Button */}
+                  <div className="mt-2 flex">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        aisetEducation([
+                          ...aieducation,
+                          { degree: "", school: "", date: "", gpa: "" },
+                        ])
+                      }
+                      className="bg-white text-[#007CEE] flex items-center rounded-md py-2 pl-3 pr-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                        data-slot="icon"
+                        className="text-link -ml-0.5 mr-1.5 h-5 w-5"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 4.5v15m7.5-7.5h-15"
+                        />
+                      </svg>
+                      Add School
+                    </button>
+                  </div>
+                </section>
+                {/*  */}
+
+                {/* Projects */}
+
+                <section
+                  style={{
+                    backgroundColor: hideProjects ? "#f0f0f0" : "#FFFFFF",
+                  }}
+                  className="bg-white flex flex-col gap-3 rounded-md border border-slate-200 p-6 pt-4 shadow transition-opacity duration-200 pb-6"
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex grow items-center gap-2">
+                      <FolderGit2 className="w-4 h-4 mr-2 text-gray-600" />
+                      <input
+                        className="block w-full border-b border-transparent text-lg font-semibold tracking-wide text-gray-900 outline-none hover:border-gray-300 hover:shadow-sm focus:border-gray-300 focus:shadow-sm"
+                        type="text"
+                        value={projectTitle}
+                        maxLength={30}
+                        onChange={(e) => setProjectTitle(e.target.value)}
+                      />
+                      <button
+                        onClick={() => setHideProjects(!hideProjects)}
+                        className="text-gray-600 hover:text-black"
+                        title={hideProjects ? "Show Projects" : "Hide Projects"}
+                      >
+                        {hideProjects ? (
+                          <EyeOff className="h-6 w-6 text-gray-400" />
+                        ) : (
+                          <Eye className="h-6 w-6 text-gray-600" />
+                        )}
+                      </button>
+                    </div>
+                    <div className="flex items-center gap-0.5">
+                      {/* Up / Down / Hide buttons */}
+                    </div>
+                  </div>{" "}
+                  {aiprojects.map((proj, i) => (
+                    <div
+                      key={i}
+                      className="relative grid grid-cols-6 gap-3 border-t border-gray-200 pt-4 first:border-t-0 first:pt-0"
+                    >
                       <div
                         style={{
                           borderLeftWidth: "4px",
@@ -454,16 +814,16 @@ Improved application load time by 25% through code splitting and performance opt
                       >
                         <h3 className="text-sm font-semibold text-slate-900">{`${
                           i + 1
-                        } Experience`}</h3>
+                        } Project`}</h3>
                         <button
                           type="button"
                           onClick={() => {
-                            const updated = [...aiexperience];
+                            const updated = [...aiprojects];
                             updated.splice(i, 1);
-                            aisetExperience(updated);
+                            aisetProjects(updated);
                           }}
                           className="text-red-500 hover:text-red-700"
-                          title="Delete Experience"
+                          title="Delete Project"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -482,342 +842,65 @@ Improved application load time by 25% through code splitting and performance opt
                         </button>
                       </div>
 
-                      {/* Company */}
-                      <label className="text-base font-medium text-gray-700 col-span-full">
-                        Company
-                        <input
-                          placeholder="Company Name"
-                          className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                          type="text"
-                          value={exp.company}
-                          onChange={(e) => {
-                            const updated = [...aiexperience];
-                            updated[i].company = e.target.value;
-                            aisetExperience(updated);
-                          }}
-                        />
-                      </label>
-
-                      {/* Job Title */}
+                      {/* Project Title */}
                       <label className="text-base font-medium text-gray-700 col-span-4">
-                        Job Title
+                        Project Name
                         <input
-                          placeholder="Job Title"
+                          placeholder="Project Title"
                           className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
                           type="text"
-                          value={exp.jobTitle}
+                          value={proj.title}
                           onChange={(e) => {
-                            const updated = [...aiexperience];
-                            updated[i].jobTitle = e.target.value;
-                            aisetExperience(updated);
+                            const updated = [...aiprojects];
+                            updated[i].title = e.target.value;
+                            aisetProjects(updated);
                           }}
                         />
                       </label>
 
-                      {/* Date */}
+                      {/* Date / Tech */}
                       <label className="text-base font-medium text-gray-700 col-span-2">
-                        Date
+                        Tech / Date
                         <input
-                          placeholder="APR 2024 - Present"
+                          placeholder="React, Node, 2024"
                           className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
                           type="text"
-                          value={exp.date}
+                          value={proj.tech}
                           onChange={(e) => {
-                            const updated = [...aiexperience];
-                            updated[i].date = e.target.value;
-                            aisetExperience(updated);
+                            const updated = [...aiprojects];
+                            updated[i].tech = e.target.value;
+                            aisetProjects(updated);
                           }}
                         />
                       </label>
 
-                      {/* Description / Bullets */}
+                      {/* Description */}
                       <label className="text-base font-medium text-gray-700 col-span-full">
                         Description
-                        <div className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base cursor-text pl-7">
-                          <textarea
-                            className="h-[150px] w-full border-none outline-none  bg-transparent"
-                            value={exp.bullets}
-                            onChange={(e) => {
-                              const updated = [...aiexperience];
-                              updated[i].bullets = e.target.value;
-                              aisetExperience(updated);
-                            }}
-                          />
-                        </div>
+                        <textarea
+                          placeholder="Describe your project..."
+                          className="h-[120px] mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                          value={proj.desc}
+                          onChange={(e) => {
+                            const updated = [...aiprojects];
+                            updated[i].desc = e.target.value;
+                            aisetProjects(updated);
+                          }}
+                        />
                       </label>
                     </div>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-2 flex">
-                <button
-                  type="button"
-                  onClick={() =>
-                    aisetExperience([
-                      ...aiexperience,
-                      { jobTitle: "", company: "", date: "", bullets: "" },
-                    ])
-                  }
-                  className="bg-white text-[#007CEE] flex items-center rounded-md py-2 pl-3 pr-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                    data-slot="icon"
-                    className="text-link -ml-0.5 mr-1.5 h-5 w-5"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 4.5v15m7.5-7.5h-15"
-                    />
-                  </svg>
-                  Add an experience
-                </button>
-              </div>
-            </section>
-
-            {/* Education */}
-            <section
-              style={{ backgroundColor: hideEducation ? "#f0f0f0" : "#FFFFFF" }}
-              className="bg-white flex flex-col gap-3 rounded-md border border-slate-200 p-6 pt-4 shadow transition-opacity duration-200 pb-6"
-            >
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex grow items-center gap-2">
-                  <GraduationCap className="h-6 w-6 text-gray-600" />
-                  <input
-                    className="block w-full border-b border-transparent text-lg font-semibold tracking-wide text-gray-900 outline-none hover:border-gray-300 hover:shadow-sm focus:border-gray-300 focus:shadow-sm"
-                    type="text"
-                    value={educationTitle}
-                    maxLength={30}
-                    onChange={(e) => setEducationTitle(e.target.value)}
-                  />
-                  <button
-                    onClick={() => setHideEducation(!hideEducation)}
-                    className="text-gray-600 hover:text-black"
-                    title={hideEducation ? "Show Education" : "Hide Education"}
-                  >
-                    {hideEducation ? (
-                      <EyeOff className="h-6 w-6 text-gray-400" />
-                    ) : (
-                      <Eye className="h-6 w-6 text-gray-600" />
-                    )}
-                  </button>
-                </div>
-                <div className="flex items-center gap-0.5">
-                  {/* Up / Down / Hide buttons */}
-                </div>
-              </div>
-
-              <div
-                className="grid overflow-hidden transition-all duration-300 visible"
-                style={{ gridTemplateRows: "1fr" }}
-              >
-                {aieducation.map((edu, i) => (
-                  <div key={i} className="min-h-0">
-                    <div className="relative grid grid-cols-6 gap-3">
-                      {/* Header */}
-                      <div
-                        style={{
-                          borderLeftWidth: "4px",
-                          borderLeftColor: themeColor,
-                        }}
-                        className="mt-5 col-span-full flex h-9 items-center justify-between bg-slate-100 px-3 py-2"
-                      >
-                        <h3 className="text-sm font-semibold text-slate-900">{`${
-                          i + 1
-                        } Section`}</h3>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            const updated = [...aieducation];
-                            updated.splice(i, 1);
-                            aisetEducation(updated);
-                          }}
-                          className="text-red-500 hover:text-red-700"
-                          title="Delete Education"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="w-5 h-5"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M6 18L18 6M6 6l12 12"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-
-                      {/* School */}
-                      <label className="text-base font-medium text-gray-700 col-span-4">
-                        School
-                        <input
-                          placeholder="Final Round AI University"
-                          className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                          type="text"
-                          value={edu.school}
-                          onChange={(e) => {
-                            const updated = [...aieducation];
-                            updated[i].school = e.target.value;
-                            aisetEducation(updated);
-                          }}
-                        />
-                      </label>
-
-                      {/* Date */}
-                      <label className="text-base font-medium text-gray-700 col-span-2">
-                        Date
-                        <input
-                          placeholder="APR 2024"
-                          className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                          type="text"
-                          value={edu.date}
-                          onChange={(e) => {
-                            const updated = [...aieducation];
-                            updated[i].date = e.target.value;
-                            aisetEducation(updated);
-                          }}
-                        />
-                      </label>
-
-                      {/* Degree */}
-                      <label className="text-base font-medium text-gray-700 col-span-4">
-                        Degree &amp; Major
-                        <input
-                          placeholder="Bachelor of Science in Computer Engineering"
-                          className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                          type="text"
-                          value={edu.degree}
-                          onChange={(e) => {
-                            const updated = [...aieducation];
-                            updated[i].degree = e.target.value;
-                            aisetEducation(updated);
-                          }}
-                        />
-                      </label>
-
-                      {/* GPA */}
-                      <label className="text-base font-medium text-gray-700 col-span-2">
-                        GPA
-                        <input
-                          placeholder="4.00"
-                          className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                          type="text"
-                          value={edu.gpa}
-                          onChange={(e) => {
-                            const updated = [...aieducation];
-                            updated[i].gpa = e.target.value;
-                            aisetEducation(updated);
-                          }}
-                        />
-                      </label>
-
-                      {/* Additional Info with AI Button */}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Add School Button */}
-              <div className="mt-2 flex">
-                <button
-                  type="button"
-                  onClick={() =>
-                    aisetEducation([
-                      ...aieducation,
-                      { degree: "", school: "", date: "", gpa: "" },
-                    ])
-                  }
-                  className="bg-white text-[#007CEE] flex items-center rounded-md py-2 pl-3 pr-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                    data-slot="icon"
-                    className="text-link -ml-0.5 mr-1.5 h-5 w-5"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 4.5v15m7.5-7.5h-15"
-                    />
-                  </svg>
-                  Add School
-                </button>
-              </div>
-            </section>
-            {/*  */}
-
-            {/* Projects */}
-
-            <section
-              style={{ backgroundColor: hideProjects ? "#f0f0f0" : "#FFFFFF" }}
-              className="bg-white flex flex-col gap-3 rounded-md border border-slate-200 p-6 pt-4 shadow transition-opacity duration-200 pb-6"
-            >
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex grow items-center gap-2">
-                  <FolderGit2 className="w-4 h-4 mr-2 text-gray-600" />
-                  <input
-                    className="block w-full border-b border-transparent text-lg font-semibold tracking-wide text-gray-900 outline-none hover:border-gray-300 hover:shadow-sm focus:border-gray-300 focus:shadow-sm"
-                    type="text"
-                    value={projectTitle}
-                    maxLength={30}
-                    onChange={(e) => setProjectTitle(e.target.value)}
-                  />
-                  <button
-                    onClick={() => setHideProjects(!hideProjects)}
-                    className="text-gray-600 hover:text-black"
-                    title={hideProjects ? "Show Projects" : "Hide Projects"}
-                  >
-                    {hideProjects ? (
-                      <EyeOff className="h-6 w-6 text-gray-400" />
-                    ) : (
-                      <Eye className="h-6 w-6 text-gray-600" />
-                    )}
-                  </button>
-                </div>
-                <div className="flex items-center gap-0.5">
-                  {/* Up / Down / Hide buttons */}
-                </div>
-              </div>{" "}
-              {aiprojects.map((proj, i) => (
-                <div
-                  key={i}
-                  className="relative grid grid-cols-6 gap-3 border-t border-gray-200 pt-4 first:border-t-0 first:pt-0"
-                >
-                  <div
-                    style={{
-                      borderLeftWidth: "4px",
-                      borderLeftColor: themeColor,
-                    }}
-                    className="col-span-full flex h-9 items-center justify-between bg-slate-100 px-3 py-2"
-                  >
-                    <h3 className="text-sm font-semibold text-slate-900">{`${
-                      i + 1
-                    } Project`}</h3>
+                  ))}
+                  {/* Add Project Button */}
+                  <div className="mt-2 flex">
                     <button
                       type="button"
-                      onClick={() => {
-                        const updated = [...aiprojects];
-                        updated.splice(i, 1);
-                        aisetProjects(updated);
-                      }}
-                      className="text-red-500 hover:text-red-700"
-                      title="Delete Project"
+                      onClick={() =>
+                        aisetProjects([
+                          ...aiprojects,
+                          { title: "", tech: "", desc: "" },
+                        ])
+                      }
+                      className="bg-white text-[#007CEE] flex items-center rounded-md py-2 pl-3 pr-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -825,267 +908,555 @@ Improved application load time by 25% through code splitting and performance opt
                         viewBox="0 0 24 24"
                         strokeWidth="1.5"
                         stroke="currentColor"
-                        className="w-5 h-5"
+                        aria-hidden="true"
+                        data-slot="icon"
+                        className="text-link -ml-0.5 mr-1.5 h-5 w-5"
                       >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          d="M6 18L18 6M6 6l12 12"
+                          d="M12 4.5v15m7.5-7.5h-15"
                         />
                       </svg>
+                      Add Project
                     </button>
                   </div>
+                </section>
 
-                  {/* Project Title */}
-                  <label className="text-base font-medium text-gray-700 col-span-4">
-                    Project Name
-                    <input
-                      placeholder="Project Title"
-                      className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                      type="text"
-                      value={proj.title}
-                      onChange={(e) => {
-                        const updated = [...aiprojects];
-                        updated[i].title = e.target.value;
-                        aisetProjects(updated);
-                      }}
-                    />
-                  </label>
+                {/* Skills */}
 
-                  {/* Date / Tech */}
-                  <label className="text-base font-medium text-gray-700 col-span-2">
-                    Tech / Date
-                    <input
-                      placeholder="React, Node, 2024"
-                      className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                      type="text"
-                      value={proj.tech}
-                      onChange={(e) => {
-                        const updated = [...aiprojects];
-                        updated[i].tech = e.target.value;
-                        aisetProjects(updated);
-                      }}
-                    />
-                  </label>
-
-                  {/* Description */}
-                  <label className="text-base font-medium text-gray-700 col-span-full">
-                    Description
-                    <textarea
-                      placeholder="Describe your project..."
-                      className="h-[120px] mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                      value={proj.desc}
-                      onChange={(e) => {
-                        const updated = [...aiprojects];
-                        updated[i].desc = e.target.value;
-                        aisetProjects(updated);
-                      }}
-                    />
-                  </label>
-                </div>
-              ))}
-              {/* Add Project Button */}
-              <div className="mt-2 flex">
-                <button
-                  type="button"
-                  onClick={() =>
-                    aisetProjects([
-                      ...aiprojects,
-                      { title: "", tech: "", desc: "" },
-                    ])
-                  }
-                  className="bg-white text-[#007CEE] flex items-center rounded-md py-2 pl-3 pr-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                <section
+                  style={{
+                    backgroundColor: hideSkills ? "#f0f0f0" : "#FFFFFF",
+                  }}
+                  className=" flex flex-col gap-3 rounded-md border border-slate-200 p-6 pt-4 shadow pb-6"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                    data-slot="icon"
-                    className="text-link -ml-0.5 mr-1.5 h-5 w-5"
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex grow items-center gap-2">
+                      <Wrench className="w-4 h-4 mr-2 text-gray-600" />
+                      <input
+                        className="block w-full border-b border-transparent text-lg font-semibold tracking-wide text-gray-900 outline-none hover:border-gray-300 hover:shadow-sm focus:border-gray-300 focus:shadow-sm"
+                        type="text"
+                        value={skillsTitle}
+                        maxLength={30}
+                        onChange={(e) => setSkillsTitle(e.target.value)}
+                      />
+                      <button
+                        onClick={() => setHideSkills(!hideSkills)}
+                        className="text-gray-600 hover:text-black"
+                        title={hideSkills ? "Show Skills" : "Hide Skills"}
+                      >
+                        {hideSkills ? (
+                          <EyeOff className="h-6 w-6 text-gray-400" />
+                        ) : (
+                          <Eye className="h-6 w-6 text-gray-600" />
+                        )}
+                      </button>
+                    </div>
+                    <div className="flex items-center gap-0.5">
+                      {/* Up / Down / Hide buttons */}
+                    </div>
+                  </div>
+
+                  <div className="col-span-full grid grid-cols-6 gap-3">
+                    {/* Skills List */}
+                    <label className="text-base font-medium text-gray-700 col-span-full">
+                      Skills List
+                      <textarea
+                        className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base resize-none min-h-[150px]"
+                        placeholder="e.g. React.js, Tailwind CSS, Redux, REST APIs"
+                        value={aiskills.join("\n")}
+                        onChange={(e) =>
+                          aisetSkills(
+                            e.target.value.split("\n").map((s) => s.trim())
+                          )
+                        }
+                      />
+                    </label>
+                  </div>
+
+                  <div className="col-span-full mb-4 mt-6 border-t-2 border-dotted border-gray-200"></div>
+                </section>
+                {/* ------------------- */}
+              </>
+            ) : (
+              <>
+                <section className="bg-white flex flex-col gap-3 rounded-md border border-slate-200 p-6 pt-4 shadow transition-opacity duration-200 undefined">
+                  <div className="grid grid-cols-6 gap-3 text-[#374151] mb-4">
+                    <label className="text-base font-medium text-gray-700 col-span-3">
+                      Name
+                      <input
+                        placeholder="Name"
+                        className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                    </label>
+
+                    <label className="text-base font-medium text-gray-700 col-span-3">
+                      Location
+                      <input
+                        placeholder="Bengaluru, Karnataka, India"
+                        className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                        type="text"
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
+                      />
+                    </label>
+
+                    <label className="text-base font-medium text-gray-700 col-span-3">
+                      Phone
+                      <input
+                        placeholder="+91-0000000000"
+                        className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                        type="text"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                      />
+                    </label>
+
+                    <label className="text-base font-medium text-gray-700 col-span-3">
+                      Email
+                      <input
+                        placeholder="john.doe@example.com"
+                        className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                        type="text"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                    </label>
+
+                    <label className="text-base font-medium text-gray-700 col-span-full">
+                      Website
+                      <input
+                        placeholder="linkedin.com/in/johndoe"
+                        className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                        type="text"
+                        value={website}
+                        onChange={(e) => setWebsite(e.target.value)}
+                      />
+                    </label>
+
+                    {/* Objective with AI Button */}
+                    <div className="relative col-span-full">
+                      <label className="text-base font-medium text-gray-700 col-span-full relative w-full">
+                        Objective
+                        <textarea
+                          name="summary"
+                          className="h-[180px] mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base overflow-hidden"
+                          placeholder="objective"
+                          value={objective}
+                          onChange={(e) => setObjective(e.target.value)}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </section>
+                {/* Work Experience */}
+                <section
+                  style={{
+                    backgroundColor: hideExperience ? "#f0f0f0" : "#FFFFFF",
+                  }}
+                  className="bg-white flex flex-col gap-3 rounded-md border border-slate-200 p-6 pt-4 shadow pb-6 transition-opacity duration-200"
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex grow items-center gap-2">
+                      <Briefcase className="h-6 w-6 text-gray-600" />
+                      <input
+                        className="block w-full border-b border-transparent text-lg font-semibold tracking-wide text-gray-900 outline-none hover:border-gray-300 hover:shadow-sm focus:border-gray-300 focus:shadow-sm"
+                        type="text"
+                        value={workExperienceTitle}
+                        maxLength={30}
+                        onChange={(e) => setWorkExperienceTitle(e.target.value)}
+                      />
+                      {/* hide unhide section */}
+                      <button
+                        onClick={() => setHideExperience(!hideExperience)}
+                        className="text-gray-600 hover:text-black"
+                        title={
+                          hideExperience
+                            ? "Show Work Experience"
+                            : "Hide Work Experience"
+                        }
+                      >
+                        {hideExperience ? (
+                          <EyeOff className="h-6 w-6 text-gray-400" />
+                        ) : (
+                          <Eye className="h-6 w-6 text-gray-600" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div
+                    className="grid overflow-hidden transition-all duration-300 visible"
+                    style={{ gridTemplateRows: "1fr" }}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 4.5v15m7.5-7.5h-15"
-                    />
-                  </svg>
-                  Add Project
-                </button>
-              </div>
-            </section>
+                    {experience.map((exp, i) => (
+                      <div key={i} className="min-h-0 mb-6">
+                        <div className="relative grid grid-cols-6 gap-3">
+                          {/* Header row */}
+                          <div
+                            style={{
+                              borderLeftWidth: "4px",
+                              borderLeftColor: themeColor,
+                            }}
+                            className="col-span-full flex h-9 items-center justify-between bg-slate-100 px-3 py-2"
+                          >
+                            <h3 className="text-sm font-semibold text-slate-900">{`${
+                              i + 1
+                            } Experience`}</h3>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const updated = [...experience];
+                                updated.splice(i, 1);
+                                setExperience(updated);
+                              }}
+                              className="text-red-500 hover:text-red-700"
+                              title="Delete Experience"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="w-5 h-5"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M6 18L18 6M6 6l12 12"
+                                />
+                              </svg>
+                            </button>
+                          </div>
 
-            {/* Skills */}
+                          {/* Company */}
+                          <label className="text-base font-medium text-gray-700 col-span-full">
+                            Company
+                            <input
+                              placeholder="Company Name"
+                              className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                              type="text"
+                              value={exp.company}
+                              onChange={(e) => {
+                                const updated = [...experience];
+                                updated[i].company = e.target.value;
+                                setExperience(updated);
+                              }}
+                            />
+                          </label>
 
-            <section
-              style={{ backgroundColor: hideSkills ? "#f0f0f0" : "#FFFFFF" }}
-              className=" flex flex-col gap-3 rounded-md border border-slate-200 p-6 pt-4 shadow pb-6"
-            >
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex grow items-center gap-2">
-                  <Wrench className="w-4 h-4 mr-2 text-gray-600" />
-                  <input
-                    className="block w-full border-b border-transparent text-lg font-semibold tracking-wide text-gray-900 outline-none hover:border-gray-300 hover:shadow-sm focus:border-gray-300 focus:shadow-sm"
-                    type="text"
-                    value={skillsTitle}
-                    maxLength={30}
-                    onChange={(e) => setSkillsTitle(e.target.value)}
-                  />
-                  <button
-                    onClick={() => setHideSkills(!hideSkills)}
-                    className="text-gray-600 hover:text-black"
-                    title={hideSkills ? "Show Skills" : "Hide Skills"}
+                          {/* Job Title */}
+                          <label className="text-base font-medium text-gray-700 col-span-4">
+                            Job Title
+                            <input
+                              placeholder="Job Title"
+                              className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                              type="text"
+                              value={exp.jobTitle}
+                              onChange={(e) => {
+                                const updated = [...experience];
+                                updated[i].jobTitle = e.target.value;
+                                setExperience(updated);
+                              }}
+                            />
+                          </label>
+
+                          {/* Date */}
+                          <label className="text-base font-medium text-gray-700 col-span-2">
+                            Date
+                            <input
+                              placeholder="APR 2024 - Present"
+                              className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                              type="text"
+                              value={exp.date}
+                              onChange={(e) => {
+                                const updated = [...experience];
+                                updated[i].date = e.target.value;
+                                setExperience(updated);
+                              }}
+                            />
+                          </label>
+
+                          {/* Description / Bullets */}
+                          <label className="text-base font-medium text-gray-700 col-span-full">
+                            Description
+                            <div className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base cursor-text pl-7">
+                              <textarea
+                                className="h-[150px] w-full border-none outline-none  bg-transparent"
+                                value={exp.bullets}
+                                onChange={(e) => {
+                                  const updated = [...experience];
+                                  updated[i].bullets = e.target.value;
+                                  setExperience(updated);
+                                }}
+                              />
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-2 flex">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setExperience([
+                          ...experience,
+                          { jobTitle: "", company: "", date: "", bullets: "" },
+                        ])
+                      }
+                      className="bg-white text-[#007CEE] flex items-center rounded-md py-2 pl-3 pr-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                        data-slot="icon"
+                        className="text-link -ml-0.5 mr-1.5 h-5 w-5"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 4.5v15m7.5-7.5h-15"
+                        />
+                      </svg>
+                      Add an experience
+                    </button>
+                  </div>
+                </section>
+
+                {/* Education */}
+                <section
+                  style={{
+                    backgroundColor: hideEducation ? "#f0f0f0" : "#FFFFFF",
+                  }}
+                  className="bg-white flex flex-col gap-3 rounded-md border border-slate-200 p-6 pt-4 shadow transition-opacity duration-200 pb-6"
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex grow items-center gap-2">
+                      <GraduationCap className="h-6 w-6 text-gray-600" />
+                      <input
+                        className="block w-full border-b border-transparent text-lg font-semibold tracking-wide text-gray-900 outline-none hover:border-gray-300 hover:shadow-sm focus:border-gray-300 focus:shadow-sm"
+                        type="text"
+                        value={educationTitle}
+                        maxLength={30}
+                        onChange={(e) => setEducationTitle(e.target.value)}
+                      />
+                      <button
+                        onClick={() => setHideEducation(!hideEducation)}
+                        className="text-gray-600 hover:text-black"
+                        title={
+                          hideEducation ? "Show Education" : "Hide Education"
+                        }
+                      >
+                        {hideEducation ? (
+                          <EyeOff className="h-6 w-6 text-gray-400" />
+                        ) : (
+                          <Eye className="h-6 w-6 text-gray-600" />
+                        )}
+                      </button>
+                    </div>
+                    <div className="flex items-center gap-0.5">
+                      {/* Up / Down / Hide buttons */}
+                    </div>
+                  </div>
+
+                  <div
+                    className="grid overflow-hidden transition-all duration-300 visible"
+                    style={{ gridTemplateRows: "1fr" }}
                   >
-                    {hideSkills ? (
-                      <EyeOff className="h-6 w-6 text-gray-400" />
-                    ) : (
-                      <Eye className="h-6 w-6 text-gray-600" />
-                    )}
-                  </button>
-                </div>
-                <div className="flex items-center gap-0.5">
-                  {/* Up / Down / Hide buttons */}
-                </div>
-              </div>
+                    {education.map((edu, i) => (
+                      <div key={i} className="min-h-0">
+                        <div className="relative grid grid-cols-6 gap-3">
+                          {/* Header */}
+                          <div
+                            style={{
+                              borderLeftWidth: "4px",
+                              borderLeftColor: themeColor,
+                            }}
+                            className="mt-5 col-span-full flex h-9 items-center justify-between bg-slate-100 px-3 py-2"
+                          >
+                            <h3 className="text-sm font-semibold text-slate-900">{`${
+                              i + 1
+                            } Section`}</h3>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const updated = [...education];
+                                updated.splice(i, 1);
+                                setEducation(updated);
+                              }}
+                              className="text-red-500 hover:text-red-700"
+                              title="Delete Education"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="w-5 h-5"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M6 18L18 6M6 6l12 12"
+                                />
+                              </svg>
+                            </button>
+                          </div>
 
-              <div className="col-span-full grid grid-cols-6 gap-3">
-                {/* Skills List */}
-                <label className="text-base font-medium text-gray-700 col-span-full">
-                  Skills List
-                  <textarea
-                    className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base resize-none min-h-[150px]"
-                    placeholder="e.g. React.js, Tailwind CSS, Redux, REST APIs"
-                    value={aiskills.join("\n")}
-                    onChange={(e) =>
-                      aisetSkills(e.target.value.split("\n").map((s) => s.trim()))
-                    }
-                  />
-                </label>
-              </div>
+                          {/* School */}
+                          <label className="text-base font-medium text-gray-700 col-span-4">
+                            School
+                            <input
+                              placeholder="Final Round AI University"
+                              className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                              type="text"
+                              value={edu.school}
+                              onChange={(e) => {
+                                const updated = [...education];
+                                updated[i].school = e.target.value;
+                                setEducation(updated);
+                              }}
+                            />
+                          </label>
 
-              <div className="col-span-full mb-4 mt-6 border-t-2 border-dotted border-gray-200"></div>
-            </section>
-            {/* ------------------- */}
-            </>
-            :<>
-            <section className="bg-white flex flex-col gap-3 rounded-md border border-slate-200 p-6 pt-4 shadow transition-opacity duration-200 undefined">
-              <div className="grid grid-cols-6 gap-3 text-[#374151] mb-4">
-                <label className="text-base font-medium text-gray-700 col-span-3">
-                  Name
-                  <input
-                    placeholder="Name"
-                    className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </label>
+                          {/* Date */}
+                          <label className="text-base font-medium text-gray-700 col-span-2">
+                            Date
+                            <input
+                              placeholder="APR 2024"
+                              className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                              type="text"
+                              value={edu.date}
+                              onChange={(e) => {
+                                const updated = [...education];
+                                updated[i].date = e.target.value;
+                                setEducation(updated);
+                              }}
+                            />
+                          </label>
 
-                <label className="text-base font-medium text-gray-700 col-span-3">
-                  Location
-                  <input
-                    placeholder="Bengaluru, Karnataka, India"
-                    className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                    type="text"
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                  />
-                </label>
+                          {/* Degree */}
+                          <label className="text-base font-medium text-gray-700 col-span-4">
+                            Degree &amp; Major
+                            <input
+                              placeholder="Bachelor of Science in Computer Engineering"
+                              className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                              type="text"
+                              value={edu.degree}
+                              onChange={(e) => {
+                                const updated = [...education];
+                                updated[i].degree = e.target.value;
+                                setEducation(updated);
+                              }}
+                            />
+                          </label>
 
-                <label className="text-base font-medium text-gray-700 col-span-3">
-                  Phone
-                  <input
-                    placeholder="+91-0000000000"
-                    className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                    type="text"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                  />
-                </label>
+                          {/* GPA */}
+                          <label className="text-base font-medium text-gray-700 col-span-2">
+                            GPA
+                            <input
+                              placeholder="4.00"
+                              className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                              type="text"
+                              value={edu.gpa}
+                              onChange={(e) => {
+                                const updated = [...education];
+                                updated[i].gpa = e.target.value;
+                                setEducation(updated);
+                              }}
+                            />
+                          </label>
 
-                <label className="text-base font-medium text-gray-700 col-span-3">
-                  Email
-                  <input
-                    placeholder="john.doe@example.com"
-                    className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                    type="text"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </label>
+                          {/* Additional Info with AI Button */}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
 
-                <label className="text-base font-medium text-gray-700 col-span-full">
-                  Website
-                  <input
-                    placeholder="linkedin.com/in/johndoe"
-                    className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                    type="text"
-                    value={website}
-                    onChange={(e) => setWebsite(e.target.value)}
-                  />
-                </label>
+                  {/* Add School Button */}
+                  <div className="mt-2 flex">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setEducation([
+                          ...education,
+                          { degree: "", school: "", date: "", gpa: "" },
+                        ])
+                      }
+                      className="bg-white text-[#007CEE] flex items-center rounded-md py-2 pl-3 pr-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                        data-slot="icon"
+                        className="text-link -ml-0.5 mr-1.5 h-5 w-5"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 4.5v15m7.5-7.5h-15"
+                        />
+                      </svg>
+                      Add School
+                    </button>
+                  </div>
+                </section>
+                {/*  */}
 
-                {/* Objective with AI Button */}
-                <div className="relative col-span-full">
-                  <label className="text-base font-medium text-gray-700 col-span-full relative w-full">
-                    Objective
-                    <textarea
-                      name="summary"
-                      className="h-[180px] mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base overflow-hidden"
-                      placeholder="objective"
-                      value={objective}
-                      onChange={(e) => setObjective(e.target.value)}
-                    />
-                  </label>
-                </div>
-              </div>
-            </section>
-            {/* Work Experience */}
-            <section
-              style={{
-                backgroundColor: hideExperience ? "#f0f0f0" : "#FFFFFF",
-              }}
-              className="bg-white flex flex-col gap-3 rounded-md border border-slate-200 p-6 pt-4 shadow pb-6 transition-opacity duration-200"
-            >
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex grow items-center gap-2">
-                  <Briefcase className="h-6 w-6 text-gray-600" />
-                  <input
-                    className="block w-full border-b border-transparent text-lg font-semibold tracking-wide text-gray-900 outline-none hover:border-gray-300 hover:shadow-sm focus:border-gray-300 focus:shadow-sm"
-                    type="text"
-                    value={workExperienceTitle}
-                    maxLength={30}
-                    onChange={(e) => setWorkExperienceTitle(e.target.value)}
-                  />
-                  {/* hide unhide section */}
-                  <button
-                    onClick={() => setHideExperience(!hideExperience)}
-                    className="text-gray-600 hover:text-black"
-                    title={
-                      hideExperience
-                        ? "Show Work Experience"
-                        : "Hide Work Experience"
-                    }
-                  >
-                    {hideExperience ? (
-                      <EyeOff className="h-6 w-6 text-gray-400" />
-                    ) : (
-                      <Eye className="h-6 w-6 text-gray-600" />
-                    )}
-                  </button>
-                </div>
-              </div>
+                {/* Projects */}
 
-              <div
-                className="grid overflow-hidden transition-all duration-300 visible"
-                style={{ gridTemplateRows: "1fr" }}
-              >
-                {experience.map((exp, i) => (
-                  <div key={i} className="min-h-0 mb-6">
-                    <div className="relative grid grid-cols-6 gap-3">
-                      {/* Header row */}
+                <section
+                  style={{
+                    backgroundColor: hideProjects ? "#f0f0f0" : "#FFFFFF",
+                  }}
+                  className="bg-white flex flex-col gap-3 rounded-md border border-slate-200 p-6 pt-4 shadow transition-opacity duration-200 pb-6"
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex grow items-center gap-2">
+                      <FolderGit2 className="w-4 h-4 mr-2 text-gray-600" />
+                      <input
+                        className="block w-full border-b border-transparent text-lg font-semibold tracking-wide text-gray-900 outline-none hover:border-gray-300 hover:shadow-sm focus:border-gray-300 focus:shadow-sm"
+                        type="text"
+                        value={projectTitle}
+                        maxLength={30}
+                        onChange={(e) => setProjectTitle(e.target.value)}
+                      />
+                      <button
+                        onClick={() => setHideProjects(!hideProjects)}
+                        className="text-gray-600 hover:text-black"
+                        title={hideProjects ? "Show Projects" : "Hide Projects"}
+                      >
+                        {hideProjects ? (
+                          <EyeOff className="h-6 w-6 text-gray-400" />
+                        ) : (
+                          <Eye className="h-6 w-6 text-gray-600" />
+                        )}
+                      </button>
+                    </div>
+                    <div className="flex items-center gap-0.5">
+                      {/* Up / Down / Hide buttons */}
+                    </div>
+                  </div>{" "}
+                  {projects.map((proj, i) => (
+                    <div
+                      key={i}
+                      className="relative grid grid-cols-6 gap-3 border-t border-gray-200 pt-4 first:border-t-0 first:pt-0"
+                    >
                       <div
                         style={{
                           borderLeftWidth: "4px",
@@ -1095,16 +1466,16 @@ Improved application load time by 25% through code splitting and performance opt
                       >
                         <h3 className="text-sm font-semibold text-slate-900">{`${
                           i + 1
-                        } Experience`}</h3>
+                        } Project`}</h3>
                         <button
                           type="button"
                           onClick={() => {
-                            const updated = [...experience];
+                            const updated = [...projects];
                             updated.splice(i, 1);
-                            setExperience(updated);
+                            setProjects(updated);
                           }}
                           className="text-red-500 hover:text-red-700"
-                          title="Delete Experience"
+                          title="Delete Project"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -1123,342 +1494,65 @@ Improved application load time by 25% through code splitting and performance opt
                         </button>
                       </div>
 
-                      {/* Company */}
-                      <label className="text-base font-medium text-gray-700 col-span-full">
-                        Company
-                        <input
-                          placeholder="Company Name"
-                          className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                          type="text"
-                          value={exp.company}
-                          onChange={(e) => {
-                            const updated = [...experience];
-                            updated[i].company = e.target.value;
-                            setExperience(updated);
-                          }}
-                        />
-                      </label>
-
-                      {/* Job Title */}
+                      {/* Project Title */}
                       <label className="text-base font-medium text-gray-700 col-span-4">
-                        Job Title
+                        Project Name
                         <input
-                          placeholder="Job Title"
+                          placeholder="Project Title"
                           className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
                           type="text"
-                          value={exp.jobTitle}
+                          value={proj.title}
                           onChange={(e) => {
-                            const updated = [...experience];
-                            updated[i].jobTitle = e.target.value;
-                            setExperience(updated);
+                            const updated = [...projects];
+                            updated[i].title = e.target.value;
+                            setProjects(updated);
                           }}
                         />
                       </label>
 
-                      {/* Date */}
+                      {/* Date / Tech */}
                       <label className="text-base font-medium text-gray-700 col-span-2">
-                        Date
+                        Tech / Date
                         <input
-                          placeholder="APR 2024 - Present"
+                          placeholder="React, Node, 2024"
                           className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
                           type="text"
-                          value={exp.date}
+                          value={proj.tech}
                           onChange={(e) => {
-                            const updated = [...experience];
-                            updated[i].date = e.target.value;
-                            setExperience(updated);
+                            const updated = [...projects];
+                            updated[i].tech = e.target.value;
+                            setProjects(updated);
                           }}
                         />
                       </label>
 
-                      {/* Description / Bullets */}
+                      {/* Description */}
                       <label className="text-base font-medium text-gray-700 col-span-full">
                         Description
-                        <div className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base cursor-text pl-7">
-                          <textarea
-                            className="h-[150px] w-full border-none outline-none  bg-transparent"
-                            value={exp.bullets}
-                            onChange={(e) => {
-                              const updated = [...experience];
-                              updated[i].bullets = e.target.value;
-                              setExperience(updated);
-                            }}
-                          />
-                        </div>
+                        <textarea
+                          placeholder="Describe your project..."
+                          className="h-[120px] mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+                          value={proj.desc}
+                          onChange={(e) => {
+                            const updated = [...projects];
+                            updated[i].desc = e.target.value;
+                            setProjects(updated);
+                          }}
+                        />
                       </label>
                     </div>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-2 flex">
-                <button
-                  type="button"
-                  onClick={() =>
-                    setExperience([
-                      ...experience,
-                      { jobTitle: "", company: "", date: "", bullets: "" },
-                    ])
-                  }
-                  className="bg-white text-[#007CEE] flex items-center rounded-md py-2 pl-3 pr-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                    data-slot="icon"
-                    className="text-link -ml-0.5 mr-1.5 h-5 w-5"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 4.5v15m7.5-7.5h-15"
-                    />
-                  </svg>
-                  Add an experience
-                </button>
-              </div>
-            </section>
-
-            {/* Education */}
-            <section
-              style={{ backgroundColor: hideEducation ? "#f0f0f0" : "#FFFFFF" }}
-              className="bg-white flex flex-col gap-3 rounded-md border border-slate-200 p-6 pt-4 shadow transition-opacity duration-200 pb-6"
-            >
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex grow items-center gap-2">
-                  <GraduationCap className="h-6 w-6 text-gray-600" />
-                  <input
-                    className="block w-full border-b border-transparent text-lg font-semibold tracking-wide text-gray-900 outline-none hover:border-gray-300 hover:shadow-sm focus:border-gray-300 focus:shadow-sm"
-                    type="text"
-                    value={educationTitle}
-                    maxLength={30}
-                    onChange={(e) => setEducationTitle(e.target.value)}
-                  />
-                  <button
-                    onClick={() => setHideEducation(!hideEducation)}
-                    className="text-gray-600 hover:text-black"
-                    title={hideEducation ? "Show Education" : "Hide Education"}
-                  >
-                    {hideEducation ? (
-                      <EyeOff className="h-6 w-6 text-gray-400" />
-                    ) : (
-                      <Eye className="h-6 w-6 text-gray-600" />
-                    )}
-                  </button>
-                </div>
-                <div className="flex items-center gap-0.5">
-                  {/* Up / Down / Hide buttons */}
-                </div>
-              </div>
-
-              <div
-                className="grid overflow-hidden transition-all duration-300 visible"
-                style={{ gridTemplateRows: "1fr" }}
-              >
-                {education.map((edu, i) => (
-                  <div key={i} className="min-h-0">
-                    <div className="relative grid grid-cols-6 gap-3">
-                      {/* Header */}
-                      <div
-                        style={{
-                          borderLeftWidth: "4px",
-                          borderLeftColor: themeColor,
-                        }}
-                        className="mt-5 col-span-full flex h-9 items-center justify-between bg-slate-100 px-3 py-2"
-                      >
-                        <h3 className="text-sm font-semibold text-slate-900">{`${
-                          i + 1
-                        } Section`}</h3>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            const updated = [...education];
-                            updated.splice(i, 1);
-                            setEducation(updated);
-                          }}
-                          className="text-red-500 hover:text-red-700"
-                          title="Delete Education"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="w-5 h-5"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M6 18L18 6M6 6l12 12"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-
-                      {/* School */}
-                      <label className="text-base font-medium text-gray-700 col-span-4">
-                        School
-                        <input
-                          placeholder="Final Round AI University"
-                          className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                          type="text"
-                          value={edu.school}
-                          onChange={(e) => {
-                            const updated = [...education];
-                            updated[i].school = e.target.value;
-                            setEducation(updated);
-                          }}
-                        />
-                      </label>
-
-                      {/* Date */}
-                      <label className="text-base font-medium text-gray-700 col-span-2">
-                        Date
-                        <input
-                          placeholder="APR 2024"
-                          className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                          type="text"
-                          value={edu.date}
-                          onChange={(e) => {
-                            const updated = [...education];
-                            updated[i].date = e.target.value;
-                            setEducation(updated);
-                          }}
-                        />
-                      </label>
-
-                      {/* Degree */}
-                      <label className="text-base font-medium text-gray-700 col-span-4">
-                        Degree &amp; Major
-                        <input
-                          placeholder="Bachelor of Science in Computer Engineering"
-                          className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                          type="text"
-                          value={edu.degree}
-                          onChange={(e) => {
-                            const updated = [...education];
-                            updated[i].degree = e.target.value;
-                            setEducation(updated);
-                          }}
-                        />
-                      </label>
-
-                      {/* GPA */}
-                      <label className="text-base font-medium text-gray-700 col-span-2">
-                        GPA
-                        <input
-                          placeholder="4.00"
-                          className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                          type="text"
-                          value={edu.gpa}
-                          onChange={(e) => {
-                            const updated = [...education];
-                            updated[i].gpa = e.target.value;
-                            setEducation(updated);
-                          }}
-                        />
-                      </label>
-
-                      {/* Additional Info with AI Button */}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Add School Button */}
-              <div className="mt-2 flex">
-                <button
-                  type="button"
-                  onClick={() =>
-                    setEducation([
-                      ...education,
-                      { degree: "", school: "", date: "", gpa: "" },
-                    ])
-                  }
-                  className="bg-white text-[#007CEE] flex items-center rounded-md py-2 pl-3 pr-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                    data-slot="icon"
-                    className="text-link -ml-0.5 mr-1.5 h-5 w-5"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 4.5v15m7.5-7.5h-15"
-                    />
-                  </svg>
-                  Add School
-                </button>
-              </div>
-            </section>
-            {/*  */}
-
-            {/* Projects */}
-
-            <section
-              style={{ backgroundColor: hideProjects ? "#f0f0f0" : "#FFFFFF" }}
-              className="bg-white flex flex-col gap-3 rounded-md border border-slate-200 p-6 pt-4 shadow transition-opacity duration-200 pb-6"
-            >
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex grow items-center gap-2">
-                  <FolderGit2 className="w-4 h-4 mr-2 text-gray-600" />
-                  <input
-                    className="block w-full border-b border-transparent text-lg font-semibold tracking-wide text-gray-900 outline-none hover:border-gray-300 hover:shadow-sm focus:border-gray-300 focus:shadow-sm"
-                    type="text"
-                    value={projectTitle}
-                    maxLength={30}
-                    onChange={(e) => setProjectTitle(e.target.value)}
-                  />
-                  <button
-                    onClick={() => setHideProjects(!hideProjects)}
-                    className="text-gray-600 hover:text-black"
-                    title={hideProjects ? "Show Projects" : "Hide Projects"}
-                  >
-                    {hideProjects ? (
-                      <EyeOff className="h-6 w-6 text-gray-400" />
-                    ) : (
-                      <Eye className="h-6 w-6 text-gray-600" />
-                    )}
-                  </button>
-                </div>
-                <div className="flex items-center gap-0.5">
-                  {/* Up / Down / Hide buttons */}
-                </div>
-              </div>{" "}
-              {projects.map((proj, i) => (
-                <div
-                  key={i}
-                  className="relative grid grid-cols-6 gap-3 border-t border-gray-200 pt-4 first:border-t-0 first:pt-0"
-                >
-                  <div
-                    style={{
-                      borderLeftWidth: "4px",
-                      borderLeftColor: themeColor,
-                    }}
-                    className="col-span-full flex h-9 items-center justify-between bg-slate-100 px-3 py-2"
-                  >
-                    <h3 className="text-sm font-semibold text-slate-900">{`${
-                      i + 1
-                    } Project`}</h3>
+                  ))}
+                  {/* Add Project Button */}
+                  <div className="mt-2 flex">
                     <button
                       type="button"
-                      onClick={() => {
-                        const updated = [...projects];
-                        updated.splice(i, 1);
-                        setProjects(updated);
-                      }}
-                      className="text-red-500 hover:text-red-700"
-                      title="Delete Project"
+                      onClick={() =>
+                        setProjects([
+                          ...projects,
+                          { title: "", tech: "", desc: "" },
+                        ])
+                      }
+                      className="bg-white text-[#007CEE] flex items-center rounded-md py-2 pl-3 pr-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -1466,150 +1560,77 @@ Improved application load time by 25% through code splitting and performance opt
                         viewBox="0 0 24 24"
                         strokeWidth="1.5"
                         stroke="currentColor"
-                        className="w-5 h-5"
+                        aria-hidden="true"
+                        data-slot="icon"
+                        className="text-link -ml-0.5 mr-1.5 h-5 w-5"
                       >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          d="M6 18L18 6M6 6l12 12"
+                          d="M12 4.5v15m7.5-7.5h-15"
                         />
                       </svg>
+                      Add Project
                     </button>
                   </div>
+                </section>
 
-                  {/* Project Title */}
-                  <label className="text-base font-medium text-gray-700 col-span-4">
-                    Project Name
-                    <input
-                      placeholder="Project Title"
-                      className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                      type="text"
-                      value={proj.title}
-                      onChange={(e) => {
-                        const updated = [...projects];
-                        updated[i].title = e.target.value;
-                        setProjects(updated);
-                      }}
-                    />
-                  </label>
+                {/* Skills */}
 
-                  {/* Date / Tech */}
-                  <label className="text-base font-medium text-gray-700 col-span-2">
-                    Tech / Date
-                    <input
-                      placeholder="React, Node, 2024"
-                      className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                      type="text"
-                      value={proj.tech}
-                      onChange={(e) => {
-                        const updated = [...projects];
-                        updated[i].tech = e.target.value;
-                        setProjects(updated);
-                      }}
-                    />
-                  </label>
-
-                  {/* Description */}
-                  <label className="text-base font-medium text-gray-700 col-span-full">
-                    Description
-                    <textarea
-                      placeholder="Describe your project..."
-                      className="h-[120px] mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
-                      value={proj.desc}
-                      onChange={(e) => {
-                        const updated = [...projects];
-                        updated[i].desc = e.target.value;
-                        setProjects(updated);
-                      }}
-                    />
-                  </label>
-                </div>
-              ))}
-              {/* Add Project Button */}
-              <div className="mt-2 flex">
-                <button
-                  type="button"
-                  onClick={() =>
-                    setProjects([
-                      ...projects,
-                      { title: "", tech: "", desc: "" },
-                    ])
-                  }
-                  className="bg-white text-[#007CEE] flex items-center rounded-md py-2 pl-3 pr-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                <section
+                  style={{
+                    backgroundColor: hideSkills ? "#f0f0f0" : "#FFFFFF",
+                  }}
+                  className=" flex flex-col gap-3 rounded-md border border-slate-200 p-6 pt-4 shadow pb-6"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                    data-slot="icon"
-                    className="text-link -ml-0.5 mr-1.5 h-5 w-5"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 4.5v15m7.5-7.5h-15"
-                    />
-                  </svg>
-                  Add Project
-                </button>
-              </div>
-            </section>
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex grow items-center gap-2">
+                      <Wrench className="w-4 h-4 mr-2 text-gray-600" />
+                      <input
+                        className="block w-full border-b border-transparent text-lg font-semibold tracking-wide text-gray-900 outline-none hover:border-gray-300 hover:shadow-sm focus:border-gray-300 focus:shadow-sm"
+                        type="text"
+                        value={skillsTitle}
+                        maxLength={30}
+                        onChange={(e) => setSkillsTitle(e.target.value)}
+                      />
+                      <button
+                        onClick={() => setHideSkills(!hideSkills)}
+                        className="text-gray-600 hover:text-black"
+                        title={hideSkills ? "Show Skills" : "Hide Skills"}
+                      >
+                        {hideSkills ? (
+                          <EyeOff className="h-6 w-6 text-gray-400" />
+                        ) : (
+                          <Eye className="h-6 w-6 text-gray-600" />
+                        )}
+                      </button>
+                    </div>
+                    <div className="flex items-center gap-0.5">
+                      {/* Up / Down / Hide buttons */}
+                    </div>
+                  </div>
 
-            {/* Skills */}
+                  <div className="col-span-full grid grid-cols-6 gap-3">
+                    {/* Skills List */}
+                    <label className="text-base font-medium text-gray-700 col-span-full">
+                      Skills List
+                      <textarea
+                        className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base resize-none min-h-[150px]"
+                        placeholder="e.g. React.js, Tailwind CSS, Redux, REST APIs"
+                        value={skills.join("\n")}
+                        onChange={(e) =>
+                          setSkills(
+                            e.target.value.split("\n").map((s) => s.trim())
+                          )
+                        }
+                      />
+                    </label>
+                  </div>
 
-            <section
-              style={{ backgroundColor: hideSkills ? "#f0f0f0" : "#FFFFFF" }}
-              className=" flex flex-col gap-3 rounded-md border border-slate-200 p-6 pt-4 shadow pb-6"
-            >
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex grow items-center gap-2">
-                  <Wrench className="w-4 h-4 mr-2 text-gray-600" />
-                  <input
-                    className="block w-full border-b border-transparent text-lg font-semibold tracking-wide text-gray-900 outline-none hover:border-gray-300 hover:shadow-sm focus:border-gray-300 focus:shadow-sm"
-                    type="text"
-                    value={skillsTitle}
-                    maxLength={30}
-                    onChange={(e) => setSkillsTitle(e.target.value)}
-                  />
-                  <button
-                    onClick={() => setHideSkills(!hideSkills)}
-                    className="text-gray-600 hover:text-black"
-                    title={hideSkills ? "Show Skills" : "Hide Skills"}
-                  >
-                    {hideSkills ? (
-                      <EyeOff className="h-6 w-6 text-gray-400" />
-                    ) : (
-                      <Eye className="h-6 w-6 text-gray-600" />
-                    )}
-                  </button>
-                </div>
-                <div className="flex items-center gap-0.5">
-                  {/* Up / Down / Hide buttons */}
-                </div>
-              </div>
-
-              <div className="col-span-full grid grid-cols-6 gap-3">
-                {/* Skills List */}
-                <label className="text-base font-medium text-gray-700 col-span-full">
-                  Skills List
-                  <textarea
-                    className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base resize-none min-h-[150px]"
-                    placeholder="e.g. React.js, Tailwind CSS, Redux, REST APIs"
-                    value={skills.join("\n")}
-                    onChange={(e) =>
-                      setSkills(e.target.value.split("\n").map((s) => s.trim()))
-                    }
-                  />
-                </label>
-              </div>
-
-              <div className="col-span-full mb-4 mt-6 border-t-2 border-dotted border-gray-200"></div>
-            </section>
-            </>
-}
+                  <div className="col-span-full mb-4 mt-6 border-t-2 border-dotted border-gray-200"></div>
+                </section>
+              </>
+            )}
 
             {/* Theme and Font Settings */}
             <section className="bg-white flex flex-col gap-3 rounded-md border border-slate-200 p-6 pt-4 shadow">
@@ -1793,12 +1814,7 @@ Improved application load time by 25% through code splitting and performance opt
                       {ainame}
                     </h1>
                     <div className="flex flex-wrap justify-center items-center gap-2 text-[10pt]">
-                      {[
-                        aiphone,
-                        aiemail,
-                        aiwebsite,
-                        ailocation,
-                      ]
+                      {[aiphone, aiemail, aiwebsite, ailocation]
                         .filter(Boolean)
                         .map((item, idx, arr) => (
                           <React.Fragment key={idx}>
@@ -2216,7 +2232,7 @@ Improved application load time by 25% through code splitting and performance opt
                   <button
                     onClick={handleAIGenerate}
                     type="button"
-                    className="flex items-center gap-2 px-7 py-5 text-sm font-mona-sans text-indigo-600 bg-white rounded-lg shadow-md border border-gray-200 hover:bg-indigo-50 hover:text-indigo-800 transition-colors duration-200"
+                    className="cursor-pointer flex items-center gap-2 px-7 py-5 text-sm font-mona-sans text-indigo-600 bg-white rounded-lg shadow-md border border-gray-200 hover:bg-indigo-50 hover:text-indigo-800 transition-colors duration-200"
                   >
                     <img src="/gemini.png" alt="AI Logo" className="w-5 h-5" />
                     <span className="whitespace-nowrap">

@@ -6,7 +6,52 @@ import Link from "next/link";
 import Image from "next/image";
 import { toast } from "sonner";
 import { getCurrentUser } from "@/lib/actions/auth.action";
+import { useReactToPrint } from "react-to-print";
 
+import {
+  Roboto,
+  Lato,
+  Montserrat,
+  Open_Sans,
+  Raleway,
+  Noto_Serif,
+  Lora,
+  Roboto_Slab,
+  Playfair_Display,
+  Merriweather,
+} from "next/font/google";
+
+// 2️⃣ Top-level font definitions
+const roboto = Roboto({ subsets: ["latin"], weight: ["400", "700"] });
+const lato = Lato({ subsets: ["latin"], weight: ["400", "700"] });
+const montserrat = Montserrat({ subsets: ["latin"], weight: ["400", "700"] });
+const openSans = Open_Sans({ subsets: ["latin"], weight: ["400", "700"] });
+const raleway = Raleway({ subsets: ["latin"], weight: ["400", "700"] });
+const notoSerif = Noto_Serif({ subsets: ["latin"], weight: ["400", "700"] });
+const lora = Lora({ subsets: ["latin"], weight: ["400", "700"] });
+const robotoSlab = Roboto_Slab({ subsets: ["latin"], weight: ["400", "700"] });
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+const merriweather = Merriweather({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+
+// 3️⃣ Font map
+const fontMap = {
+  Roboto: roboto.className,
+  Lato: lato.className,
+  Montserrat: montserrat.className,
+  "Open Sans": openSans.className,
+  Raleway: raleway.className,
+  "Noto Serif": notoSerif.className,
+  Lora: lora.className,
+  "Roboto Slab": robotoSlab.className,
+  "Playfair Display": playfairDisplay.className,
+  Merriweather: merriweather.className,
+};
 const themes = ["night", "synthwave", "halloween", "forest", "aqua", "dracula"];
 
 /**
@@ -158,6 +203,8 @@ interface ResumeAnalysis {
 }
 
 export default function ResumeCheckerPage() {
+  const contentRef = useRef<HTMLDivElement>(null);
+  const reactToPrintFn = useReactToPrint({ contentRef });
   const [photoUrl, setPhotoUrl] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [userloading, setUserLoader] = useState(true);
@@ -176,6 +223,64 @@ export default function ResumeCheckerPage() {
       localStorage.setItem("theme", newTheme);
     }
   };
+  const [themeColor, setThemeColor] = useState("#FF4800");
+  const [fontFamily, setFontFamily] = useState("Roboto");
+  const [fontSize, setFontSize] = useState("11");
+  const [documentSize, setDocumentSize] = useState("Letter");
+  const [workExperienceTitle, setWorkExperienceTitle] =
+    useState("WORK EXPERIENCE");
+  const [educationTitle, setEducationTitle] = useState("EDUCATION");
+  const [projectTitle, setProjectTitle] = useState("PROJECTS");
+  const [skillsTitle, setSkillsTitle] = useState("SKILLS");
+  const [hideExperience, setHideExperience] = useState(false);
+  const [hideEducation, setHideEducation] = useState(false);
+  const [hideProjects, setHideProjects] = useState(false);
+  const [hideSkills, setHideSkills] = useState(false);
+  // buidler
+  const [atsOutput, setAtsOutput] = useState(null);
+  const [atsGenerated, setAtsGenerated] = useState(false);
+  const [atsShow, setAtsShow] = useState(false);
+  const [name, setName] = useState("");
+  const [location, setLocation] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [website, setWebsite] = useState("");
+  // Objective
+  const [objective, setObjective] = useState("");
+
+  // Work Experience
+  const [experience, setExperience] = useState([]);
+
+  // Education
+  const [education, setEducation] = useState([]);
+
+  // Projects
+  const [projects, setProjects] = useState([]);
+
+  // Skills
+  const [skills, setSkills] = useState([]);
+
+  const [ainame, aisetName] = useState("");
+  const [ailocation, aisetLocation] = useState("");
+  const [aiphone, aisetPhone] = useState("");
+  const [aiemail, aisetEmail] = useState("");
+  const [aiwebsite, aisetWebsite] = useState("");
+  // Objective
+  const [aiobjective, aisetObjective] = useState("");
+
+  // Work Experience
+  const [aiexperience, aisetExperience] = useState([]);
+
+  // Education
+  const [aieducation, aisetEducation] = useState([]);
+
+  // Projects
+  const [aiprojects, aisetProjects] = useState([]);
+
+  // Skills
+  const [aiskills, aisetSkills] = useState([]);
+
+  // checker
   const [parsedText, setParsedText] = useState("");
   const [n8nData, setN8nData] = useState<ResumeAnalysis | null>(null);
   const [loading, setLoading] = useState(false);
@@ -187,6 +292,9 @@ export default function ResumeCheckerPage() {
 
     const formData = new FormData();
     formData.append("file", file);
+    setAtsOutput(null);
+    setAtsGenerated(false);
+    setAtsShow(false);
 
     setLoading(true);
     try {
@@ -198,7 +306,39 @@ export default function ResumeCheckerPage() {
       if (!res.ok) throw new Error("Failed to parse PDF");
       const data = await res.json();
       setParsedText(data.text);
+      // resume data extract
+      const webhookRes2 = await fetch(
+        "https://n8n.panalinks.com/webhook/eda7f983-5085-4618-a87f-242815ff71df",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ resumeParsedText: data.text }),
+        }
+      );
 
+      if (!webhookRes2.ok) {
+        console.warn("Webhook call failed");
+        return;
+      }
+
+      const webhookData2 = await webhookRes2.json();
+      console.log("here", webhookData2);
+      if (webhookData2.isItResume == true) {
+        setName(webhookData2.name || "");
+        setLocation(webhookData2.location || "");
+        setPhone(webhookData2.phone || "");
+        setEmail(webhookData2.email || "");
+        setWebsite(webhookData2.website || "");
+        setObjective(webhookData2.objective || "");
+
+        setExperience(webhookData2.experience || []);
+        setEducation(webhookData2.education || []);
+        setProjects(webhookData2.projects || []);
+        setSkills(webhookData2.skills || []);
+      } else {
+      }
+
+      // check resume score
       const webhookRes = await fetch(
         "https://n8n.panalinks.com/webhook/7e8a6934-9faf-4049-bee7-6f8b8add5f7b",
         {
@@ -275,6 +415,7 @@ export default function ResumeCheckerPage() {
     initializeAppData();
   }, []);
   const [resumeLoader, setResumeLoader] = useState(false);
+  const [aigenerateLoader, setAIGenerateLoader] = useState(false);
   const handleRedirect = () => {
     setResumeLoader(true);
     setTimeout(() => {
@@ -282,6 +423,63 @@ export default function ResumeCheckerPage() {
       window.location.href =
         "https://app.winyourinterview.ai/jobs/ats-resume-builder/";
     }, 3000);
+  };
+
+  const handleAIGenerate = async () => {
+    try {
+      setAIGenerateLoader(true);
+      const payload = {
+        data: JSON.stringify({
+          name,
+          location,
+          phone,
+          email,
+          website,
+          objective,
+          experience,
+          education,
+          projects,
+          skills,
+        }),
+      };
+      const webhookRes = await fetch(
+        "https://n8n.panalinks.com/webhook/f3079888-7d1d-4814-9acb-0fc59690b93b",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }
+      );
+
+      if (!webhookRes.ok) {
+        console.warn("Webhook call failed");
+        setAIGenerateLoader(false);
+        return;
+      }
+
+      const webhookData = await webhookRes.json();
+      console.log("AI suggestions response:", webhookData);
+      setAtsOutput(webhookData);
+      aisetName(webhookData.name || "");
+      aisetLocation(webhookData.location || "");
+      aisetPhone(webhookData.phone || "");
+      aisetEmail(webhookData.email || "");
+      aisetWebsite(webhookData.website || "");
+      aisetObjective(webhookData.objective || "");
+      aisetExperience(webhookData.experience || []);
+      aisetEducation(webhookData.education || []);
+      aisetProjects(webhookData.projects || []);
+      aisetSkills(webhookData.skills || []);
+
+      setAtsShow(true);
+      setAtsGenerated(true);
+    } catch (error) {
+      setAtsShow(false);
+      setAtsGenerated(false);
+      console.error("AI generation error:", error);
+    } finally {
+      setAIGenerateLoader(false);
+    }
   };
   if (userloading) {
     return (
@@ -617,6 +815,529 @@ export default function ResumeCheckerPage() {
                   </ul>
 
                   <div className="mt-10 h-0.5 bg-white w-full"></div>
+                  {/* show resume if available */}
+                  {stepsloader ? (
+                    <></>
+                  ) : atsGenerated ? (
+                    <>
+                      <div className="flex justify-center items-center bg-gray-100 relative">
+                        <div
+                          ref={contentRef}
+                          className={`print-container bg-white border-black border-[12px] hide-scrollbar shadow-lg ${fontMap[fontFamily]}`}
+                          style={{
+                            width:
+                              documentSize === "Letter" ? "816px" : "794px",
+                            height:
+                              documentSize === "Letter" ? "1056px" : "1123px",
+                            transform: "scale(0.7)", // scale down for screen preview
+                            fontSize: `${fontSize}pt`,
+                            overflowY: "auto",
+                            overflowX: "hidden",
+                          }}
+                        >
+                          {/* Floating Button */}
+                          <div className="px-[60pt] py-8 font-normal text-[#171717]">
+                            {/* Name & Contact */}
+                            <div className="flex flex-col items-center gap-1 mb-3">
+                              <h1
+                                className="font-bold text-[18pt] text-center"
+                                style={{ color: themeColor }}
+                              >
+                                {ainame}
+                              </h1>
+                              <div className="flex flex-wrap justify-center items-center gap-2 text-[10pt]">
+                                {[aiphone, aiemail, aiwebsite, ailocation]
+                                  .filter(Boolean)
+                                  .map((item, idx, arr) => (
+                                    <React.Fragment key={idx}>
+                                      <span>{item}</span>
+                                      {idx < arr.length - 1 && (
+                                        <span className="w-px h-[10pt] bg-[#2e2e2e]"></span>
+                                      )}
+                                    </React.Fragment>
+                                  ))}
+                              </div>
+                            </div>
+
+                            {/* Divider */}
+                            <div className="w-full h-px bg-[#2e2e2e] my-2"></div>
+
+                            {/* Objective */}
+                            <h2
+                              className="font-bold text-[12pt]"
+                              style={{ color: themeColor }}
+                            >
+                              OBJECTIVE
+                            </h2>
+                            <p className="text-[#171717] font-normal mt-[6pt]">
+                              {aiobjective}
+                            </p>
+
+                            <div className="w-full h-px bg-[#2e2e2e] my-2"></div>
+
+                            {/* Work Experience */}
+                            {!hideExperience && (
+                              <h2
+                                className="font-bold tracking-wide text-[12pt]"
+                                style={{ color: themeColor }}
+                              >
+                                {workExperienceTitle}
+                              </h2>
+                            )}
+                            {!hideExperience &&
+                              aiexperience?.map((exp, i) => (
+                                <div key={i} className="mt-[6pt]">
+                                  <div className="flex justify-between">
+                                    <div>
+                                      <p className="text-[#171717] font-normal">
+                                        {exp.jobTitle}
+                                      </p>
+                                      <p className="text-[#171717] font-bold">
+                                        {exp.company}
+                                      </p>
+                                    </div>
+                                    <p className="text-[#171717] text-[10pt]">
+                                      {exp.date}
+                                    </p>
+                                  </div>
+                                  <div className="flex flex-col mt-[4.5pt]">
+                                    {(Array.isArray(exp.bullets)
+                                      ? exp.bullets
+                                      : exp.bullets?.split("\n") || []
+                                    )
+                                      .filter(Boolean)
+                                      .map((line, bi) =>
+                                        line.trim() ? (
+                                          <div key={bi} className="flex">
+                                            <span className="font-bold px-[6pt]">
+                                              •
+                                            </span>
+                                            <span className="flex-1">
+                                              {line}
+                                            </span>
+                                          </div>
+                                        ) : null
+                                      )}
+                                  </div>
+                                </div>
+                              ))}
+
+                            {!hideExperience && (
+                              <div className="w-full h-px bg-[#2e2e2e] my-2"></div>
+                            )}
+
+                            {/* Education */}
+                            {!hideEducation && (
+                              <h2
+                                className="font-bold tracking-wide text-[12pt]"
+                                style={{ color: themeColor }}
+                              >
+                                {educationTitle}
+                              </h2>
+                            )}
+                            {!hideEducation &&
+                              aieducation?.map((edu, i) => (
+                                <div key={i} className="mt-[6pt]">
+                                  <p className="text-[#171717] font-bold">
+                                    {edu.school}
+                                  </p>
+                                  <div className="flex justify-between mt-[4.5pt]">
+                                    <p className="text-[#171717]">
+                                      {edu.degree && edu.gpa
+                                        ? `${edu.degree} - ${edu.gpa}`
+                                        : edu.degree || edu.gpa || ""}
+                                    </p>
+                                    <p className="text-[#171717]">{edu.date}</p>
+                                  </div>
+                                  {edu.details && (
+                                    <div className="flex mt-[4.5pt]">
+                                      <span className="font-bold px-[6pt]">
+                                        •
+                                      </span>
+                                      <span className="flex-1">
+                                        {edu.details}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
+                              ))}
+
+                            {!hideEducation && (
+                              <div className="w-full h-px bg-[#2e2e2e] my-2"></div>
+                            )}
+
+                            {/* Projects */}
+                            {!hideProjects && (
+                              <h2
+                                className="font-bold tracking-wide text-[12pt]"
+                                style={{ color: themeColor }}
+                              >
+                                {projectTitle}
+                              </h2>
+                            )}
+                            {!hideProjects &&
+                              aiprojects?.map((proj, i) => (
+                                <div key={i} className="mt-[6pt]">
+                                  <div className="flex justify-between">
+                                    <p className="text-[#171717] font-bold">
+                                      {proj.title}{" "}
+                                      {proj.tech && `(${proj.tech})`}
+                                    </p>
+                                  </div>
+                                  <div className="flex mt-[4.5pt]">
+                                    <span className="font-bold px-[6pt]">
+                                      {proj.desc !== "" && "•"}
+                                    </span>
+                                    <span className="flex-1">{proj.desc}</span>
+                                  </div>
+                                </div>
+                              ))}
+
+                            {!hideProjects && (
+                              <div className="w-full h-px bg-[#2e2e2e] my-2"></div>
+                            )}
+
+                            {/* Skills */}
+                            {!hideSkills && (
+                              <h2
+                                className="font-bold tracking-wide text-[12pt]"
+                                style={{ color: themeColor }}
+                              >
+                                {skillsTitle}
+                              </h2>
+                            )}
+                            {!hideSkills && (
+                              <div className="mt-3 grid grid-cols-2 gap-x-8 gap-y-2">
+                                {aiskills?.map((skill, i) => (
+                                  <div key={i} className="flex items-center">
+                                    <span className="font-bold px-[6pt]">
+                                      •
+                                    </span>
+                                    <span>{skill}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        {/* Continue with ATS Resume editor */}
+
+                        <div className="absolute bottom-14 z-10">
+                          <button
+                            onClick={handleRedirect}
+                            className="px-5 py-3 cursor-pointer bg-[#FF4800]  text-[#ffffff]  font-medium"
+                          >
+                            Continue with ATS Resume Editor
+                          </button>
+                        </div>
+
+                        {/* Buttons */}
+                        <div className="absolute top-4 right-4 z-10">
+                          <div className="flex bg-[#e0e0e0] rounded-lg p-1 w-fit">
+                            <button
+                              onClick={reactToPrintFn}
+                              className=" text-white px-4 py-2 rounded shadow transition"
+                              style={{ backgroundColor: themeColor }}
+                            >
+                              Print Resume
+                            </button>
+                          </div>
+                        </div>
+                        <div className="absolute top-4 left-4 z-10">
+                          <div className="flex bg-[#e0e0e0] rounded-lg p-1 w-fit">
+                            {/* Original Button */}
+                            <button
+                              onClick={() => {
+                                setAtsGenerated(false);
+                              }}
+                              className="px-5 py-1 cursor-pointer  text-[#384347]  font-medium"
+                            >
+                              Basic
+                            </button>
+
+                            {/* Enhancv Button */}
+                            <button className="flex items-center gap-2 px-8 py-2 cursor-progress  rounded-lg text-green-500 font-semibold bg-white">
+                              <img
+                                src="/gemini.png"
+                                alt="AI Logo"
+                                className="w-5 h-5"
+                              />
+                              ATS Compatible
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      {aigenerateLoader ? (
+                        <div className="flex justify-center items-center bg-gray-100 relative">
+                          <div
+                            className={`print-container bg-white border-black border-[12px] hide-scrollbar shadow-lg ${fontMap[fontFamily]}`}
+                            style={{
+                              width:
+                                documentSize === "Letter" ? "816px" : "794px",
+                              height:
+                                documentSize === "Letter" ? "1056px" : "1123px",
+                              transform: "scale(0.7)", // scale down for screen preview
+                              fontSize: `${fontSize}pt`,
+                              overflowY: "auto",
+                              overflowX: "hidden",
+                            }}
+                          >
+                            <div className="flex items-center justify-center h-full">
+                              <span
+                                className="loading loading-spinner text-gray-500"
+                                style={{ width: "70px", height: "70px" }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="flex justify-center items-center bg-gray-100 relative">
+                          <div
+                            ref={contentRef}
+                            className={`print-container bg-white border-black border-[12px] hide-scrollbar shadow-lg ${fontMap[fontFamily]}`}
+                            style={{
+                              width:
+                                documentSize === "Letter" ? "816px" : "794px",
+                              height:
+                                documentSize === "Letter" ? "1056px" : "1123px",
+                              transform: "scale(0.7)", // scale down for screen preview
+                              fontSize: `${fontSize}pt`,
+                              overflowY: "auto",
+                              overflowX: "hidden",
+                            }}
+                          >
+                            {/* Floating Button */}
+
+                            <div className="px-[60pt] py-8 font-normal text-[#171717]">
+                              {/* Name & Contact */}
+                              <div className="flex flex-col items-center gap-1 mb-3">
+                                <h1
+                                  className="font-bold text-[18pt] text-center"
+                                  style={{ color: themeColor }}
+                                >
+                                  {name}
+                                </h1>
+                                <div className="flex flex-wrap justify-center items-center gap-2 text-[10pt]">
+                                  {[phone, email, website, location]
+                                    .filter(Boolean)
+                                    .map((item, idx, arr) => (
+                                      <React.Fragment key={idx}>
+                                        <span>{item}</span>
+                                        {idx < arr.length - 1 && (
+                                          <span className="w-px h-[10pt] bg-[#2e2e2e]"></span>
+                                        )}
+                                      </React.Fragment>
+                                    ))}
+                                </div>
+                              </div>
+
+                              {/* Divider */}
+                              <div className="w-full h-px bg-[#2e2e2e] my-2"></div>
+
+                              {/* Objective */}
+                              <h2
+                                className="font-bold text-[12pt]"
+                                style={{ color: themeColor }}
+                              >
+                                OBJECTIVE
+                              </h2>
+                              <p className="text-[#171717] font-normal mt-[6pt]">
+                                {objective}
+                              </p>
+
+                              <div className="w-full h-px bg-[#2e2e2e] my-2"></div>
+
+                              {/* Work Experience */}
+                              {!hideExperience && (
+                                <h2
+                                  className="font-bold tracking-wide text-[12pt]"
+                                  style={{ color: themeColor }}
+                                >
+                                  {workExperienceTitle}
+                                </h2>
+                              )}
+                              {!hideExperience &&
+                                experience.map((exp, i) => (
+                                  <div key={i} className="mt-[6pt]">
+                                    <div className="flex justify-between">
+                                      <div>
+                                        <p className="text-[#171717] font-normal">
+                                          {exp.jobTitle}
+                                        </p>
+                                        <p className="text-[#171717] font-bold">
+                                          {exp.company}
+                                        </p>
+                                      </div>
+                                      <p className="text-[#171717] text-[10pt]">
+                                        {exp.date}
+                                      </p>
+                                    </div>
+                                    <div className="flex flex-col mt-[4.5pt]">
+                                      {exp.bullets.split("\n").map((line, bi) =>
+                                        line.trim() ? (
+                                          <div key={bi} className="flex">
+                                            <span className="font-bold px-[6pt]">
+                                              •
+                                            </span>
+                                            <span className="flex-1">
+                                              {line}
+                                            </span>
+                                          </div>
+                                        ) : null
+                                      )}
+                                    </div>
+                                  </div>
+                                ))}
+
+                              {!hideExperience && (
+                                <div className="w-full h-px bg-[#2e2e2e] my-2"></div>
+                              )}
+
+                              {/* Education */}
+                              {!hideEducation && (
+                                <h2
+                                  className="font-bold tracking-wide text-[12pt]"
+                                  style={{ color: themeColor }}
+                                >
+                                  {educationTitle}
+                                </h2>
+                              )}
+                              {!hideEducation &&
+                                education.map((edu, i) => (
+                                  <div key={i} className="mt-[6pt]">
+                                    <p className="text-[#171717] font-bold">
+                                      {edu.school}
+                                    </p>
+                                    <div className="flex justify-between mt-[4.5pt]">
+                                      <p className="text-[#171717]">
+                                        {edu.degree && edu.gpa
+                                          ? `${edu.degree} - ${edu.gpa}`
+                                          : edu.degree || edu.gpa || ""}
+                                      </p>
+                                      <p className="text-[#171717]">
+                                        {edu.date}
+                                      </p>
+                                    </div>
+                                    {edu.details && (
+                                      <div className="flex mt-[4.5pt]">
+                                        <span className="font-bold px-[6pt]">
+                                          •
+                                        </span>
+                                        <span className="flex-1">
+                                          {edu.details}
+                                        </span>
+                                      </div>
+                                    )}
+                                  </div>
+                                ))}
+
+                              {!hideEducation && (
+                                <div className="w-full h-px bg-[#2e2e2e] my-2"></div>
+                              )}
+
+                              {/* Projects */}
+                              {!hideProjects && (
+                                <h2
+                                  className="font-bold tracking-wide text-[12pt]"
+                                  style={{ color: themeColor }}
+                                >
+                                  {projectTitle}
+                                </h2>
+                              )}
+                              {!hideProjects &&
+                                projects.map((proj, i) => (
+                                  <div key={i} className="mt-[6pt]">
+                                    <div className="flex justify-between">
+                                      <p className="text-[#171717] font-bold">
+                                        {proj.title}{" "}
+                                        {proj.tech && `(${proj.tech})`}
+                                      </p>
+                                    </div>
+                                    <div className="flex mt-[4.5pt]">
+                                      <span className="font-bold px-[6pt]">
+                                        {proj.desc !== "" && "•"}
+                                      </span>
+                                      <span className="flex-1">
+                                        {proj.desc}
+                                      </span>
+                                    </div>
+                                  </div>
+                                ))}
+
+                              {!hideProjects && (
+                                <div className="w-full h-px bg-[#2e2e2e] my-2"></div>
+                              )}
+
+                              {/* Skills */}
+                              {!hideSkills && (
+                                <h2
+                                  className="font-bold tracking-wide text-[12pt]"
+                                  style={{ color: themeColor }}
+                                >
+                                  {skillsTitle}
+                                </h2>
+                              )}
+                              {!hideSkills && (
+                                <div className="mt-3 grid grid-cols-2 gap-x-8 gap-y-2">
+                                  {skills.map((skill, i) => (
+                                    <div key={i} className="flex items-center">
+                                      <span className="font-bold px-[6pt]">
+                                        •
+                                      </span>
+                                      <span>{skill}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          {/*  */}
+                          <div className="absolute top-4 right-4 z-10">
+                            <button
+                              onClick={reactToPrintFn}
+                              className=" text-white px-4 py-2 rounded shadow transition"
+                              style={{ backgroundColor: themeColor }}
+                            >
+                              Print Resume
+                            </button>
+                          </div>
+                          <div className="absolute top-4 left-4 z-10">
+                            <div className="flex bg-[#e0e0e0] rounded-lg p-1 w-fit">
+                              {/* Original Button */}
+                              <button className="px-5 py-1 rounded-lg text-[#000000]  font-semibold bg-white">
+                                Basic
+                              </button>
+
+                              {/* Enhancv Button */}
+
+                              <button
+                                onClick={() => {
+                                  if (atsOutput) {
+                                    setAtsGenerated(true);
+                                  } else {
+                                    handleAIGenerate();
+                                  }
+                                }}
+                                className="flex items-center gap-2 px-8 py-2 cursor-pointer text-[#384347]  font-medium"
+                              >
+                                <img
+                                  src="/gemini.png"
+                                  alt="AI Logo"
+                                  className="w-5 h-5"
+                                />
+                                ATS Compatible
+                              </button>
+                            </div>
+                          </div>
+
+                          {/*  */}
+                        </div>
+                      )}
+                    </>
+                  )}
                 </div>
               </div>
             </div>
