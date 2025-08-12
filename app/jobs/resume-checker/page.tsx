@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { Lock, Upload, ArrowLeft } from "lucide-react";
+import { Lock, Upload, ArrowLeft, ArrowRightIcon } from "lucide-react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
@@ -274,7 +274,15 @@ export default function ResumeCheckerPage() {
     };
     initializeAppData();
   }, []);
-
+  const [resumeLoader, setResumeLoader] = useState(false);
+  const handleRedirect = () => {
+    setResumeLoader(true);
+    setTimeout(() => {
+      // Redirect to the resume checker page after 1 second
+      window.location.href =
+        "https://app.winyourinterview.ai/jobs/ats-resume-builder/";
+    }, 3000);
+  };
   if (userloading) {
     return (
       <div className="fixed inset-0 z-50  text-white flex items-center justify-center">
@@ -300,7 +308,14 @@ export default function ResumeCheckerPage() {
       </div>
     );
   }
-  return (
+  return resumeLoader ? (
+    <div className="bg-white min-h-screen flex justify-center items-center">
+      <span
+        className="loading loading-infinity text-green-500"
+        style={{ width: "70px", height: "70px" }}
+      />
+    </div>
+  ) : (
     <>
       <div
         data-theme={theme}
@@ -672,6 +687,73 @@ export default function ResumeCheckerPage() {
                 />
               </div>
             </div>
+            {/*  */}
+            {/* Second Feature Section */}
+            <div className="flex flex-col md:flex-row items-center justify-between gap-8 py-12 px-6 md:px-16 lg:px-24">
+              {/* Left side image */}
+              <div className="flex-1 flex">
+                <img
+                  src="/rb/resumepack.png"
+                  alt="Resume checker dashboard"
+                  className="w-full max-w-md h-auto object-contain rounded-xl shadow"
+                  width={400}
+                  height={300}
+                />
+              </div>
+              {/* Right side paragraph */}
+              <div className="flex-1 max-w-xl">
+                <div>
+                  <div>
+                    <h3
+                      className="h3 font-mona-sans"
+                      style={{
+                        fontWeight: 500,
+                        fontSize: 38,
+                        lineHeight: "46px",
+                        marginTop: 32,
+                        marginBottom: 16,
+                        color: "#2d3639",
+                      }}
+                    >
+                      Feature-Packed & ATS-Optimized Resume Builder
+                    </h3>
+                    <p
+                      style={{
+                        lineHeight: 1.6,
+                        color: "#384347",
+                        margin: "0 0 8px",
+                        fontSize: 16,
+                      }}
+                    >
+                      Easily create and customize your ATS-optimized resume with
+                      our intuitive drag-and-drop builder. Choose from
+                      professional templates, section layouts, and design
+                      options tailored to help you land more interviews.
+                    </p>
+                    <button
+                      onClick={handleRedirect}
+                      className="lbDsKPVYdwKjE90OIGvw8g== RRxe1M+sUxFTRkUeo96NlQ=="
+                    >
+                      <span
+                        style={{
+                          textDecoration: "underline",
+                          fontSize: "16px",
+                          fontWeight: 650,
+                          cursor: "pointer",
+                          color: "#5f4dc7",
+                          lineHeight: "22px",
+                        }}
+                      >
+                        Build Your Resume
+                      </span>
+                      <ArrowRightIcon className="text-[#5f4dc7] ml-1 w-4 h-4 inline-block" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/*  */}
           </div>
         )}
 
