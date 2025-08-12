@@ -1092,6 +1092,19 @@ export default function ResumeCheckerPage() {
                               />
                             </div>
                           </div>
+                           <div className="absolute top-4 left-4 z-10">
+                              <div className="flex items-center gap-2 px-7 py-5 text-sm font-mona-sans text-indigo-600 bg-white rounded-lg shadow-md border border-gray-200 hover:bg-indigo-50 hover:text-indigo-800 transition-colors duration-200">
+                                <img
+                                  src="/gemini.png"
+                                  alt="AI Logo"
+                                  className="w-5 h-5"
+                                />
+                                <span
+                                  className="loading loading-spinner text-indigo-600"
+                                  style={{ width: "20px", height: "20px" }}
+                                />
+                              </div>
+                            </div>
                         </div>
                       ) : (
                         <div className="flex justify-center items-center bg-gray-100 relative">
@@ -1293,6 +1306,16 @@ export default function ResumeCheckerPage() {
                                 </div>
                               )}
                             </div>
+                          </div>
+                          {/* Continue with ATS Resume editor */}
+
+                          <div className="absolute bottom-14 z-10">
+                            <button
+                              onClick={handleRedirect}
+                              className="px-5 py-3 cursor-pointer bg-[#FF4800]  text-[#ffffff]  font-medium"
+                            >
+                              Continue with ATS Resume Editor
+                            </button>
                           </div>
                           {/*  */}
                           <div className="absolute top-4 right-4 z-10">
