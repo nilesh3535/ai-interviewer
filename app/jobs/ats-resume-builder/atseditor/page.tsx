@@ -190,7 +190,7 @@ Improved application load time by 25% through code splitting and performance opt
     if (!file) return;
 
     const formData = new FormData();
-    formData.append("FILE", file);
+    formData.append("file", file);
 
     setLoading(true);
     setRError("");

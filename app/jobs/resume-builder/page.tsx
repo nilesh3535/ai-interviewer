@@ -192,7 +192,7 @@ export default function ResumeBuilderPage() {
     if (!file) return;
 
     const formData = new FormData();
-    formData.append("FILE", file);
+    formData.append("file", file);
 
     setLoading(true);
     try {
