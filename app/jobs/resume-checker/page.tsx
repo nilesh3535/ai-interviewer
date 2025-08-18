@@ -7,6 +7,7 @@ import Image from "next/image";
 import { toast } from "sonner";
 import { getCurrentUser } from "@/lib/actions/auth.action";
 import { useReactToPrint } from "react-to-print";
+import jsPDF from "jspdf";
 
 import {
   Roboto,
@@ -204,7 +205,10 @@ interface ResumeAnalysis {
 
 export default function ResumeCheckerPage() {
   const contentRef = useRef<HTMLDivElement>(null);
-  const reactToPrintFn = useReactToPrint({ contentRef });
+  const reactToPrintFn = useReactToPrint({
+    contentRef,
+    documentTitle: "resume",
+  });
   const [photoUrl, setPhotoUrl] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [userloading, setUserLoader] = useState(true);
@@ -1092,19 +1096,19 @@ export default function ResumeCheckerPage() {
                               />
                             </div>
                           </div>
-                           <div className="absolute top-4 left-4 z-10">
-                              <div className="flex items-center gap-2 px-7 py-5 text-sm font-mona-sans text-indigo-600 bg-white rounded-lg shadow-md border border-gray-200 hover:bg-indigo-50 hover:text-indigo-800 transition-colors duration-200">
-                                <img
-                                  src="/gemini.png"
-                                  alt="AI Logo"
-                                  className="w-5 h-5"
-                                />
-                                <span
-                                  className="loading loading-spinner text-indigo-600"
-                                  style={{ width: "20px", height: "20px" }}
-                                />
-                              </div>
+                          <div className="absolute top-4 left-4 z-10">
+                            <div className="flex items-center gap-2 px-7 py-5 text-sm font-mona-sans text-indigo-600 bg-white rounded-lg shadow-md border border-gray-200 hover:bg-indigo-50 hover:text-indigo-800 transition-colors duration-200">
+                              <img
+                                src="/gemini.png"
+                                alt="AI Logo"
+                                className="w-5 h-5"
+                              />
+                              <span
+                                className="loading loading-spinner text-indigo-600"
+                                style={{ width: "20px", height: "20px" }}
+                              />
                             </div>
+                          </div>
                         </div>
                       ) : (
                         <div className="flex justify-center items-center bg-gray-100 relative">
@@ -1396,7 +1400,7 @@ export default function ResumeCheckerPage() {
                   <p className="text-gray-700 text-center text-sm leading-5">
                     Drag and drop your resume or click to upload.
                     <br />
-                    Supported formats: PDF & DOCX | Max file size: 2MB
+                    Supported formats: PDF only | Max file size: 2MB
                   </p>
                   {!loading && (
                     <>

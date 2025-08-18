@@ -190,7 +190,7 @@ Improved application load time by 25% through code splitting and performance opt
     if (!file) return;
 
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("FILE", file);
 
     setLoading(true);
     setRError("");
@@ -241,10 +241,10 @@ Improved application load time by 25% through code splitting and performance opt
       } else {
         gotParsedData(false);
         toast.error(
-          "We couldn’t detect a resume in your file. Please upload your resume as a PDF or Word document."
+          "We couldn’t detect a resume in your file. Please upload your resume as a PDF document."
         );
         setRError(
-          "We couldn’t detect a resume in your file. Please upload your resume as a PDF or Word document."
+          "We couldn’t detect a resume in your file. Please upload your resume as a PDF document."
         );
       }
     } catch (err) {
@@ -2210,16 +2210,19 @@ Improved application load time by 25% through code splitting and performance opt
                               </p>
                             </div>
                             <div className="flex flex-col mt-[4.5pt]">
-                              {exp.bullets.split("\n").map((line, bi) =>
-                                line.trim() ? (
-                                  <div key={bi} className="flex">
-                                    <span className="font-bold px-[6pt]">
-                                      •
-                                    </span>
-                                    <span className="flex-1">{line}</span>
-                                  </div>
-                                ) : null
-                              )}
+                              {exp?.bullets
+                                ?.toString()
+                                .split("\n")
+                                .map((line, bi) =>
+                                  line.trim() ? (
+                                    <div key={bi} className="flex">
+                                      <span className="font-bold px-[6pt]">
+                                        •
+                                      </span>
+                                      <span className="flex-1">{line}</span>
+                                    </div>
+                                  ) : null
+                                )}
                             </div>
                           </div>
                         ))}
@@ -2403,6 +2406,9 @@ Improved application load time by 25% through code splitting and performance opt
             <h1 className="text-center font-mona-sans text-[32px] font-normal leading-[38px] mb-4 mt-8 text-[#2d3639]">
               Please upload your resume here:
             </h1>
+            <p className="text-gray-700 text-center text-sm leading-5">
+              Supported format: PDF only
+            </p>
             {loading ? (
               <>
                 <span
