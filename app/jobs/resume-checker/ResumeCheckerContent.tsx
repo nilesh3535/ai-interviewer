@@ -267,6 +267,7 @@ export default function ResumeCheckerContent() {
 
   // Projects
   const [projects, setProjects] = useState([]);
+  const [coursework, setCourseWork] = useState([]);
 
   // Skills
   const [skills, setSkills] = useState([]);
@@ -287,6 +288,7 @@ export default function ResumeCheckerContent() {
 
   // Projects
   const [aiprojects, aisetProjects] = useState([]);
+  const [aicoursework, aisetCourseWork] = useState([]);
 
   // Skills
   const [aiskills, aisetSkills] = useState([]);
@@ -357,6 +359,7 @@ export default function ResumeCheckerContent() {
           setExperience(webhookData2.experience || []);
           setEducation(webhookData2.education || []);
           setProjects(webhookData2.projects || []);
+          setCourseWork(webhookData2.coursework || []);
           setSkills(webhookData2.skills || []);
         } else {
           toast.error("This file doesn’t look like a resume. Try another one.");
@@ -462,6 +465,7 @@ export default function ResumeCheckerContent() {
           experience,
           education,
           projects,
+          coursework,
           skills,
         }),
       };
@@ -492,6 +496,7 @@ export default function ResumeCheckerContent() {
       aisetExperience(webhookData.experience || []);
       aisetEducation(webhookData.education || []);
       aisetProjects(webhookData.projects || []);
+      aisetCourseWork(webhookData.coursework || []);
       aisetSkills(webhookData.skills || []);
 
       setAtsShow(true);
@@ -818,6 +823,8 @@ export default function ResumeCheckerContent() {
                     <button
                       onClick={() => {
                         setN8nData(null);
+                        setAtsGenerated(false);
+                        setAtsOutput(null);
                         setCurrentStep(0);
                         setScoreLoader(false);
                       }}
@@ -1037,12 +1044,41 @@ export default function ResumeCheckerContent() {
                                 </div>
                               ))}
 
-                            {!hideProjects && aiprojects.length ? (
+                            {!hideProjects && aiprojects.length > 0 ? (
                               <div className="w-full h-px bg-[#2e2e2e] my-2"></div>
                             ) : (
                               <></>
                             )}
+                            {/* Course wpork */}
+                            <h2
+                              className="font-bold tracking-wide text-[12pt]"
+                              style={{ color: themeColor }}
+                            >
+                              {aicoursework.length > 0 ? "COURSEWORK" : ""}
+                            </h2>
 
+                            {aicoursework.length > 0 &&
+                              aicoursework.map((course, i) => (
+                                <div key={i} className="mt-[6pt]">
+                                  <p className="text-[#171717] font-bold">
+                                    {course.title}
+                                  </p>
+                                  <div className="flex justify-between mt-[4.5pt]">
+                                    <p className="text-[#171717]">
+                                      {course.institution}
+                                    </p>
+                                    <p className="text-[#171717]">
+                                      {course.platform}
+                                    </p>
+                                  </div>
+                                </div>
+                              ))}
+
+                            {aicoursework.length > 0 ? (
+                              <div className="w-full h-px bg-[#2e2e2e] my-2"></div>
+                            ) : (
+                              <></>
+                            )}
                             {/* Skills */}
                             {!hideSkills && (
                               <h2
@@ -1079,13 +1115,13 @@ export default function ResumeCheckerContent() {
 
                         {/* Buttons */}
                         <div className="absolute top-4 right-4 z-10">
-                          <button
+                          {/* <button
                             onClick={reactToPrintFn}
                             className=" text-white px-4 py-2 rounded shadow transition"
                             style={{ backgroundColor: themeColor }}
                           >
                             Print Resume
-                          </button>
+                          </button> */}
                         </div>
                         <div className="absolute top-4 left-4 z-10">
                           <div className="flex bg-[#e0e0e0] rounded-lg p-1 w-fit">
@@ -1332,6 +1368,36 @@ export default function ResumeCheckerContent() {
                                 <></>
                               )}
 
+                              {/* Course wpork */}
+                              <h2
+                                className="font-bold tracking-wide text-[12pt]"
+                                style={{ color: themeColor }}
+                              >
+                                {coursework.length > 0 ? "COURSEWORK" : ""}
+                              </h2>
+
+                              {coursework.length > 0 &&
+                                coursework.map((course, i) => (
+                                  <div key={i} className="mt-[6pt]">
+                                    <p className="text-[#171717] font-bold">
+                                      {course.title}
+                                    </p>
+                                    <div className="flex justify-between mt-[4.5pt]">
+                                      <p className="text-[#171717]">
+                                        {course.institution}
+                                      </p>
+                                      <p className="text-[#171717]">
+                                        {course.platform}
+                                      </p>
+                                    </div>
+                                  </div>
+                                ))}
+
+                              {coursework.length > 0 ? (
+                                <div className="w-full h-px bg-[#2e2e2e] my-2"></div>
+                              ) : (
+                                <></>
+                              )}
                               {/* Skills */}
                               {!hideSkills && (
                                 <h2
@@ -1367,13 +1433,13 @@ export default function ResumeCheckerContent() {
                           </div>
                           {/*  */}
                           <div className="absolute top-4 right-4 z-10">
-                            <button
+                            {/* <button
                               onClick={reactToPrintFn}
                               className=" text-white px-4 py-2 rounded shadow transition"
                               style={{ backgroundColor: themeColor }}
                             >
                               Print Resume
-                            </button>
+                            </button> */}
                           </div>
                           <div className="absolute top-4 left-4 z-10">
                             <div className="flex bg-[#e0e0e0] rounded-lg p-1 w-fit">

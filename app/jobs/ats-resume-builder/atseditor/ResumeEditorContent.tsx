@@ -12,6 +12,7 @@ import {
   Eye,
   ChevronLeft,
   EyeOff,
+  BookOpen,
 } from "lucide-react";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { useReactToPrint } from "react-to-print";
@@ -165,7 +166,18 @@ Improved application load time by 25% through code splitting and performance opt
       gpa: "GPA: 9.2/10",
     },
   ]);
-
+  const [coursework, setCoursework] = useState([
+    {
+      title: "Google Data Analytics Professional Certificate",
+      institution: "Coursera",
+      platform: "Coursera",
+    },
+    {
+      title: "Excel Skills for Business Specialization",
+      institution: "Macquarie University",
+      platform: "Coursera",
+    },
+  ]);
   // Projects
   const [projects, setProjects] = useState([
     {
@@ -260,6 +272,7 @@ Improved application load time by 25% through code splitting and performance opt
 
         setExperience(webhookData.experience || []);
         setEducation(webhookData.education || []);
+        setCoursework(webhookData.coursework || []);
         setProjects(webhookData.projects || []);
         setSkills(webhookData.skills || []);
 
@@ -288,11 +301,13 @@ Improved application load time by 25% through code splitting and performance opt
   const [workExperienceTitle, setWorkExperienceTitle] =
     useState("WORK EXPERIENCE");
   const [educationTitle, setEducationTitle] = useState("EDUCATION");
+  const [courseworkTitle, setCourseworkTitle] = useState("COURSEWORK");
   const [projectTitle, setProjectTitle] = useState("PROJECTS");
   const [skillsTitle, setSkillsTitle] = useState("SKILLS");
 
   const [hideExperience, setHideExperience] = useState(false);
   const [hideEducation, setHideEducation] = useState(false);
+  const [hideCoursework, setHideCoursework] = useState(false);
   const [hideProjects, setHideProjects] = useState(false);
   const [hideSkills, setHideSkills] = useState(false);
 
@@ -338,6 +353,7 @@ Improved application load time by 25% through code splitting and performance opt
 
   // Education
   const [aieducation, aisetEducation] = useState([]);
+  const [aicoursework, aisetCourseWork] = useState([]);
 
   // Projects
   const [aiprojects, aisetProjects] = useState([]);
@@ -357,6 +373,7 @@ Improved application load time by 25% through code splitting and performance opt
           objective,
           experience,
           education,
+          coursework,
           projects,
           skills,
         }),
@@ -387,6 +404,7 @@ Improved application load time by 25% through code splitting and performance opt
       aisetObjective(webhookData.objective || "");
       aisetExperience(webhookData.experience || []);
       aisetEducation(webhookData.education || []);
+      aisetCourseWork(webhookData.coursework || []);
       aisetProjects(webhookData.projects || []);
       aisetSkills(webhookData.skills || []);
 
@@ -1047,6 +1065,129 @@ Improved application load time by 25% through code splitting and performance opt
                         </button>
                       </div>
                     </section>
+{/* Course work */}
+<section
+  style={{
+    backgroundColor: hideCoursework ? "#f0f0f0" : "#FFFFFF",
+  }}
+  className="bg-white flex flex-col gap-3 rounded-md border border-slate-200 p-6 pt-4 shadow transition-opacity duration-200 pb-6"
+>
+  <div className="flex items-center justify-between gap-4">
+    <div className="flex grow items-center gap-2">
+      <BookOpen className="w-4 h-4 mr-2 text-gray-600" />
+      <input
+        className="block w-full border-b border-transparent text-lg font-semibold tracking-wide text-gray-900 outline-none hover:border-gray-300 hover:shadow-sm focus:border-gray-300 focus:shadow-sm"
+        type="text"
+        value={courseworkTitle}
+        maxLength={30}
+        onChange={(e) => setCourseworkTitle(e.target.value)}
+      />
+      <button
+        onClick={() => setHideCoursework(!hideCoursework)}
+        className="text-gray-600 hover:text-black"
+        title={hideCoursework ? "Show Coursework" : "Hide Coursework"}
+      >
+        {hideCoursework ? (
+          <EyeOff className="h-6 w-6 text-gray-400" />
+        ) : (
+          <Eye className="h-6 w-6 text-gray-600" />
+        )}
+      </button>
+    </div>
+  </div>
+
+  {aicoursework.map((course, i) => (
+    <div
+      key={i}
+      className="relative grid grid-cols-6 gap-3 border-t border-gray-200 pt-4 first:border-t-0 first:pt-0"
+    >
+      <div
+        style={{
+          borderLeftWidth: "4px",
+          borderLeftColor: themeColor,
+        }}
+        className="col-span-full flex h-9 items-center justify-between bg-slate-100 px-3 py-2"
+      >
+        <h3 className="text-sm font-semibold text-slate-900">{`${
+          i + 1
+        } Course`}</h3>
+        <button
+          type="button"
+          onClick={() => {
+            const updated = [...aicoursework];
+            updated.splice(i, 1);
+            aisetCourseWork(updated);
+          }}
+          className="text-red-500 hover:text-red-700"
+          title="Delete Course"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="w-5 h-5"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+
+      {/* Course Title */}
+      <label className="text-base font-medium text-gray-700 col-span-6">
+        Course Title
+        <input
+          placeholder="Course Title"
+          className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+          type="text"
+          value={course.title}
+          onChange={(e) => {
+            const updated = [...aicoursework];
+            updated[i].title = e.target.value;
+            aisetCourseWork(updated);
+          }}
+        />
+      </label>
+
+      {/* Institution */}
+      <label className="text-base font-medium text-gray-700 col-span-3">
+        Institution
+        <input
+          placeholder="e.g. Google, Macquarie University"
+          className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+          type="text"
+          value={course.institution}
+          onChange={(e) => {
+            const updated = [...aicoursework];
+            updated[i].institution = e.target.value;
+            aisetCourseWork(updated);
+          }}
+        />
+      </label>
+
+      {/* Platform */}
+      <label className="text-base font-medium text-gray-700 col-span-3">
+        Platform
+        <input
+          placeholder="Coursera, Udemy, edX..."
+          className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+          type="text"
+          value={course.platform}
+          onChange={(e) => {
+            const updated = [...aicoursework];
+            updated[i].platform = e.target.value;
+            aisetCourseWork(updated);
+          }}
+        />
+      </label>
+    </div>
+  ))}
+</section>
 
                     {/* Skills */}
 
@@ -1711,6 +1852,155 @@ Improved application load time by 25% through code splitting and performance opt
                         </button>
                       </div>
                     </section>
+{/* course work  */}
+<section
+  style={{
+    backgroundColor: hideCoursework ? "#f0f0f0" : "#FFFFFF",
+  }}
+  className="bg-white flex flex-col gap-3 rounded-md border border-slate-200 p-6 pt-4 shadow transition-opacity duration-200 pb-6"
+>
+  <div className="flex items-center justify-between gap-4">
+    <div className="flex grow items-center gap-2">
+      <BookOpen className="w-4 h-4 mr-2 text-gray-600" />
+      <input
+        className="block w-full border-b border-transparent text-lg font-semibold tracking-wide text-gray-900 outline-none hover:border-gray-300 hover:shadow-sm focus:border-gray-300 focus:shadow-sm"
+        type="text"
+        value={courseworkTitle}
+        maxLength={30}
+        onChange={(e) => setCourseworkTitle(e.target.value)}
+      />
+      <button
+        onClick={() => setHideCoursework(!hideCoursework)}
+        className="text-gray-600 hover:text-black"
+        title={hideCoursework ? "Show Coursework" : "Hide Coursework"}
+      >
+        {hideCoursework ? (
+          <EyeOff className="h-6 w-6 text-gray-400" />
+        ) : (
+          <Eye className="h-6 w-6 text-gray-600" />
+        )}
+      </button>
+    </div>
+    <div className="flex items-center gap-0.5">
+      {/* Up / Down / Hide buttons if needed */}
+    </div>
+  </div>{" "}
+  {coursework.map((course, i) => (
+    <div
+      key={i}
+      className="relative grid grid-cols-6 gap-3 border-t border-gray-200 pt-4 first:border-t-0 first:pt-0"
+    >
+      <div
+        style={{
+          borderLeftWidth: "4px",
+          borderLeftColor: themeColor,
+        }}
+        className="col-span-full flex h-9 items-center justify-between bg-slate-100 px-3 py-2"
+      >
+        <h3 className="text-sm font-semibold text-slate-900">{`${
+          i + 1
+        } Course`}</h3>
+        <button
+          type="button"
+          onClick={() => {
+            const updated = [...coursework];
+            updated.splice(i, 1);
+            setCoursework(updated);
+          }}
+          className="text-red-500 hover:text-red-700"
+          title="Delete Course"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="w-5 h-5"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+
+      {/* Course Title */}
+      <label className="text-base font-medium text-gray-700 col-span-6">
+        Course Title
+        <input
+          placeholder="Google Data Analytics Professional Certificate"
+          className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+          type="text"
+          value={course.title}
+          onChange={(e) => {
+            const updated = [...coursework];
+            updated[i].title = e.target.value;
+            setCoursework(updated);
+          }}
+        />
+      </label>
+
+      {/* Institution */}
+      <label className="text-base font-medium text-gray-700 col-span-3">
+        Institution
+        <input
+          placeholder="Google, Macquarie University"
+          className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+          type="text"
+          value={course.institution}
+          onChange={(e) => {
+            const updated = [...coursework];
+            updated[i].institution = e.target.value;
+            setCoursework(updated);
+          }}
+        />
+      </label>
+
+      {/* Platform */}
+      <label className="text-base font-medium text-gray-700 col-span-3">
+        Platform
+        <input
+          placeholder="Coursera"
+          className="mt-1 px-3 py-2 block w-full rounded-md border border-gray-300 text-gray-900 shadow-sm outline-none font-normal text-base"
+          type="text"
+          value={course.platform}
+          onChange={(e) => {
+            const updated = [...coursework];
+            updated[i].platform = e.target.value;
+            setCoursework(updated);
+          }}
+        />
+      </label>
+    </div>
+  ))}
+  {/* Add Course Button */}
+  <div className="mt-2 flex">
+    <button
+      type="button"
+      onClick={() =>
+        setCoursework([...coursework, { title: "", institution: "", platform: "" }])
+      }
+      className="bg-white text-[#007CEE] flex items-center rounded-md py-2 pl-3 pr-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth="1.5"
+        stroke="currentColor"
+        aria-hidden="true"
+        data-slot="icon"
+        className="text-link -ml-0.5 mr-1.5 h-5 w-5"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+      </svg>
+      Add Course
+    </button>
+  </div>
+</section>
 
                     {/* Skills */}
 
@@ -2102,6 +2392,36 @@ Improved application load time by 25% through code splitting and performance opt
                       {!hideProjects && (
                         <div className="w-full h-px bg-[#2e2e2e] my-2"></div>
                       )}
+{/* course work */}
+{/* Coursework */}
+{!hideCoursework && (
+  <h2
+    className="font-bold tracking-wide text-[12pt]"
+    style={{ color: themeColor }}
+  >
+    {courseworkTitle || "Coursework"}
+  </h2>
+)}
+{!hideCoursework &&
+  aicoursework?.map((course, i) => (
+   <div key={i} className="mt-[6pt]">
+                                    <p className="text-[#171717] font-bold">
+                                      {course.title}
+                                    </p>
+                                    <div className="flex justify-between mt-[4.5pt]">
+                                      <p className="text-[#171717]">
+                                        {course.institution}
+                                      </p>
+                                      <p className="text-[#171717]">
+                                        {course.platform}
+                                      </p>
+                                    </div>
+                                  </div>
+  ))}
+
+{!hideCoursework && (
+  <div className="w-full h-px bg-[#2e2e2e] my-2"></div>
+)}
 
                       {/* Skills */}
                       {!hideSkills && (
@@ -2326,6 +2646,36 @@ Improved application load time by 25% through code splitting and performance opt
                       {!hideProjects && (
                         <div className="w-full h-px bg-[#2e2e2e] my-2"></div>
                       )}
+{/* course work */}
+{/* Coursework */}
+{!hideCoursework && (
+  <h2
+    className="font-bold tracking-wide text-[12pt]"
+    style={{ color: themeColor }}
+  >
+    {courseworkTitle || "Coursework"}
+  </h2>
+)}
+{!hideCoursework &&
+  coursework?.map((course, i) => (
+   <div key={i} className="mt-[6pt]">
+                                    <p className="text-[#171717] font-bold">
+                                      {course.title}
+                                    </p>
+                                    <div className="flex justify-between mt-[4.5pt]">
+                                      <p className="text-[#171717]">
+                                        {course.institution}
+                                      </p>
+                                      <p className="text-[#171717]">
+                                        {course.platform}
+                                      </p>
+                                    </div>
+                                  </div>
+  ))}
+
+{!hideCoursework && (
+  <div className="w-full h-px bg-[#2e2e2e] my-2"></div>
+)}
 
                       {/* Skills */}
                       {!hideSkills && (
