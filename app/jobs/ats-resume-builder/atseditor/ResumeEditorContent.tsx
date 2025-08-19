@@ -86,7 +86,10 @@ export default function Atseditor() {
   }, []);
 
   const contentRef = useRef<HTMLDivElement>(null);
-  const reactToPrintFn = useReactToPrint({ contentRef });
+  const reactToPrintFn = useReactToPrint({
+    contentRef,
+    documentTitle: "resume",
+  });
   // Header
   const [name, setName] = useState("John Doe");
   const [location, setLocation] = useState("Bengaluru, Karnataka, India");
@@ -2387,28 +2390,32 @@ Improved application load time by 25% through code splitting and performance opt
                       </div>
                     ) : (
                       <button
-  onClick={handleAIGenerate}
-  type="button"
-  className="relative px-7 py-5 text-sm font-mona-sans text-indigo-600 bg-white rounded-lg overflow-hidden border-2 border-gray-100 z-10"
->
-  {/* Animated Google-colored border */}
-  <span
-    className="absolute -inset-[2px] rounded-lg animate-spin-slow -z-10"
-    style={{
-      background:
-        "conic-gradient(#4285F4, #EA4335, #FBBC05, #34A853, #4285F4)"
-    }}
-  ></span>
+                        onClick={handleAIGenerate}
+                        type="button"
+                        className="relative px-7 py-5 text-sm font-mona-sans text-indigo-600 bg-white rounded-lg overflow-hidden border-2 border-gray-100 z-10"
+                      >
+                        {/* Animated Google-colored border */}
+                        <span
+                          className="absolute -inset-[2px] rounded-lg animate-spin-slow -z-10"
+                          style={{
+                            background:
+                              "conic-gradient(#4285F4, #EA4335, #FBBC05, #34A853, #4285F4)",
+                          }}
+                        ></span>
 
-  {/* Inner white mask to cover gradient inside */}
-  <span className="absolute inset-[2px] bg-white rounded-lg -z-0"></span>
+                        {/* Inner white mask to cover gradient inside */}
+                        <span className="absolute inset-[2px] bg-white rounded-lg -z-0"></span>
 
-  {/* Button content */}
-  <span className="relative flex items-center gap-2">
-    <img src="/gemini.png" alt="AI Logo" className="w-5 h-5" />
-    Click to Generate ATS Compatible
-  </span>
-</button>
+                        {/* Button content */}
+                        <span className="relative flex items-center gap-2">
+                          <img
+                            src="/gemini.png"
+                            alt="AI Logo"
+                            className="w-5 h-5"
+                          />
+                          Click to Generate ATS Compatible
+                        </span>
+                      </button>
                     )}
                   </div>
 

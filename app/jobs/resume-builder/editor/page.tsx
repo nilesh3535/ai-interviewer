@@ -63,7 +63,10 @@ const fontMap = {
 };
 export default function EditorPage(props) {
   const contentRef = useRef<HTMLDivElement>(null);
-  const reactToPrintFn = useReactToPrint({ contentRef });
+  const reactToPrintFn = useReactToPrint({
+    contentRef,
+    documentTitle: "resume",
+  });
 
   // Header
   const [name, setName] = useState("John Doe");
