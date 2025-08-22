@@ -11,19 +11,15 @@ import moment from "moment";
 import LastSearchInfo from "@/components/LastSearchInfo";
 import Footer from "@/components/Footer";
 
-import { fetchAndProcessJobs, fetchUserDataAndJobs } from "@/lib/actions/jobs.action";
+import {
+  fetchAndProcessJobs,
+  fetchUserDataAndJobs,
+} from "@/lib/actions/jobs.action";
 import { getAllRoles, getCurrentUser } from "@/lib/actions/auth.action";
 import Link from "next/link";
 import Image from "next/image";
-import CreatableSelect from 'react-select/creatable';
-const themes = [
-  "night",
-  "synthwave",
-  "halloween",
-  "forest",
-  "aqua",
-  "dracula",
-];
+import CreatableSelect from "react-select/creatable";
+const themes = ["night", "synthwave", "halloween", "forest", "aqua", "dracula"];
 
 /**
  * ThemeSwitcher Component
@@ -52,7 +48,6 @@ function ThemeSwitcher({ theme, setTheme }: ThemeSwitcherProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-
   // Icon component
   const ThemeIcon = () => (
     <svg
@@ -69,9 +64,6 @@ function ThemeSwitcher({ theme, setTheme }: ThemeSwitcherProps) {
       <path d="M16.9109 13.7703H16.925C17.2062 13.7703 17.4734 13.6625 17.6703 13.4609C17.8718 13.2594 17.9796 12.9969 17.9796 12.7156C17.9796 12.4344 17.8671 12.1578 17.6656 11.9609L6.82339 1.2078C5.87651 0.256237 4.32964 0.251549 3.37808 1.20311L3.13433 1.44686C2.18277 2.39374 2.17808 3.94061 3.12964 4.89217L5.07964 6.84218L1.10933 10.8078C0.720265 11.1969 0.50464 11.7125 0.499953 12.2656C0.495265 12.8187 0.71089 13.3344 1.09995 13.7234C1.10933 13.7328 1.1187 13.7422 1.13277 13.7562L7.28277 19.6625C7.68589 20.0469 8.19683 20.239 8.71245 20.239C9.22808 20.239 9.74839 20.0422 10.1468 19.6578L10.8078 19.0203C12.7625 17.1312 15.7062 14.2812 16.0906 13.8969C16.114 13.8734 16.3062 13.7703 16.9109 13.7703ZM4.18901 3.83749C3.82339 3.46717 3.82339 2.87655 4.18901 2.51092L4.43277 2.26717C4.79839 1.90155 5.3937 1.90155 5.75933 2.27186L7.71402 4.21249L6.13433 5.79217L4.18901 3.83749ZM15.0359 12.8234C14.689 13.1703 11.6093 16.1515 9.76714 17.9375L9.1062 18.575C8.88589 18.7859 8.5437 18.7859 8.32339 18.5797L2.17339 12.6734L2.16402 12.6641C2.0562 12.5562 1.99995 12.4156 1.99995 12.2656C1.99995 12.1156 2.06089 11.975 2.1687 11.8672L6.13902 7.90624L8.78277 5.26249L15.9406 12.3641C15.5562 12.4531 15.2562 12.6031 15.0359 12.8234Z"></path>
     </svg>
   );
-
-
-
 
   return (
     <div className="dropdown dropdown-end relative" ref={dropdownRef}>
@@ -123,7 +115,7 @@ function ThemeSwitcher({ theme, setTheme }: ThemeSwitcherProps) {
                     <path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"></path>
                   </svg>
                 )}
-                {t=="night" ? "lofi" : t}
+                {t == "night" ? "lofi" : t}
               </span>
               <div className="flex flex-shrink-0 flex-wrap gap-1 h-full">
                 <div className="bg-primary w-2 h-4 rounded"></div>
@@ -142,10 +134,10 @@ function ThemeSwitcher({ theme, setTheme }: ThemeSwitcherProps) {
 type DeviceSize = "mobile" | "medium" | "desktop";
 
 function getDeviceSize(width: number): DeviceSize {
-  if (width < 768) return "mobile";      // Tailwind: < md
-  if (width < 1024) return "medium";     // Tailwind: < lg
-  return "desktop";                      // Tailwind: lg and up
-};
+  if (width < 768) return "mobile"; // Tailwind: < md
+  if (width < 1024) return "medium"; // Tailwind: < lg
+  return "desktop"; // Tailwind: lg and up
+}
 interface ApplyOption {
   is_direct: boolean;
   publisher: string;
@@ -200,6 +192,48 @@ interface Roles {
   createdAt: string;
   flag: boolean;
 }
+interface SelectCityOption {
+  value: string;
+  label: string;
+}
+export const cityData: SelectCityOption[] = [
+  { value: "Delhi", label: "Delhi" },
+  { value: "Gurugram", label: "Gurugram" },
+  { value: "Noida", label: "Noida" },
+  { value: "Ghaziabad", label: "Ghaziabad" },
+  { value: "Faridabad", label: "Faridabad" },
+  { value: "Mumbai", label: "Mumbai" },
+  { value: "Navi Mumbai", label: "Navi Mumbai" },
+  { value: "Thane", label: "Thane" },
+  { value: "Bengaluru", label: "Bengaluru" },
+  { value: "Hyderabad", label: "Hyderabad" },
+  { value: "Chennai", label: "Chennai" },
+  { value: "Kolkata", label: "Kolkata" },
+  { value: "Pune", label: "Pune" },
+  { value: "Ahmedabad", label: "Ahmedabad" },
+  { value: "Jaipur", label: "Jaipur" },
+  { value: "Chandigarh", label: "Chandigarh" },
+  { value: "Mohali", label: "Mohali" },
+  { value: "Panchkula", label: "Panchkula" },
+  { value: "Indore", label: "Indore" },
+  { value: "Lucknow", label: "Lucknow" },
+  { value: "Surat", label: "Surat" },
+  { value: "Coimbatore", label: "Coimbatore" },
+  { value: "Kochi", label: "Kochi" },
+  { value: "Nagpur", label: "Nagpur" },
+  { value: "Bhubaneswar", label: "Bhubaneswar" },
+  { value: "Vadodara", label: "Vadodara" },
+  { value: "Rajkot", label: "Rajkot" },
+  { value: "Visakhapatnam", label: "Visakhapatnam" },
+  { value: "Vijayawada", label: "Vijayawada" },
+  { value: "Guwahati", label: "Guwahati" },
+  { value: "Mysuru", label: "Mysuru" },
+  { value: "Mangaluru", label: "Mangaluru" },
+  { value: "Madurai", label: "Madurai" },
+  { value: "Tiruchirappalli", label: "Tiruchirappalli" },
+  { value: "Bhopal", label: "Bhopal" },
+  { value: "Patna", label: "Patna" },
+];
 export default function JobsApp() {
   // Initialize theme from localStorage or default to "night"
   const [theme, setThemeState] = useState<string>(() => {
@@ -216,65 +250,67 @@ export default function JobsApp() {
       localStorage.setItem("theme", newTheme);
     }
   };
- 
- const [loading, setLoading] = useState(true);
+
+  const [loading, setLoading] = useState(true);
   const [allJobs, setAllJobs] = useState<Job[]>([]);
-  const [roles,setRoles]=useState<Roles[]>([])
- const [isOpen, setIsOpen] = useState<boolean>(false);
- const [isFetchSuccess, setIsFetchSuccess] = useState<boolean>(false);
- const [newJobs,setNewJobs]=useState(0);
+  const [roles, setRoles] = useState<Roles[]>([]);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isFetchSuccess, setIsFetchSuccess] = useState<boolean>(false);
+  const [newJobs, setNewJobs] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
-    const [generateStatus, setGenerateStatus] =useState<boolean>(false);
-   const [photoUrl, setPhotoUrl] = useState<string>("");
-   const [username, setUsername] = useState<string>("");
-    const [selectedRole, setSelectedRole] = useState<SelectOption | null>(null);
-    // Validation states
+  const [generateStatus, setGenerateStatus] = useState<boolean>(false);
+  const [photoUrl, setPhotoUrl] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [selectedRole, setSelectedRole] = useState<SelectOption | null>(null);
+  // Validation states
   const [isRoleInvalid, setIsRoleInvalid] = useState(false);
   const [isLevelInvalid, setIsLevelInvalid] = useState(false);
   const [isLocInvalid, setIsLocInvalid] = useState(false);
-    const [role, setRole] = useState("");
-      const [city, setCity] = useState("");
-      const [level, setLevel] = useState("Select Experience Level");
+  const [role, setRole] = useState("");
+  const [city, setCity] = useState("");
+  const [isCityInvalid, setIsCityInvalid] = useState(false);
+  const [selectedCity, setSelectedCity] = useState<SelectCityOption | null>(
+    null
+  );
+  const [level, setLevel] = useState("Select Experience Level");
   // Move these useState calls to the top, before any early returns
-   const [size, setSize] = useState(() => {
-    if (typeof window !== "undefined") { // This is correct
+  const [size, setSize] = useState(() => {
+    if (typeof window !== "undefined") {
+      // This is correct
       return getDeviceSize(window.innerWidth);
     }
     return "desktop";
   });
   // const [position, setPosition] = useState("");
- 
+
   useEffect(() => {
     setIsFullscreen(false);
-   
+
     const initializeAppData = async () => {
-    
       // Fetch user data and jobs
 
       const currentUser = await getCurrentUser();
       setPhotoUrl(currentUser?.photoURL || "/user-avatar.jpg");
       setUsername(currentUser?.name || "Hey");
-        const userId = currentUser?.id;
+      const userId = currentUser?.id;
 
-        if (!userId) {
-          console.error("No user ID found.");
-          return;
-        }
-      
-        const alldata = await fetchUserDataAndJobs({ userId });
+      if (!userId) {
+        console.error("No user ID found.");
+        return;
+      }
 
-        setAllJobs(alldata);
-         const froles=await getAllRoles();
-        setRoles(froles)
-        setLoading(false);
-      
+      const alldata = await fetchUserDataAndJobs({ userId });
+
+      setAllJobs(alldata);
+      const froles = await getAllRoles();
+      setRoles(froles);
+      setLoading(false);
     };
     initializeAppData();
   }, []);
 
-
   // Move this useEffect for window resize to the top, before early return
-useEffect(() => {
+  useEffect(() => {
     if (typeof window === "undefined") return; // This is correct
     const handleResize = () => {
       const newSize = getDeviceSize(window.innerWidth);
@@ -288,126 +324,138 @@ useEffect(() => {
 
   // Move this useEffect for theme to the top, before early return
   // Now, your early return is safe because all hooks have been called
- if (loading) {
-  return (
-    <div className="fixed inset-0 z-50  text-white flex items-center justify-center">
-      <div role="status" className="text-center">
-        <svg
-          aria-hidden="true"
-          className="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
-          viewBox="0 0 100 101"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-            fill="currentColor"
-          />
-          <path
-            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-            fill="currentFill"
-          />
-        </svg>
-        <span className="ml-5 text-xl text-amber-50">Loading...</span>
+  if (loading) {
+    return (
+      <div className="fixed inset-0 z-50  text-white flex items-center justify-center">
+        <div role="status" className="text-center">
+          <svg
+            aria-hidden="true"
+            className="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+            viewBox="0 0 100 101"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+              fill="currentColor"
+            />
+            <path
+              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+              fill="currentFill"
+            />
+          </svg>
+          <span className="ml-5 text-xl text-amber-50">Loading...</span>
+        </div>
       </div>
-    </div>
-  );
-}
-
-
+    );
+  }
 
   const getJobs = async () => {
-    
-
     // Reset all validation states
     setIsRoleInvalid(false);
     setIsLevelInvalid(false);
-    setIsLocInvalid(false);
-     setNewJobs(0)
-       if (selectedRole?.label == "" || selectedRole?.label==null) {
-         setIsRoleInvalid(true);
-          toast.error("Please Select or type a Role!", { duration: 2000, position: "top-center",closeButton:true });
-          return;
-        }
-        if (level === "Select Experience Level") {
-            setIsLevelInvalid(true);
-          toast.error("Please select an experience level!", { duration: 2000, position: "top-center" ,closeButton:true });
-          return;
-        }
-        if (city.trim() === "") {
-              setIsLocInvalid(true);
-          toast.error("Please enter a city/preferred location!", { duration: 2000, position: "top-center" ,closeButton:true });
-          return;
-        }
+    setIsCityInvalid(false);
+    setNewJobs(0);
+    if (selectedRole?.label == "" || selectedRole?.label == null) {
+      setIsRoleInvalid(true);
+      toast.error("Please Select or type a Role!", {
+        duration: 2000,
+        position: "top-center",
+        closeButton: true,
+      });
+      return;
+    }
+    if (level === "Select Experience Level") {
+      setIsLevelInvalid(true);
+      toast.error("Please select an experience level!", {
+        duration: 2000,
+        position: "top-center",
+        closeButton: true,
+      });
+      return;
+    }
+    if (selectedCity?.label == "" || selectedCity?.label == null) {
+      setIsCityInvalid(true);
+      toast.error("Please enter a city/preferred location!", {
+        duration: 2000,
+        position: "top-center",
+        closeButton: true,
+      });
+      return;
+    }
 
-        // Logic for checking if already searched today (client-side specific)
-        if (allJobs.length>0) {
-          const jobDate = moment(allJobs[0].created_date).startOf("day");
-          const today = moment().startOf("day");
-          const isSameDay = jobDate.isSame(today, "day");
-          if (isSameDay) {
-            toast.error("You have already searched for jobs today!", { duration: 2000, position: "top-center" });
-            return; // Stop the function here
-          }
-        }
-
-        console.log("Searching... Please wait");
-        setGenerateStatus(true); // Set loading status in the component
-        const loadingToastId = toast.loading("Searching jobs for you... Please wait while it loads. Do not close this window.", {
-          duration: 5000,
-          id: "loading-toast",
+    // Logic for checking if already searched today (client-side specific)
+    if (allJobs.length > 0) {
+      const jobDate = moment(allJobs[0].created_date).startOf("day");
+      const today = moment().startOf("day");
+      const isSameDay = jobDate.isSame(today, "day");
+      if (isSameDay) {
+        toast.error("You have already searched for jobs today!", {
+          duration: 2000,
+          position: "top-center",
         });
+        return; // Stop the function here
+      }
+    }
 
-        const currentUser = await getCurrentUser();
-        const userId = currentUser?.id;
+    console.log("Searching... Please wait");
+    setGenerateStatus(true); // Set loading status in the component
+    const loadingToastId = toast.loading(
+      "Searching jobs for you... Please wait while it loads. Do not close this window.",
+      {
+        duration: 5000,
+        id: "loading-toast",
+      }
+    );
 
-        if (userId) {
-         
-     const newJobs=await fetchAndProcessJobs({
-      userId:userId,
-      role:selectedRole?.label||"",
-      city:city,
-      level:level
-     });
-     console.log(newJobs);
-     if(newJobs.length==undefined|| newJobs.length==0){
-      setNewJobs(0)
-     }else{
-     setNewJobs(newJobs.length)
-     }
-     if(newJobs){
-       toast.dismiss(loadingToastId);
-       
-    toast.success("Jobs fetched successfully!", {
-      duration: 2000,
-      position: "top-center",
-    });
-    setGenerateStatus(false);
-    setIsOpen(false)
-    setIsFetchSuccess(true)
-    // setTimeout(()=>{
-    //  window.location.reload();
-    // },1000)
-  }else{
-  
-            toast.error("You have already searched for jobs today!", { duration: 2000, position: "top-center" });
-          
-  }
-  }
-   //  
+    const currentUser = await getCurrentUser();
+    const userId = currentUser?.id;
 
+    if (userId) {
+      const newJobs = await fetchAndProcessJobs({
+        userId: userId,
+        role: selectedRole?.label || "",
+        city: selectedCity?.label || "",
+        level: level,
+      });
+      console.log(newJobs);
+      if (newJobs.length == undefined || newJobs.length == 0) {
+        setNewJobs(0);
+      } else {
+        setNewJobs(newJobs.length);
+      }
+      if (newJobs) {
+        toast.dismiss(loadingToastId);
+
+        toast.success("Jobs fetched successfully!", {
+          duration: 2000,
+          position: "top-center",
+        });
+        setGenerateStatus(false);
+        setIsOpen(false);
+        setIsFetchSuccess(true);
+        // setTimeout(()=>{
+        //  window.location.reload();
+        // },1000)
+      } else {
+        toast.error("You have already searched for jobs today!", {
+          duration: 2000,
+          position: "top-center",
+        });
+      }
+    }
+    //
   };
   // const handleSubmit = (e: React.FormEvent) => {
   //   e.preventDefault();
   //    getJobs();
   // };
 
-
   const closeModal = () => {
     setIsOpen(false);
   };
 
- const closeFecthModal = () => {
+  const closeFecthModal = () => {
     window.location.reload();
     setIsFetchSuccess(false);
   };
@@ -415,435 +463,518 @@ useEffect(() => {
   const commonFieldClasses =
     "w-full px-5 py-3 pr-10 rounded-md border border-gray-300 dark:border-gray-700 bg-gray-900 text-white appearance-none";
 
-   const getCustomSelectStyles = (isInvalid: boolean) => ({
+  const getCustomSelectStyles = (isInvalid: boolean) => ({
     control: (base: any, state: any) => ({
       ...base,
-      backgroundColor: '#1A202C', // bg-gray-900
-      borderColor: isInvalid ? '#EF4444' : '#4A5568', // border-red-500 or border-gray-700
-      color: 'white',
-      borderRadius: '0.375rem', // rounded-md
-      padding: '0.25rem', // p-2
-      boxShadow: state.isFocused ? '0 0 0 1px #63B3ED' : 'none', // Example focus ring
-      '&:hover': {
-        borderColor: isInvalid ? '#EF4444' : '#63B3ED', // Maintain red on hover if invalid
+      backgroundColor: "#1A202C", // bg-gray-900
+      borderColor: isInvalid ? "#EF4444" : "#4A5568", // border-red-500 or border-gray-700
+      color: "white",
+      borderRadius: "0.375rem", // rounded-md
+      padding: "0.25rem", // p-2
+      boxShadow: state.isFocused ? "0 0 0 1px #63B3ED" : "none", // Example focus ring
+      "&:hover": {
+        borderColor: isInvalid ? "#EF4444" : "#63B3ED", // Maintain red on hover if invalid
       },
-      minHeight: '42px', // Ensure consistent height for single and multi-select
+      minHeight: "42px", // Ensure consistent height for single and multi-select
     }),
     multiValue: (base: any) => ({
       ...base,
-      backgroundColor: '#3B82F6', // bg-blue-500
-      color: 'white',
-      borderRadius: '9999px', // rounded-full
-      padding: '0.125rem 0.5rem', // px-2 py-1
+      backgroundColor: "#3B82F6", // bg-blue-500
+      color: "white",
+      borderRadius: "9999px", // rounded-full
+      padding: "0.125rem 0.5rem", // px-2 py-1
     }),
     multiValueLabel: (base: any) => ({
       ...base,
-      color: 'white',
-      fontSize: '0.875rem', // text-sm
+      color: "white",
+      fontSize: "0.875rem", // text-sm
     }),
     multiValueRemove: (base: any) => ({
       ...base,
-      color: 'white',
-      '&:hover': {
-        backgroundColor: '#2563EB', // A darker blue on hover
-        color: 'white',
+      color: "white",
+      "&:hover": {
+        backgroundColor: "#2563EB", // A darker blue on hover
+        color: "white",
       },
     }),
     singleValue: (base: any) => ({
       ...base,
-      color: 'white',
+      color: "white",
     }),
     input: (base: any) => ({
       ...base,
-      color: 'white',
+      color: "white",
     }),
     placeholder: (base: any) => ({
       ...base,
-      color: '#A0AEC0', // gray-400
+      color: "#A0AEC0", // gray-400
     }),
     menu: (base: any) => ({
       ...base,
-      backgroundColor: '#1A202C', // bg-gray-900 for dropdown menu
-      color: 'white',
-      borderRadius: '0.375rem', // rounded-md
+      backgroundColor: "#1A202C", // bg-gray-900 for dropdown menu
+      color: "white",
+      borderRadius: "0.375rem", // rounded-md
     }),
     option: (base: any, state: any) => ({
       ...base,
-      backgroundColor: state.isFocused ? '#2D3748' : '#1A202C', // bg-gray-800 on focus, bg-gray-900 otherwise
-      color: 'white',
-      '&:active': {
-        backgroundColor: '#4A5568', // bg-gray-700 on active
+      backgroundColor: state.isFocused ? "#2D3748" : "#1A202C", // bg-gray-800 on focus, bg-gray-900 otherwise
+      color: "white",
+      "&:active": {
+        backgroundColor: "#4A5568", // bg-gray-700 on active
       },
     }),
     indicatorSeparator: (base: any) => ({
       ...base,
-      backgroundColor: '#4A5568', // Separator color
+      backgroundColor: "#4A5568", // Separator color
     }),
     dropdownIndicator: (base: any) => ({
       ...base,
-      color: '#A0AEC0', // Arrow color
-      '&:hover': {
-        color: 'white',
+      color: "#A0AEC0", // Arrow color
+      "&:hover": {
+        color: "white",
       },
     }),
   });
- 
+
   return (
-     <div data-theme={theme} className="min-h-screen bg-base-100 text-base-content font-sans transition-colors duration-300">
+    <div
+      data-theme={theme}
+      className="min-h-screen bg-base-100 text-base-content font-sans transition-colors duration-300"
+    >
       {/* header */}
-      <nav className="navbar px-4 sm:px-20" role="navigation" aria-label="Main navigation">
+      <nav
+        className="navbar px-4 sm:px-20"
+        role="navigation"
+        aria-label="Main navigation"
+      >
         <div className="flex-1 flex items-center">
-         {/* nextjs image */}
-         <a href="https://winyourinterview.ai/" target='_blank' className="btn btn-ghost">
-          <Image
-                             src="/wyi.png" // replace with your logo path
-                             alt="Company Logo"
-                             width={200}
-                             height={100}
-                             className="object-contain bg-gray-50 rounded-sm shadow-lg shadow-gray-700"
-                           />
-                 </a>
-       
+          {/* nextjs image */}
+          <a
+            href="https://winyourinterview.ai/"
+            target="_blank"
+            className="btn btn-ghost"
+          >
+            <Image
+              src="/wyi.png" // replace with your logo path
+              alt="Company Logo"
+              width={200}
+              height={100}
+              className="object-contain bg-gray-50 rounded-sm shadow-lg shadow-gray-700"
+            />
+          </a>
         </div>
         <div className="flex-none gap-4 flex items-center">
           <div className="flex gap-4">
-             <ThemeSwitcher theme={theme} setTheme={setTheme} />
-           <a href="https://app.winyourinterview.ai" target='_blank' className="hidden sm:btn btn-ghost">
-            <p>AI Mock Interview</p>
-          </a>
-         <a href="https://app.winyourinterview.ai/jobs/resume-checker" target='_blank' className="hidden sm:btn btn-ghost">
-            <p>ATS Resume Checker</p>
-          </a>
-          <a href="https://app.winyourinterview.ai/jobs/resume-builder" target='_blank' className="hidden md:btn btn-ghost">
-            <p >ATS Resume Builder</p>
-          </a>
-          
-        
-            <p className="hidden sm:btn btn-md">{username.split(" ")[0]}</p>
-          
-          
-          <Link href={"/profile"} className="p-1 rounded-full border-1 border-white hover:ring-2 ring-white transition duration-200">
-                    <Image
-                            src={photoUrl}
-                            alt="avatar"
-                            width={32}
-                            height={32}
-                            className="rounded-full"
-                        />
-                  </Link>
-          </div>
+            <ThemeSwitcher theme={theme} setTheme={setTheme} />
+            <a
+              href="https://app.winyourinterview.ai"
+              target="_blank"
+              className="hidden sm:btn btn-ghost"
+            >
+              <p>AI Mock Interview</p>
+            </a>
+            <a
+              href="https://app.winyourinterview.ai/jobs/resume-checker"
+              target="_blank"
+              className="hidden sm:btn btn-ghost"
+            >
+              <p>ATS Resume Checker</p>
+            </a>
+            <a
+              href="https://app.winyourinterview.ai/jobs/resume-builder"
+              target="_blank"
+              className="hidden md:btn btn-ghost"
+            >
+              <p>ATS Resume Builder</p>
+            </a>
 
+            <p className="hidden sm:btn btn-md">{username.split(" ")[0]}</p>
+
+            <Link
+              href={"/profile"}
+              className="p-1 rounded-full border-1 border-white hover:ring-2 ring-white transition duration-200"
+            >
+              <Image
+                src={photoUrl}
+                alt="avatar"
+                width={32}
+                height={32}
+                className="rounded-full"
+              />
+            </Link>
+          </div>
         </div>
       </nav>
-{/*  */}
-{/* Main content area */}
-<div
-  className="bg-[url('/jobpattern.png')] bg-no-repeat bg-center bg-cover h-[652px] lg:h-[698px] relative pt-32 md:pt-40"
->
-  <div className="container mx-auto px-5 sm:px-0">
-    <div className="max-w-[640px] w-full mx-auto">
-     <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold  text-center leading-tight max-w-[446px] w-full mx-auto">
-      Your Ultimate Job Search Companion</h1>
-      <p className="text-sm sm:text-base md:text-lg  text-center pt-4 mb-8">
-        Are you looking for the perfect job or the ideal candidate? Find your
-        dream job with thousands of job postings across industries.
-      </p>
-
-    <div className="flex justify-center">
-  <button onClick={()=>{
-     if (allJobs.length === 0) {
-           setIsOpen(true)
-        } else if (allJobs.length > 0) {
-         const jobDate = moment(allJobs[0].created_date).startOf('day'); 
-         const today = moment().startOf('day');
-
-          // Compare dates (ignores time)
-          const isSameDay = jobDate.isSame(today, 'day');
-
-          if (!isSameDay) {
-            setIsOpen(true)
-          } else {
-            toast.error("You have already searched for jobs today!", {
-              duration: 2000,
-              position: "top-center",
-            });
-          }
-        }
-    
-   
-    
-    }} className="bg-primary cursor-pointer px-7 py-3 rounded-lg text-primary-content text-base font-medium flex items-center justify-center gap-3 flex-row-reverse hover:bg-primary-content hover:text-white">
-    <svg className="w-5 h-5" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path fillRule="evenodd" clipRule="evenodd" d="M3.85587 1.61739C5.19014 0.725854 6.75882 0.25 8.36354 0.25H8.36358C10.5154 0.250137 12.579 1.105 14.1006 2.62655C15.6221 4.14811 16.477 6.21174 16.4771 8.36355V8.36359C16.4771 9.96831 16.0013 11.537 15.1097 12.8713C14.9533 13.1054 14.7852 13.3305 14.6065 13.5459L19.5303 18.4697C19.8232 18.7626 19.8232 19.2374 19.5303 19.5303C19.2374 19.8232 18.7625 19.8232 18.4696 19.5303L13.5458 14.6065C12.9234 15.1232 12.2239 15.5467 11.4685 15.8596C9.98591 16.4737 8.35454 16.6344 6.78065 16.3213C5.20677 16.0082 3.76107 15.2355 2.62636 14.1008C1.49165 12.9661 0.718908 11.5204 0.405843 9.94648C0.0927783 8.37259 0.253454 6.74122 0.867553 5.25866C1.48165 3.77609 2.52159 2.50892 3.85587 1.61739ZM8.36349 1.75C7.05546 1.75001 5.77681 2.13789 4.68922 2.86459C3.60162 3.5913 2.75394 4.6242 2.25337 5.83268C1.75281 7.04116 1.62183 8.37093 1.87702 9.65384C2.13221 10.9368 2.76209 12.1152 3.68702 13.0401C4.61195 13.965 5.79038 14.5949 7.07329 14.8501C8.3562 15.1053 9.68597 14.9743 10.8945 14.4738C12.1029 13.9732 13.1358 13.1255 13.8625 12.0379C14.5892 10.9503 14.9771 9.67167 14.9771 8.36364M8.36354 1.75C10.1175 1.75012 11.7997 2.44695 13.0399 3.68721C14.2802 4.92748 14.977 6.60960 14.9771 8.36359" fill="currentColor" />
-    </svg>
-   <span className="text-base md:text-2xl">
-  Click here to find your dream jobs
-</span>
-
-  </button> 
-  
-</div>
-  <LastSearchInfo allJobs={allJobs} />
-  {/* Modal success */}
-{isFetchSuccess &&
-<div className="fixed inset-0 flex items-center justify-center overflow-y-auto z-[99999]">
-    {/* Backdrop */}
-    {!isFullscreen && (
-      <div
-        className="fixed inset-0 h-full w-full bg-gray-400/20 backdrop-blur-[5px]"
-        // onClick={closeModal}
-      ></div>
-    )}
-
-    {/* Modal Content */}
-    <div
-      className={`${
-        isFullscreen ? "w-full h-full" : "relative w-full max-w-[700px] m-4 rounded-3xl bg-white dark:bg-gray-900"
-      }`}
-      // onClick={(e) => e.stopPropagation()}
-    >
-      {/* Close Button */}
-      {true && (
-        <button
-          onClick={closeFecthModal}
-          className="absolute right-3 top-3 z-[999] flex h-9.5 w-9.5 items-center justify-center rounded-full bg-gray-100 text-gray-400 transition-colors hover:bg-gray-200 hover:text-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white sm:right-6 sm:top-6 sm:h-11 sm:w-11"
-        >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M6.04289 16.5413C5.65237 16.9318 5.65237 17.565 6.04289 17.9555C6.43342 18.346 7.06658 18.346 7.45711 17.9555L11.9987 13.4139L16.5408 17.956C16.9313 18.3466 17.5645 18.3466 17.955 17.956C18.3455 17.5655 18.3455 16.9323 17.955 16.5418L13.4129 11.9997L17.955 7.4576C18.3455 7.06707 18.3455 6.43391 17.955 6.04338C17.5645 5.65286 16.9313 5.65286 16.5408 6.04338L11.9987 10.5855L7.45711 6.0439C7.06658 5.65338 6.43342 5.65338 6.04289 6.0439C5.65237 6.43442 5.65237 7.06759 6.04289 7.45811L10.5845 11.9997L6.04289 16.5413Z"
-              fill="currentColor"
-            />
-          </svg>
-        </button>
-      )}
-       <div className="no-scrollbar relative w-full max-w-[700px] overflow-y-auto rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11">
-        <div className="px-2 pr-14">
-          <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
-            Job Search Alert!
-          </h4>
-         
-        </div>
-<div className="flex flex-col gap-5">
-         <div className="flex flex-col gap-5">
-        {/* role */}
-          <div className="flex flex-col gap-2 w-full">
-           <label className="text-green-500 text-center text-lg my-15">
-
-            {newJobs==0 ? " No Jobs found" : `${newJobs} jobs found`  } for `{selectedRole?.label||""} | {city}.`
-           </label>
-          </div>
-          </div>
-         <button onClick={()=>{
-          if(newJobs==0){
-              setIsFetchSuccess(false);
-               setIsOpen(true)
-          }else{
-             window.location.reload();
-          }
-         }} 
-         className="cursor-pointer px-10 bg-primary-200 text-accent-content text-xl font-medium py-3 rounded-md mt-4 transition hover:bg-primary hover:text-primary-content">
-        {newJobs==0 ?"New Search":"View fetched Jobs"} 
-      </button>
-
-      </div>
-      </div>
-      </div>
-      </div>
-
-}
-
-
-{/* Modal */}
-{isOpen && (
-  <div className="fixed inset-0 flex items-center justify-center overflow-y-auto z-[99999]">
-    {/* Backdrop */}
-    {!isFullscreen && (
-      <div
-        className="fixed inset-0 h-full w-full bg-gray-400/20 backdrop-blur-[5px]"
-        // onClick={closeModal}
-      ></div>
-    )}
-
-    {/* Modal Content */}
-    <div
-      className={`${
-        isFullscreen ? "w-full h-full" : "relative w-full max-w-[700px] m-4 rounded-3xl bg-white dark:bg-gray-900"
-      }`}
-      // onClick={(e) => e.stopPropagation()}
-    >
-      {/* Close Button */}
-      {true && (
-        <button
-          onClick={closeModal}
-          className="absolute right-3 top-3 z-[999] flex h-9.5 w-9.5 items-center justify-center rounded-full bg-gray-100 text-gray-400 transition-colors hover:bg-gray-200 hover:text-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white sm:right-6 sm:top-6 sm:h-11 sm:w-11"
-        >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M6.04289 16.5413C5.65237 16.9318 5.65237 17.565 6.04289 17.9555C6.43342 18.346 7.06658 18.346 7.45711 17.9555L11.9987 13.4139L16.5408 17.956C16.9313 18.3466 17.5645 18.3466 17.955 17.956C18.3455 17.5655 18.3455 16.9323 17.955 16.5418L13.4129 11.9997L17.955 7.4576C18.3455 7.06707 18.3455 6.43391 17.955 6.04338C17.5645 5.65286 16.9313 5.65286 16.5408 6.04338L11.9987 10.5855L7.45711 6.0439C7.06658 5.65338 6.43342 5.65338 6.04289 6.0439C5.65237 6.43442 5.65237 7.06759 6.04289 7.45811L10.5845 11.9997L6.04289 16.5413Z"
-              fill="currentColor"
-            />
-          </svg>
-        </button>
-      )}
-
-      {/* Modal Inner Content */}
-      <div className="no-scrollbar relative w-full max-w-[700px] overflow-y-auto rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11">
-        <div className="px-2 pr-14">
-          <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
-            Find Your Dream Job!
-          </h4>
-          <p className="mb-6 text-sm text-gray-500 dark:text-gray-400 lg:mb-7">
-            Update your details to keep your profile up-to-date.
-          </p>
-        </div>
-        {/* Add your fields or form here */}
-        <div className="flex flex-col gap-5">
-        {/* role */}
-        <div className="flex flex-col gap-2 w-full">
-        <label className="text-white font-medium">Role</label>
-        {/* <input
-            type="text"
-            placeholder="e.g. Sales Executive, Software Engineer, etc."
-            className={commonFieldClasses}
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            /> */}
-            <CreatableSelect
-            className="basic-single"
-            classNamePrefix="select"
-            value={selectedRole}
-            onChange={(selectedOption) => {
-              setSelectedRole(selectedOption as SelectOption);
-              
-              setIsRoleInvalid(false);
-            }}
-            options={roles.map((r) => ({
-              value: r.id,
-              label: r.role,
-              data: r, // full role data
-            }))}
-            isClearable={true}
-            isSearchable={true}
-            placeholder="Select or type a Role"
-            styles={getCustomSelectStyles(isRoleInvalid)}
-            onCreateOption={(inputValue) => {
-              const customRole = {
-                value: inputValue,
-                label: inputValue,
-                data: null, // or define how you want to store custom data
-              };
-              setSelectedRole(customRole);
-           
-              setIsRoleInvalid(false);
-
-              // Optional: insert new role to DB or state
-              // createRoleInBackend(inputValue)
-            }}
-          />
-      </div>
-            {/* Experience Level */}
-      <div className="flex flex-col gap-2 w-full">
-        <label className="text-white font-medium">Experience Level</label>
-        <div className="relative">
-        <select
-            className={`${commonFieldClasses} pl-3 pr-10 ${isLevelInvalid ? '!border-red-500' : ''}`}
-            value={level}
-            onChange={(e) => setLevel(e.target.value)}
-            >
-            <option value="">Select Experience Level</option>
-                <option value="Entry Level (Typically less than 2 years)">Entry Level (Typically less than 2 years)</option>
-                <option value="Junior Level (Typically 2-5 years)">Junior Level (Typically 2-5 years)</option>
-                <option value="Mid-Level">Mid-Level / Intermediate (Typically 5-7 years)</option>
-                <option value="Mid-Level / Intermediate (Typically 5-7 years)">Senior Level (Typically 7-10 years)</option>
-                <option value="Advanced Level (Typically 10-15 years)">Advanced Level (Typically 10-15 years)</option>
-                <option value="Expert Level (Typically 15-20 years)">Expert Level (Typically 15-20 years)</option>
-                <option value="Mastery Level (20+ years)">Mastery Level (20+ years)</option>
-          </select>
-          <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center justify-center text-white">
-            <svg
-              className="h-4 w-4"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-            >
-              <path d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-        </div>
-      </div>
-      {/* City */}
-       <div className="flex flex-col gap-2 w-full">
-        <label className="text-white font-medium">Preferred location</label>
-        <input
-            type="text"
-            placeholder="e.g. Bangaluru."
-            className={`${commonFieldClasses}${isLocInvalid ? '!border-red-500' : ''}`}
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            />
-      </div>
-      {/* Country */}
-      <div className="flex flex-col gap-2 w-full ">
-        <label className="text-white font-medium">Country</label>
-        <input
-            type="text"
-            placeholder="India"
-            className={`${commonFieldClasses} cursor-not-allowed`}
-            value={"India"}
-            disabled
-            />
-      </div>
       {/*  */}
-       <button onClick={()=>{
-       if (allJobs.length>0) {
-         const jobDate = moment(allJobs[0].created_date).startOf('day');
-          const today = moment().startOf('day');
+      {/* Main content area */}
+      <div className="bg-[url('/jobpattern.png')] bg-no-repeat bg-center bg-cover h-[652px] lg:h-[698px] relative pt-32 md:pt-40">
+        <div className="container mx-auto px-5 sm:px-0">
+          <div className="max-w-[640px] w-full mx-auto">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold  text-center leading-tight max-w-[446px] w-full mx-auto">
+              Your Ultimate Job Search Companion
+            </h1>
+            <p className="text-sm sm:text-base md:text-lg  text-center pt-4 mb-8">
+              Are you looking for the perfect job or the ideal candidate? Find
+              your dream job with thousands of job postings across industries.
+            </p>
 
-          // Compare dates (ignores time)
-          const isSameDay = jobDate.isSame(today, 'day');
+            <div className="flex justify-center">
+              <button
+                onClick={() => {
+                  if (allJobs.length === 0) {
+                    setIsOpen(true);
+                  } else if (allJobs.length > 0) {
+                    const jobDate = moment(allJobs[0].created_date).startOf(
+                      "day"
+                    );
+                    const today = moment().startOf("day");
 
-          if (!isSameDay) {
-            getJobs(); // allow only if it's a new day
-          } else {
-            toast.error("You have already searched for jobs today!", {
-              duration: 2000,
-              position: "top-center",
-            });
-          }
-        } else {
-         getJobs();
-        }
-        }} className="cursor-pointer px-10 bg-primary-200 text-accent-content text-xl font-medium py-3 rounded-md mt-4 transition hover:bg-primary hover:text-primary-content">
-      {generateStatus? <span className="dots-loading">. . .</span> : "Search Jobs"}
-      </button>
-      {/*  */}
-      </div>
-      </div>
-    </div>
-  </div>
-)}
+                    // Compare dates (ignores time)
+                    const isSameDay = jobDate.isSame(today, "day");
 
+                    if (!isSameDay) {
+                      setIsOpen(true);
+                    } else {
+                      toast.error("You have already searched for jobs today!", {
+                        duration: 2000,
+                        position: "top-center",
+                      });
+                    }
+                  }
+                }}
+                className="bg-primary cursor-pointer px-7 py-3 rounded-lg text-primary-content text-base font-medium flex items-center justify-center gap-3 flex-row-reverse hover:bg-primary-content hover:text-white"
+              >
+                <svg
+                  className="w-5 h-5"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M3.85587 1.61739C5.19014 0.725854 6.75882 0.25 8.36354 0.25H8.36358C10.5154 0.250137 12.579 1.105 14.1006 2.62655C15.6221 4.14811 16.477 6.21174 16.4771 8.36355V8.36359C16.4771 9.96831 16.0013 11.537 15.1097 12.8713C14.9533 13.1054 14.7852 13.3305 14.6065 13.5459L19.5303 18.4697C19.8232 18.7626 19.8232 19.2374 19.5303 19.5303C19.2374 19.8232 18.7625 19.8232 18.4696 19.5303L13.5458 14.6065C12.9234 15.1232 12.2239 15.5467 11.4685 15.8596C9.98591 16.4737 8.35454 16.6344 6.78065 16.3213C5.20677 16.0082 3.76107 15.2355 2.62636 14.1008C1.49165 12.9661 0.718908 11.5204 0.405843 9.94648C0.0927783 8.37259 0.253454 6.74122 0.867553 5.25866C1.48165 3.77609 2.52159 2.50892 3.85587 1.61739ZM8.36349 1.75C7.05546 1.75001 5.77681 2.13789 4.68922 2.86459C3.60162 3.5913 2.75394 4.6242 2.25337 5.83268C1.75281 7.04116 1.62183 8.37093 1.87702 9.65384C2.13221 10.9368 2.76209 12.1152 3.68702 13.0401C4.61195 13.965 5.79038 14.5949 7.07329 14.8501C8.3562 15.1053 9.68597 14.9743 10.8945 14.4738C12.1029 13.9732 13.1358 13.1255 13.8625 12.0379C14.5892 10.9503 14.9771 9.67167 14.9771 8.36364M8.36354 1.75C10.1175 1.75012 11.7997 2.44695 13.0399 3.68721C14.2802 4.92748 14.977 6.60960 14.9771 8.36359"
+                    fill="currentColor"
+                  />
+                </svg>
+                <span className="text-base md:text-2xl">
+                  Click here to find your dream jobs
+                </span>
+              </button>
+            </div>
+            <LastSearchInfo allJobs={allJobs} />
+            {/* Modal success */}
+            {isFetchSuccess && (
+              <div className="fixed inset-0 flex items-center justify-center overflow-y-auto z-[99999]">
+                {/* Backdrop */}
+                {!isFullscreen && (
+                  <div
+                    className="fixed inset-0 h-full w-full bg-gray-400/20 backdrop-blur-[5px]"
+                    // onClick={closeModal}
+                  ></div>
+                )}
 
+                {/* Modal Content */}
+                <div
+                  className={`${
+                    isFullscreen
+                      ? "w-full h-full"
+                      : "relative w-full max-w-[700px] m-4 rounded-3xl bg-white dark:bg-gray-900"
+                  }`}
+                  // onClick={(e) => e.stopPropagation()}
+                >
+                  {/* Close Button */}
+                  {true && (
+                    <button
+                      onClick={closeFecthModal}
+                      className="absolute right-3 top-3 z-[999] flex h-9.5 w-9.5 items-center justify-center rounded-full bg-gray-100 text-gray-400 transition-colors hover:bg-gray-200 hover:text-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white sm:right-6 sm:top-6 sm:h-11 sm:w-11"
+                    >
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                          d="M6.04289 16.5413C5.65237 16.9318 5.65237 17.565 6.04289 17.9555C6.43342 18.346 7.06658 18.346 7.45711 17.9555L11.9987 13.4139L16.5408 17.956C16.9313 18.3466 17.5645 18.3466 17.955 17.956C18.3455 17.5655 18.3455 16.9323 17.955 16.5418L13.4129 11.9997L17.955 7.4576C18.3455 7.06707 18.3455 6.43391 17.955 6.04338C17.5645 5.65286 16.9313 5.65286 16.5408 6.04338L11.9987 10.5855L7.45711 6.0439C7.06658 5.65338 6.43342 5.65338 6.04289 6.0439C5.65237 6.43442 5.65237 7.06759 6.04289 7.45811L10.5845 11.9997L6.04289 16.5413Z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </button>
+                  )}
+                  <div className="no-scrollbar relative w-full max-w-[700px] overflow-y-auto rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11">
+                    <div className="px-2 pr-14">
+                      <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
+                        Job Search Alert!
+                      </h4>
+                    </div>
+                    <div className="flex flex-col gap-5">
+                      <div className="flex flex-col gap-5">
+                        {/* role */}
+                        <div className="flex flex-col gap-2 w-full">
+                          <label className="text-green-500 text-center text-lg my-15">
+                            {newJobs == 0
+                              ? " No Jobs found"
+                              : `${newJobs} jobs found`}{" "}
+                            for `{selectedRole?.label || ""} | {city}.`
+                          </label>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => {
+                          if (newJobs == 0) {
+                            setIsFetchSuccess(false);
+                            setIsOpen(true);
+                          } else {
+                            window.location.reload();
+                          }
+                        }}
+                        className="cursor-pointer px-10 bg-primary-200 text-accent-content text-xl font-medium py-3 rounded-md mt-4 transition hover:bg-primary hover:text-primary-content"
+                      >
+                        {newJobs == 0 ? "New Search" : "View fetched Jobs"}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
 
-{/* modal end */}
-   {/* <form onSubmit={handleSubmit}>
+            {/* Modal */}
+            {isOpen && (
+              <div className="fixed inset-0 flex items-center justify-center overflow-y-auto z-[99999]">
+                {/* Backdrop */}
+                {!isFullscreen && (
+                  <div
+                    className="fixed inset-0 h-full w-full bg-gray-400/20 backdrop-blur-[5px]"
+                    // onClick={closeModal}
+                  ></div>
+                )}
+
+                {/* Modal Content */}
+                <div
+                  className={`${
+                    isFullscreen
+                      ? "w-full h-full"
+                      : "relative w-full max-w-[700px] m-4 rounded-3xl bg-white dark:bg-gray-900"
+                  }`}
+                  // onClick={(e) => e.stopPropagation()}
+                >
+                  {/* Close Button */}
+                  {true && (
+                    <button
+                      onClick={closeModal}
+                      className="absolute right-3 top-3 z-[999] flex h-9.5 w-9.5 items-center justify-center rounded-full bg-gray-100 text-gray-400 transition-colors hover:bg-gray-200 hover:text-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white sm:right-6 sm:top-6 sm:h-11 sm:w-11"
+                    >
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                          d="M6.04289 16.5413C5.65237 16.9318 5.65237 17.565 6.04289 17.9555C6.43342 18.346 7.06658 18.346 7.45711 17.9555L11.9987 13.4139L16.5408 17.956C16.9313 18.3466 17.5645 18.3466 17.955 17.956C18.3455 17.5655 18.3455 16.9323 17.955 16.5418L13.4129 11.9997L17.955 7.4576C18.3455 7.06707 18.3455 6.43391 17.955 6.04338C17.5645 5.65286 16.9313 5.65286 16.5408 6.04338L11.9987 10.5855L7.45711 6.0439C7.06658 5.65338 6.43342 5.65338 6.04289 6.0439C5.65237 6.43442 5.65237 7.06759 6.04289 7.45811L10.5845 11.9997L6.04289 16.5413Z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </button>
+                  )}
+
+                  {/* Modal Inner Content */}
+                  <div className="no-scrollbar relative w-full max-w-[700px] overflow-y-auto rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11">
+                    <div className="px-2 pr-14">
+                      <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
+                        Find Your Dream Job!
+                      </h4>
+                      <p className="mb-6 text-sm text-gray-500 dark:text-gray-400 lg:mb-7">
+                        Update your details to keep your profile up-to-date.
+                      </p>
+                    </div>
+                    {/* Add your fields or form here */}
+                    <div className="flex flex-col gap-5">
+                      {/* role */}
+                      <div className="flex flex-col gap-2 w-full">
+                        <label className="text-white font-medium">Role</label>
+
+                        <CreatableSelect
+                          className="basic-single"
+                          classNamePrefix="select"
+                          value={selectedRole}
+                          onChange={(selectedOption) => {
+                            setSelectedRole(selectedOption as SelectOption);
+
+                            setIsRoleInvalid(false);
+                          }}
+                          options={roles.map((r) => ({
+                            value: r.id,
+                            label: r.role,
+                            data: r, // full role data
+                          }))}
+                          isClearable={true}
+                          isSearchable={true}
+                          placeholder="Select or type a Role"
+                          styles={getCustomSelectStyles(isRoleInvalid)}
+                          onCreateOption={(inputValue) => {
+                            const customRole = {
+                              value: inputValue,
+                              label: inputValue,
+                              data: null, // or define how you want to store custom data
+                            };
+                            setSelectedRole(customRole);
+
+                            setIsRoleInvalid(false);
+
+                            // Optional: insert new role to DB or state
+                            // createRoleInBackend(inputValue)
+                          }}
+                        />
+                      </div>
+                      {/* Experience Level */}
+                      <div className="flex flex-col gap-2 w-full">
+                        <label className="text-white font-medium">
+                          Experience Level
+                        </label>
+                        <div className="relative">
+                          <select
+                            className={`${commonFieldClasses} pl-3 pr-10 ${
+                              isLevelInvalid ? "!border-red-500" : ""
+                            }`}
+                            value={level}
+                            onChange={(e) => setLevel(e.target.value)}
+                          >
+                            <option value="">Select Experience Level</option>
+                            <option value="Entry Level (Typically less than 2 years)">
+                              Entry Level (Typically less than 2 years)
+                            </option>
+                            <option value="Junior Level (Typically 2-5 years)">
+                              Junior Level (Typically 2-5 years)
+                            </option>
+                            <option value="Mid-Level">
+                              Mid-Level / Intermediate (Typically 5-7 years)
+                            </option>
+                            <option value="Mid-Level / Intermediate (Typically 5-7 years)">
+                              Senior Level (Typically 7-10 years)
+                            </option>
+                            <option value="Advanced Level (Typically 10-15 years)">
+                              Advanced Level (Typically 10-15 years)
+                            </option>
+                            <option value="Expert Level (Typically 15-20 years)">
+                              Expert Level (Typically 15-20 years)
+                            </option>
+                            <option value="Mastery Level (20+ years)">
+                              Mastery Level (20+ years)
+                            </option>
+                          </select>
+                          <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center justify-center text-white">
+                            <svg
+                              className="h-4 w-4"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              viewBox="0 0 24 24"
+                            >
+                              <path d="M19 9l-7 7-7-7" />
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                      {/* City */}
+                      <div className="flex flex-col gap-2 w-full">
+                        <label className="text-white font-medium">
+                          Preferred Location
+                        </label>
+
+                        <CreatableSelect
+                          className="basic-single"
+                          classNamePrefix="select"
+                          value={selectedCity}
+                          onChange={(selectedOption) => {
+                            setSelectedCity(selectedOption as SelectCityOption);
+                            setIsCityInvalid(false); // optional validation like role
+                          }}
+                          options={cityData}
+                          isClearable={true}
+                          isSearchable={true}
+                          placeholder="Select or type a City"
+                          styles={getCustomSelectStyles(isCityInvalid)} // ✅ reuse same styles as Role
+                          onCreateOption={(inputValue) => {
+                            const customCity: SelectCityOption = {
+                              value: inputValue,
+                              label: inputValue,
+                            };
+                            setSelectedCity(customCity);
+                            setIsCityInvalid(false);
+
+                            // Optional: insert new city to DB or state
+                            // createCityInBackend(inputValue)
+                          }}
+                        />
+                      </div>
+
+                      {/* Country */}
+                      <div className="flex flex-col gap-2 w-full ">
+                        <label className="text-white font-medium">
+                          Country
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="India"
+                          className={`${commonFieldClasses} cursor-not-allowed`}
+                          value={"India"}
+                          disabled
+                        />
+                      </div>
+                      {/*  */}
+                      <button
+                        onClick={() => {
+                          if (allJobs.length > 0) {
+                            const jobDate = moment(
+                              allJobs[0].created_date
+                            ).startOf("day");
+                            const today = moment().startOf("day");
+
+                            // Compare dates (ignores time)
+                            const isSameDay = jobDate.isSame(today, "day");
+
+                            if (!isSameDay) {
+                              getJobs(); // allow only if it's a new day
+                            } else {
+                              toast.error(
+                                "You have already searched for jobs today!",
+                                {
+                                  duration: 2000,
+                                  position: "top-center",
+                                }
+                              );
+                            }
+                          } else {
+                            getJobs();
+                          }
+                        }}
+                        className="cursor-pointer px-10 bg-primary-200 text-accent-content text-xl font-medium py-3 rounded-md mt-4 transition hover:bg-primary hover:text-primary-content"
+                      >
+                        {generateStatus ? (
+                          <span className="dots-loading">. . .</span>
+                        ) : (
+                          "Search Jobs"
+                        )}
+                      </button>
+                      {/*  */}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* modal end */}
+            {/* <form onSubmit={handleSubmit}>
         <div className="relative w-full">
           <svg className="hidden sm:block absolute left-4 md:left-8 top-5 md:top-7" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M3.85587 1.61739C5.19014 0.725854 6.75882 0.25 8.36354 0.25H8.36358C10.5154 0.250137 12.579 1.105 14.1006 2.62655C15.6221 4.14811 16.477 6.21174 16.4771 8.36355V8.36359C16.4771 9.96831 16.0013 11.537 15.1097 12.8713C14.9533 13.1054 14.7852 13.3305 14.6065 13.5459L19.5303 18.4697C19.8232 18.7626 19.8232 19.2374 19.5303 19.5303C19.2374 19.8232 18.7625 19.8232 18.4696 19.5303L13.5458 14.6065C12.9234 15.1232 12.2239 15.5467 11.4685 15.8596C9.98591 16.4737 8.35454 16.6344 6.78065 16.3213C5.20677 16.0082 3.76107 15.2355 2.62636 14.1008C1.49165 12.9661 0.718908 11.5204 0.405843 9.94648C0.0927783 8.37259 0.253454 6.74122 0.867553 5.25866C1.48165 3.77609 2.52159 2.50892 3.85587 1.61739ZM8.36349 1.75C7.05546 1.75001 5.77681 2.13789 4.68922 2.86459C3.60162 3.5913 2.75394 4.6242 2.25337 5.83268C1.75281 7.04116 1.62183 8.37093 1.87702 9.65384C2.13221 10.9368 2.76209 12.1152 3.68702 13.0401C4.61195 13.965 5.79038 14.5949 7.07329 14.8501C8.3562 15.1053 9.68597 14.9743 10.8945 14.4738C12.1029 13.9732 13.1358 13.1255 13.8625 12.0379C14.5892 10.9503 14.9771 9.67167 14.9771 8.36364M8.36354 1.75C10.1175 1.75012 11.7997 2.44695 13.0399 3.68721C14.2802 4.92748 14.977 6.60960 14.9771 8.36359" fill="currentColor"></path></svg>
           <input type="search" onChange={(e) => setPosition(e.target.value)} value={position} placeholder="Job Role" className="text-base-content bg-primary-content outline-none rounded-xl pl-4 sm:pl-12 md:pl-20 pr-28  h-[60px] md:h-[72px] w-full"/>
@@ -854,14 +985,14 @@ useEffect(() => {
       <svg className="hidden sm:block absolute left-4 md:left-8 top-5 md:top-7" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M3.85587 1.61739C5.19014 0.725854 6.75882 0.25 8.36354 0.25H8.36358C10.5154 0.250137 12.579 1.105 14.1006 2.62655C15.6221 4.14811 16.477 6.21174 16.4771 8.36355V8.36359C16.4771 9.96831 16.0013 11.537 15.1097 12.8713C14.9533 13.1054 14.7852 13.3305 14.6065 13.5459L19.5303 18.4697C19.8232 18.7626 19.8232 19.2374 19.5303 19.5303C19.2374 19.8232 18.7625 19.8232 18.4696 19.5303L13.5458 14.6065C12.9234 15.1232 12.2239 15.5467 11.4685 15.8596C9.98591 16.4737 8.35454 16.6344 6.78065 16.3213C5.20677 16.0082 3.76107 15.2355 2.62636 14.1008C1.49165 12.9661 0.718908 11.5204 0.405843 9.94648C0.0927783 8.37259 0.253454 6.74122 0.867553 5.25866C1.48165 3.77609 2.52159 2.50892 3.85587 1.61739ZM8.36349 1.75C7.05546 1.75001 5.77681 2.13789 4.68922 2.86459C3.60162 3.5913 2.75394 4.6242 2.25337 5.83268C1.75281 7.04116 1.62183 8.37093 1.87702 9.65384C2.13221 10.9368 2.76209 12.1152 3.68702 13.0401C4.61195 13.965 5.79038 14.5949 7.07329 14.8501C8.3562 15.1053 9.68597 14.9743 10.8945 14.4738C12.1029 13.9732 13.1358 13.1255 13.8625 12.0379C14.5892 10.9503 14.9771 9.67167 14.9771 8.36364M8.36354 1.75C10.1175 1.75012 11.7997 2.44695 13.0399 3.68721C14.2802 4.92748 14.977 6.60960 14.9771 8.36359" fill="currentColor"></path></svg>
       </div>
       </form> */}
-    </div>
-  </div>
-</div>
-{/* */}
-<LogoCarousel size={size} />
-{/* Job List main header */}
-<JobListSection jobs={allJobs} />
-<Footer />
+          </div>
+        </div>
+      </div>
+      {/* */}
+      <LogoCarousel size={size} />
+      {/* Job List main header */}
+      <JobListSection jobs={allJobs} />
+      <Footer />
     </div>
   );
 }
