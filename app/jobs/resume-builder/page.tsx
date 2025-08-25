@@ -351,7 +351,7 @@ export default function ResumeBuilderPage() {
     setTimeout(() => {
       // Redirect to the resume checker page after 1 second
       window.location.href =
-        "https://app.winyourinterview.ai/jobs/ats-resume-builder/";
+        "https://app.winyourinterview.ai/jobs/cover-letter-generator";
     }, 3000);
   };
   return resumeLoader ? (
@@ -412,6 +412,13 @@ export default function ResumeBuilderPage() {
                 className="hidden md:btn btn-ghost"
               >
                 <p>ATS Resume Checker</p>
+              </a>
+              <a
+                href="https://app.winyourinterview.ai/jobs/cover-letter-generator"
+                target="_blank"
+                className="hidden md:btn btn-ghost"
+              >
+                <p>Cover Letter Generator</p>
               </a>
               <p className="hidden sm:btn btn-md">{username.split(" ")[0]}</p>
               <Link
@@ -787,7 +794,7 @@ export default function ResumeBuilderPage() {
           {/* Left side image */}
           <div className="flex-1 flex">
             <img
-              src="/rb/resumepack.png"
+              src="/cletters.png"
               alt="Resume checker dashboard"
               className="w-full max-w-md h-auto object-contain rounded-xl shadow"
               width={400}
@@ -809,7 +816,7 @@ export default function ResumeBuilderPage() {
                     color: "#2d3639",
                   }}
                 >
-                  Feature-Packed & ATS-Optimized Resume Builder
+                  Boost Your Job Applications with AI-Powered Cover Letters
                 </h3>
                 <p
                   style={{
@@ -819,10 +826,10 @@ export default function ResumeBuilderPage() {
                     fontSize: 16,
                   }}
                 >
-                  Easily create and customize your ATS-optimized resume with our
-                  intuitive drag-and-drop builder. Choose from professional
-                  templates, section layouts, and design options tailored to
-                  help you land more interviews.
+                  Let our AI craft a tailored, role-specific cover letter in
+                  moments — highlighting your strengths, achievements, and
+                  keywords recruiters look for. Instantly get a professional,
+                  polished cover letter that makes you stand out.
                 </p>
                 <button
                   onClick={handleRedirect}
@@ -838,7 +845,7 @@ export default function ResumeBuilderPage() {
                       lineHeight: "22px",
                     }}
                   >
-                    Build Your Resume
+                    Build My Cover Letter Now
                   </span>
                   <ArrowRightIcon className="text-[#5f4dc7] ml-1 w-4 h-4 inline-block" />
                 </button>

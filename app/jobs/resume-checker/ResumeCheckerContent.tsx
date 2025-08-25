@@ -611,6 +611,13 @@ export default function ResumeCheckerContent() {
                 >
                   <p>ATS Resume Builder</p>
                 </a>
+                <a
+                  href="https://app.winyourinterview.ai/jobs/cover-letter-generator"
+                  target="_blank"
+                  className="hidden md:btn btn-ghost"
+                >
+                  <p>Cover Letter Generator</p>
+                </a>
                 <p className="hidden sm:btn btn-md">{username.split(" ")[0]}</p>
 
                 <Link
@@ -1610,7 +1617,72 @@ export default function ResumeCheckerContent() {
                 </div>
               </div>
             </div>
-
+            {/*  */}
+            <div className="flex flex-col md:flex-row items-center justify-between gap-8 py-12 px-6 md:px-16 lg:px-24">
+              {/* Left side paragraph */}
+              <div className="flex-1 max-w-xl">
+                <div>
+                  <div>
+                    <h3
+                      className="h3 font-mona-sans"
+                      style={{
+                        fontWeight: 500,
+                        fontSize: 38,
+                        lineHeight: "46px",
+                        marginTop: 32,
+                        marginBottom: 16,
+                        color: "#2d3639",
+                      }}
+                    >
+                      Boost Your Job Applications with AI-Powered Cover Letters
+                    </h3>
+                    <p
+                      style={{
+                        lineHeight: 1.6,
+                        color: "#384347",
+                        margin: "0 0 8px",
+                        fontSize: 16,
+                      }}
+                    >
+                      Let our AI craft a tailored, role-specific cover letter in
+                      moments — highlighting your strengths, achievements, and
+                      keywords recruiters look for. Instantly get a
+                      professional, polished cover letter that makes you stand
+                      out.
+                    </p>
+                    <a
+                      href="https://app.winyourinterview.ai/jobs/cover-letter-generator"
+                      target="_blank"
+                      className="lbDsKPVYdwKjE90OIGvw8g== RRxe1M+sUxFTRkUeo96NlQ=="
+                    >
+                      <span
+                        style={{
+                          textDecoration: "underline",
+                          fontSize: "16px",
+                          fontWeight: 650,
+                          cursor: "pointer",
+                          color: "#5f4dc7",
+                          lineHeight: "22px",
+                        }}
+                      >
+                        Build My Cover Letter Now
+                      </span>
+                      <ArrowRightIcon className="text-[#5f4dc7] ml-1 w-4 h-4 inline-block" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+              {/* Right side image */}
+              <div className="flex-1 flex justify-end">
+                <img
+                  src="/cletters.png"
+                  alt="Resume checker dashboard"
+                  className="w-full max-w-md h-auto object-contain rounded-xl shadow"
+                  width={400}
+                  height={300}
+                />
+              </div>
+            </div>
             {/*  */}
           </div>
         )}

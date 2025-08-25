@@ -587,7 +587,13 @@ export default function JobsApp() {
             >
               <p>ATS Resume Builder</p>
             </a>
-
+            <a
+              href="https://app.winyourinterview.ai/jobs/cover-letter-generator"
+              target="_blank"
+              className="hidden md:btn btn-ghost"
+            >
+              <p>Cover Letter Generator</p>
+            </a>
             <p className="hidden sm:btn btn-md">{username.split(" ")[0]}</p>
 
             <Link
