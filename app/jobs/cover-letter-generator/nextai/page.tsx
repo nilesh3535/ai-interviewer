@@ -60,7 +60,7 @@ export default function Nextai() {
   const resetSettings = () => {
     setThemeColor("#FF4800");
     setFontFamily("Roboto");
-    setFontSize("15");
+    setFontSize("25");
     setDocumentSize("Letter");
   };
   const themeColors = [
