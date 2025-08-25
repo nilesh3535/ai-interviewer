@@ -87,11 +87,11 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
             </a>
             <p className="text-gray-50">|</p>
             <a
-              href="https://app.winyourinterview.ai/jobs"
+              href="https://app.winyourinterview.ai/jobs/cover-letter-generator"
               target="_blank"
               className="hidden sm:btn btn-ghost"
             >
-              <p>Find Jobs</p>
+              <p>AI Cover Letter</p>
             </a>
           </div>
           {/* User profile section */}

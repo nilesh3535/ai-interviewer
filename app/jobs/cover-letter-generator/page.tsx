@@ -313,7 +313,7 @@ Best regards,
                 style={{
                   fontFamily: "Rubik, Open Sans, sans-serif",
                 }}
-                className="text-[18px] leading-[24px] py-[13px] px-5  text-[#fbe7ea] bg-[#b33443] 
+                className="shadow-md text-[18px] leading-[24px] py-[13px] px-5  text-[#fbe7ea] bg-[#c84e5c] 
     border-none font-[Rubik,'Open Sans',sans-serif] font-medium
     cursor-pointer flex justify-center items-center
     rounded text-center no-underline whitespace-nowrap align-middle

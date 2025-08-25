@@ -1,6 +1,8 @@
 "use client";
 import { ArrowUp, ChevronLeft, LucideCopy } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { Phone, Mail, Link as LinkIcon, MapPin } from "lucide-react";
 import { toast } from "sonner";
 import { set } from "zod";
 // 2️⃣ Top-level font definitions
@@ -17,6 +19,7 @@ import {
   Merriweather,
 } from "next/font/google";
 import { useReactToPrint } from "react-to-print";
+import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 const roboto = Roboto({ subsets: ["latin"], weight: ["400", "700"] });
 const lato = Lato({ subsets: ["latin"], weight: ["400", "700"] });
 const montserrat = Montserrat({ subsets: ["latin"], weight: ["400", "700"] });
@@ -52,9 +55,14 @@ export default function Nextai() {
   const reactToPrintFn = useReactToPrint({ contentRef });
   const [themeColor, setThemeColor] = useState("#FF4800");
   const [fontFamily, setFontFamily] = useState("Roboto");
-  const [fontSize, setFontSize] = useState("11");
+  const [fontSize, setFontSize] = useState("25");
   const [documentSize, setDocumentSize] = useState("Letter");
-
+  const resetSettings = () => {
+    setThemeColor("#FF4800");
+    setFontFamily("Roboto");
+    setFontSize("15");
+    setDocumentSize("Letter");
+  };
   const themeColors = [
     "#f87171",
     "#FF4800",
@@ -84,9 +92,9 @@ export default function Nextai() {
   ];
 
   const fontSizes = [
-    { label: "Compact", value: "10" },
-    { label: "Standard", value: "11" },
-    { label: "Large", value: "12" },
+    { label: "Compact", value: "21" },
+    { label: "Standard", value: "25" },
+    { label: "Large", value: "27" },
   ];
 
   const docSizes = [
@@ -158,10 +166,18 @@ Best regards,
   const [header, setHeader] = useState("");
   const [body, setBody] = useState("");
   const [name, setName] = useState("");
+  const [role, setRole] = useState("");
+
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [website, setWebsite] = useState("");
   const [address, setAddress] = useState("");
+
+  const emailRef = useRef(null);
+  const phoneRef = useRef(null);
+  const websiteRef = useRef(null);
+  const addressRef = useRef(null);
+
   const generateCoverLetter = async () => {
     if (!inputData) {
       toast.error("Please provide the required information", {
@@ -188,11 +204,13 @@ Best regards,
         setHeader(data.letterheader);
         setBody(data.letterbody);
         setName(data.name);
-        setEmail(data.email);
-        setPhone(data.phone);
-        setWebsite(data.website);
-        setAddress(data.address);
-        // setCoverLetter(`${data.letterheader}\n\n${data.letterbody}`);
+        setPhone(data.phone || "");
+        setEmail(data.email || "");
+        setWebsite(data.website || "");
+        setAddress(data.address || "");
+        setRole(data.role);
+
+        setCoverLetter(data.letterbody);
         setCoverLetterGenerated(true);
         toast.success("Cover letter generated successfully", {
           position: "top-right",
@@ -211,6 +229,13 @@ Best regards,
       setAiloader(false);
     }
   };
+  // sync contentEditable when state changes
+  useEffect(() => {
+    if (emailRef.current) emailRef.current.innerText = email || "";
+    if (phoneRef.current) phoneRef.current.innerText = phone || "";
+    if (websiteRef.current) websiteRef.current.innerText = website || "";
+    if (addressRef.current) addressRef.current.innerText = address || "";
+  }, [email, phone, website, address]);
 
   return (
     <>
@@ -231,17 +256,170 @@ Best regards,
             </button>
             <div className="flex items-center space-x-2">
               <span className="text-xl font-semibold text-indigo-600 ">
-                COVER LETTER GENERATOR
+                COVER LETTER EDITOR - POWERED BY WINYOURINTERVIEW
               </span>
             </div>
             <div className="w-16" />
           </div>
 
           {/* Editor */}
-          <div className="flex justify-center items-center relative">
+          <div className="flex justify-center  relative">
+            {/*  */}
+            {/* Theme and Font Settings */}
+            <section
+              style={{
+                width: "516px",
+              }}
+              className="bg-white flex flex-col gap-3 rounded-md border border-slate-200 p-6 pt-4 shadow"
+            >
+              <div className="flex flex-col gap-6">
+                {/* Header */}
+                <div className="flex items-center gap-2">
+                  <Cog6ToothIcon className="h-6 w-6 text-gray-600" />
+                  <div className="text-lg font-semibold tracking-wide text-gray-900">
+                    Resume Settings
+                  </div>
+                </div>
+
+                {/* Theme Color */}
+                <div>
+                  <label className="flex gap-2 text-sm font-medium items-center text-gray-700">
+                    <span className="w-28 text-sm leading-9">Theme Color</span>
+                    <input
+                      className="w-[6rem] border-b border-gray-300 text-center font-semibold leading-3 outline-none text-sm"
+                      type="text"
+                      value={themeColor}
+                      onChange={(e) => setThemeColor(e.target.value)}
+                      style={{ color: themeColor }}
+                    />
+                  </label>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {themeColors.map((color) => (
+                      <div
+                        key={color}
+                        className="text-white flex h-10 w-10 cursor-pointer items-center justify-center rounded-md text-sm"
+                        style={{
+                          backgroundColor: color,
+                          border:
+                            color === themeColor
+                              ? `2px solid ${color}`
+                              : undefined,
+                        }}
+                        onClick={() => setThemeColor(color)}
+                      >
+                        {color === themeColor && "✓"}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Font Family */}
+                <div>
+                  <label className="text-base font-medium text-gray-700">
+                    Font Family
+                  </label>
+                  <div className="mt-2 flex flex-wrap gap-3">
+                    {fontFamilies.map((font) => (
+                      <div
+                        key={font}
+                        className={`flex w-[105px] cursor-pointer items-center justify-center rounded-md border py-1.5 shadow-sm hover:border-gray-400 hover:bg-gray-100 ${
+                          font === fontFamily
+                            ? "text-white"
+                            : "text-gray-900 border-gray-300"
+                        }`}
+                        style={{
+                          backgroundColor:
+                            font === fontFamily ? themeColor : undefined,
+                          borderColor:
+                            font === fontFamily ? themeColor : undefined,
+                          fontFamily: font,
+                        }}
+                        onClick={() => setFontFamily(font)}
+                      >
+                        {font}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Font Size */}
+                <div>
+                  <label className="flex gap-2 text-sm font-medium items-center text-gray-700">
+                    <span className="w-28 text-sm leading-9">
+                      Font Size (pt)
+                    </span>
+                  </label>
+                  <div className="mt-2 flex flex-wrap gap-3">
+                    {fontSizes.map((size) => (
+                      <div
+                        key={size.value}
+                        className={`flex w-[105px] cursor-pointer items-center justify-center rounded-md border py-1.5 shadow-sm hover:border-gray-400 hover:bg-gray-100 ${
+                          size.value === fontSize
+                            ? "text-white"
+                            : "text-gray-900 border-gray-300"
+                        }`}
+                        style={{
+                          backgroundColor:
+                            size.value === fontSize ? themeColor : undefined,
+                          borderColor:
+                            size.value === fontSize ? themeColor : undefined,
+                          fontFamily: fontFamily,
+                        }}
+                        onClick={() => setFontSize(size.value)}
+                      >
+                        {size.label}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Document Size */}
+                <div>
+                  <label className="text-base font-medium text-gray-700">
+                    Document Size
+                  </label>
+                  <div className="mt-2 flex flex-wrap gap-3">
+                    {docSizes.map((doc) => (
+                      <div
+                        key={doc.value}
+                        className={`flex w-[105px] cursor-pointer items-center justify-center rounded-md border py-1.5 shadow-sm hover:border-gray-400 hover:bg-gray-100 ${
+                          doc.value === documentSize
+                            ? "text-white"
+                            : "text-gray-900 border-gray-300"
+                        }`}
+                        style={{
+                          backgroundColor:
+                            doc.value === documentSize ? themeColor : undefined,
+                          borderColor:
+                            doc.value === documentSize ? themeColor : undefined,
+                        }}
+                        onClick={() => setDocumentSize(doc.value)}
+                      >
+                        <div className="flex flex-col items-center">
+                          <div>{doc.label}</div>
+                          <div className="text-xs">{doc.sub}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              {/* reset button */}
+              <div className="mt-4">
+                <button
+                  onClick={() => {
+                    resetSettings();
+                  }}
+                  className="cursor-pointer w-full bg-gray-300 text-black py-2 rounded-md hover:bg-gray-600 hover:text-white transition-colors"
+                >
+                  Reset Settings
+                </button>
+              </div>
+            </section>
+            {/*  */}
             <div
               ref={contentRef}
-              className={`print-container bg-white  border-black border-[2px] hide-scrollbar shadow-lg ${fontMap[fontFamily]}`}
+              className={`print-container bg-white  border-[#4f4949] border-[2px] hide-scrollbar shadow-lg ${fontMap[fontFamily]}`}
               style={{
                 width: documentSize === "Letter" ? "816px" : "794px",
                 height: documentSize === "Letter" ? "1056px" : "1123px",
@@ -252,20 +430,132 @@ Best regards,
                 position: "relative",
               }}
             >
-              <textarea
-                className="absolute top-0 left-0 w-full h-full text-[#384347] p-[46px_64px] leading-[22.5px] resize-none bg-transparent border-0"
-                value={`${header}\n${body}`}
-                onChange={(e) => setCoverLetter(e.target.value)}
-                style={{ fontSize: "15px" }}
-              />
+              <header className="w-full flex items-center justify-between p-6 bg-white  rounded-2xl">
+                {/* Left Section */}
+                <div className="flex flex-col w-full ">
+                  {/* Name */}
+                  <input
+                    type="text"
+                    placeholder="Your Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    style={{ fontSize: fontSize }}
+                    className="font-bold uppercase text-slate-800 bg-transparent border-none outline-none w-full"
+                  />
+
+                  {/* Role */}
+                  <input
+                    type="text"
+                    placeholder="The role you are applying for"
+                    value={role}
+                    style={{ color: themeColor }}
+                    onChange={(e) => setRole(e.target.value)}
+                    className="mb-2 text-[19px] font-medium bg-transparent border-none outline-none w-full"
+                  />
+
+                  {/* Contact Info */}
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-600">
+                    <div className="flex items-center gap-2">
+                      <Phone
+                        style={{ color: themeColor }}
+                        className="h-4 w-4"
+                      />
+                      <div
+                        ref={phoneRef}
+                        contentEditable
+                        suppressContentEditableWarning
+                        data-placeholder="Phone"
+                        className="text-[14px] outline-none bg-transparent min-w-0 placeholder-div"
+                        onInput={(e) =>
+                          setPhone(e.currentTarget.textContent?.trim() || "")
+                        }
+                      />
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <Mail style={{ color: themeColor }} className="h-4 w-4" />
+                      <div
+                        ref={emailRef}
+                        contentEditable
+                        suppressContentEditableWarning
+                        data-placeholder="Email"
+                        className="text-[14px] outline-none bg-transparent min-w-0 placeholder-div"
+                        onInput={(e) =>
+                          setEmail(e.currentTarget.textContent?.trim() || "")
+                        }
+                      />
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <LinkIcon
+                        style={{ color: themeColor }}
+                        className="h-4 w-4"
+                      />
+                      <div
+                        ref={websiteRef}
+                        contentEditable
+                        suppressContentEditableWarning
+                        data-placeholder="Website"
+                        className="text-[14px] outline-none bg-transparent min-w-0 placeholder-div"
+                        onInput={(e) =>
+                          setWebsite(e.currentTarget.textContent?.trim() || "")
+                        }
+                      />
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <MapPin
+                        style={{ color: themeColor }}
+                        className="h-4 w-4"
+                      />
+                      <div
+                        ref={addressRef}
+                        contentEditable
+                        suppressContentEditableWarning
+                        data-placeholder="Address"
+                        className="text-[14px] outline-none bg-transparent min-w-0 placeholder-div"
+                        onInput={(e) =>
+                          setAddress(e.currentTarget.textContent?.trim() || "")
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div className="w-full h-px bg-[#2e2e2e] my-2"></div>
+                  <textarea
+                    className="w-full text-[#384347] leading-[22.5px] resize-none bg-transparent border-0 focus:outline-none"
+                    value={coverLetter}
+                    onChange={(e) => {
+                      setCoverLetter(e.target.value);
+                    }}
+                    style={{
+                      fontSize:
+                        fontSize == "25"
+                          ? "17px"
+                          : fontSize == "27"
+                          ? "19px"
+                          : "16px",
+                      overflow: "hidden",
+                      height:
+                        documentSize === "Letter"
+                          ? `${1056 * 0.7}px`
+                          : `${1123 * 0.7}px`,
+                    }}
+                  />
+                </div>
+
+                {/* Right Section (Profile Photo) */}
+                <div></div>
+              </header>
             </div>
-            <div className="absolute top-4 right-4 z-10">
+            {/*  */}
+
+            <div className="absolute top-0 right-10 z-10">
               <button
                 onClick={reactToPrintFn}
                 className=" text-white px-4 py-2 rounded shadow transition"
                 style={{ backgroundColor: themeColor }}
               >
-                Print Resume
+                Print Letter
               </button>
             </div>
           </div>
@@ -322,6 +612,12 @@ Best regards,
                   Explain why you are interested in this particular position or
                   company.
                 </li>
+                <li className="text-[#111827]">
+                  <span className="font-semibold">
+                    Personal Info(optional):
+                  </span>{" "}
+                  Your Name, Phone, Email, LinkedIn/Portfolio Url
+                </li>
               </ol>
 
               <p className="mt-6 text-indigo-600">
@@ -329,6 +625,20 @@ Best regards,
                 letter for you!
               </p>
 
+              {/* e.g */}
+              <div className="text-md text-gray-600 ml-2 my-2">
+                <p className="text-red-300">Example input</p>
+                John Doe, john.doe@example.com, +91-0000000000,
+                linkedin.com/in/johndoe, Bengaluru, India
+                <br />
+                Web Designer
+                <br /> Tata Consultancy Services (TCS)
+                <br /> 2 years experience, HTML, CSS, JavaScript, React.js,
+                Figma
+                <br /> Built employee portal & corporate dashboards
+                <br /> Interested in TCS for global innovation opportunities
+              </div>
+              {/*  */}
               <div
                 className={`bg-[#eceff6] mt-6 flex border border-gray-300 px-4 py-2 shadow-sm transition-all duration-200 relative ${
                   isSingleLine
@@ -363,6 +673,7 @@ Best regards,
                   )}
                 </div>
               </div>
+              {/*  */}
             </div>
           </div>
           {/* Main Content */}

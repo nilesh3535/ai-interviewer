@@ -5,7 +5,13 @@ import Link from "next/link";
 import InterviewCard from "@/components/InterviewCard"; // Grid view
 import InterviewCardList from "@/components/InterviewCardList"; // List view
 
-import { List, LayoutGrid } from "lucide-react";
+import {
+  List,
+  LayoutGrid,
+  ArrowRight,
+  SearchCodeIcon,
+  Search,
+} from "lucide-react";
 
 import { getCurrentUser } from "@/lib/actions/auth.action";
 import {
@@ -68,10 +74,20 @@ async function Home({ searchParams }: HomeProps) {
               For example: Frontend, Backend, Fullstack, Design, UX/UI.
             </p>
           </AnimatedText>
-          <div className="gap-2 max-w-full flex flex-col md:flex-row sm:flex-col">
+          <div className="gap-2 min-w-full flex flex-col md:flex-row sm:flex-col">
             <AnimatedCTAButton href="/create" delay={0.3}>
               Create an Interview
             </AnimatedCTAButton>
+           <div className="hidden md:block ml-auto">
+            <Link
+              href="/jobs"
+              className="ml-auto px-5 py-2.5 bg-white dark:bg-orange-300 text-black rounded-full font-medium text-lg flex items-center gap-2 cursor-pointer "
+            >
+              Find Jobs
+              <Search size={18} />
+            </Link>
+            </div>
+
             <h1 className="block mt-2 ml-3 text-amber-600  md:hidden">
               Other tools
             </h1>
@@ -88,6 +104,13 @@ async function Home({ searchParams }: HomeProps) {
               delay={0.3}
             >
               ATS Resume Checker
+            </AnimatedCTAButton>
+            <AnimatedCTAButton
+              className="block mt-1 md:hidden"
+              href="/jobs/cover-letter-generator"
+              delay={0.3}
+            >
+              AI COVER LETTER BUILDER
             </AnimatedCTAButton>
             <AnimatedCTAButton
               className="block mt-1 md:hidden"
