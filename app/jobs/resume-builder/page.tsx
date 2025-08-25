@@ -831,8 +831,9 @@ export default function ResumeBuilderPage() {
                   keywords recruiters look for. Instantly get a professional,
                   polished cover letter that makes you stand out.
                 </p>
-                <button
-                  onClick={handleRedirect}
+                <a
+                  href="https://app.winyourinterview.ai/jobs/cover-letter-generator"
+                  target="_blank"
                   className="lbDsKPVYdwKjE90OIGvw8g== RRxe1M+sUxFTRkUeo96NlQ=="
                 >
                   <span
@@ -848,7 +849,7 @@ export default function ResumeBuilderPage() {
                     Build My Cover Letter Now
                   </span>
                   <ArrowRightIcon className="text-[#5f4dc7] ml-1 w-4 h-4 inline-block" />
-                </button>
+                </a>
               </div>
             </div>
           </div>

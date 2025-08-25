@@ -183,7 +183,7 @@ Improved application load time by 25% through code splitting and performance opt
   }
 
   const skillRows = chunkSkills(skills, rowConfig);
-  const [workExperienceTitle, setWorkExperienceTitle] =
+  const [workExperienceTitle, setWorkExperienceTitle] = 
     useState("WORK EXPERIENCE");
   const [educationTitle, setEducationTitle] = useState("EDUCATION");
   const [projectTitle, setProjectTitle] = useState("PROJECTS");
