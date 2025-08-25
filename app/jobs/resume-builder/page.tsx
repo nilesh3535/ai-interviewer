@@ -351,7 +351,7 @@ export default function ResumeBuilderPage() {
     setTimeout(() => {
       // Redirect to the resume checker page after 1 second
       window.location.href =
-        "https://app.winyourinterview.ai/jobs/cover-letter-generator";
+        "https://app.winyourinterview.ai/jobs/ats-resume-builder/";
     }, 3000);
   };
   return resumeLoader ? (
